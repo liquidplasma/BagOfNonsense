@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "QcrfUwbXFEIApCYX3YqDTwZrx/CB+rVfleyM841PLW2Hw1bwpyeraCswhKLqAyN5JVbyhxM1xLCcMBuoPKTMdA==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Administrator\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\BagOfNonsense\\BagOfNonsense.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Administrator\\.nuget\\packages\\tmodloader.codeassist\\0.1.5\\tmodloader.codeassist.0.1.5.nupkg.sha512"
+  ],
+  "logs": []
+}

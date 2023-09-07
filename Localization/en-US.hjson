@@ -1,0 +1,988 @@
+Mods: {
+	BagOfNonsense: {
+		Buffs: {
+			BBloodyRage: {
+				DisplayName: Bloody Orb
+				Description: Increased damage due to fallen teammate
+			}
+
+			BGhostlySword.DisplayName: Ghostly Swords
+
+			BInvader: {
+				DisplayName: Invader
+				Description: The invader will fight for you
+			}
+
+			BPacman: {
+				DisplayName: Pacman
+				Description: The eater of bits will fight for you
+			}
+
+			BPracticalCube: {
+				DisplayName: Practical Cube
+				Description: "'Still evil, but it is cute, so you pet it'"
+			}
+
+			BPrismDream: {
+				DisplayName: Prismatic Dreams
+				Description: The star will fight for you
+			}
+
+			BShimmerSpear: {
+				DisplayName: Awakening
+				Description: Power increased
+			}
+
+			Bstaffbuff: {
+				DisplayName: Staff Buff
+				Description: You feel stronger just by holding it.
+			}
+
+			BWaver.DisplayName: Influx Waver
+			BWeaponJarate.DisplayName: Weapon Imbue: Jarate
+
+			DColdtouch: {
+				DisplayName: Cold touch
+				Description: Mods.BagOfNonsense.BuffDescription.DColdtouch
+			}
+
+			DCorruptTouch: {
+				DisplayName: Corrupt Touch
+				Description: Mods.BagOfNonsense.BuffDescription.DCorruptTouch
+			}
+
+			DFireBurn: {
+				DisplayName: Fire Burn
+				Description: Mods.BagOfNonsense.BuffDescription.DFireBurn
+			}
+
+			DGreenRot: {
+				DisplayName: GreenRot
+				Description: Mods.BagOfNonsense.BuffDescription.DGreenRot
+			}
+
+			DHighwattage: {
+				DisplayName: High wattage
+				Description: Mods.BagOfNonsense.BuffDescription.DHighwattage
+			}
+
+			DJarate: {
+				DisplayName: Jarate
+				Description: Is this what I think it is......?
+			}
+
+			DVirus: {
+				DisplayName: Virus!
+				Description: The antivirus is killing you
+			}
+		}
+
+		Items: {
+			BeeEnrager: {
+				DisplayName: Rotten Beehive
+				Tooltip: Enrages your bees
+			}
+
+			BloodyOrb: {
+				DisplayName: Bloody Orb
+				Tooltip: Deal 90% more damage while a teammate is dead
+			}
+
+			BullseyeEmblem16: {
+				DisplayName: Bullseye Emblem
+				Tooltip: Increases crit damage by 16%
+			}
+
+			BullseyeEmblem33: {
+				DisplayName: Eradicator Emblem
+				Tooltip: Increases crit damage by 33%
+			}
+
+			BullseyeEmblem50: {
+				DisplayName: Terminator Emblem
+				Tooltip: Increases crit damage by 50%
+			}
+
+			CardGlove: {
+				DisplayName: Card Glove
+				Tooltip:
+					'''
+					10% increased cards damage
+					33% chance to not consume thrown cards
+					'''
+			}
+
+			CursedEye: {
+				DisplayName: Cursed Eye
+				Tooltip:
+					'''
+					Grants immunity to Cursed Inferno debuff
+					Inflicts Cursed Inferno debuff for 7 seconds to enemies who damage you
+					[c/2E86C1:ZoaklenMod Port]
+					'''
+			}
+
+			DivineShield: {
+				DisplayName: Divine Shield
+				Tooltip:
+					'''
+					Absorbs 25% of damage done to players on your team
+					Only active above 25% life
+					Grants immunity to knockback and fire blocks
+					Grants immunity to most debuffs
+					Puts a shell around the owner when below 50% life that reduces damage
+					'Also grants immunity to myopia'
+					'''
+			}
+
+			EnhancedSniperScope: {
+				DisplayName: Enhanced Sniper Scope
+				Tooltip:
+					'''
+					Increases view range for guns (Right click to zoom out)
+					15% increased ranged damage and critical strike chance
+					Enemies are less likely to target you
+					[c/2E86C1:ZoaklenMod Port]
+					'''
+			}
+
+			FrozenShinyStone: {
+				DisplayName: Frozen Shiny Stone
+				Tooltip:
+					'''
+					Greatly increases health regen when not moving
+					Puts a shell around the owner when below 50% life that reduces damage
+					Provides life regeneration and reduces the cooldown of healing potions
+					Summons spores over time that will damage enemies
+					'''
+			}
+
+			GhostlyArrow: {
+				DisplayName: Ghostly Arrow
+				Tooltip:
+					'''
+					15% increased arrow damage and
+					using arrows spawns an additional arrow dealing 60% attack damage
+					'''
+			}
+
+			GodlyEmblem: {
+				DisplayName: Lunar Emblem
+				Tooltip: 33% increased damage and 15% increased crit chance.
+			}
+
+			HardCoded: {
+				DisplayName: Hard coded
+				Tooltip:
+					'''
+					This can't be simplified
+					[c/2E86C1:ZoaklenMod Port]
+					'''
+			}
+
+			IchorSack: {
+				DisplayName: Ichor Sack
+				Tooltip:
+					'''
+					Grants immunity to Ichor debuff
+					Inflicts Ichor debuff for 7 seconds to enemies who damage you
+					[c/2E86C1:ZoaklenMod Port]
+					'''
+			}
+
+			LeechAccessory: {
+				DisplayName: Leech Emblem
+				Tooltip: Attacks heal life
+			}
+
+			ManaTear: {
+				DisplayName: Mana Tear
+				Tooltip:
+					'''
+					Increases maximum mana by 60
+					Increases mana regeneration rate
+					10% reduced mana usage
+					Automatically uses mana potion when needed
+					15% increased magic damage
+					Increases pickup range for mana stars
+					Restores mana when damaged
+					Permanent magic buffs
+					'You secretly stole the Dryad's tear'
+					[c/2E86C1:ZoaklenMod Port]
+					'''
+			}
+
+			ManaCore: {
+				DisplayName: Mana Core
+				Tooltip:
+					'''
+					Adds flat magic damage, defense and health based on your max mana amount
+					All magic weapons no longer consume mana
+					Grants all previous bonuses of: [i:BagOfNonsense/ManaTear]
+					'''
+			}
+
+			NebulaEmblem: {
+				DisplayName: Nebula Emblem
+				Tooltip:
+					'''
+					25% increased magic damage
+					[c/2E86C1:ZoaklenMod Port]
+					'''
+			}
+
+			NinjaAmulet: {
+				DisplayName: Ninja Amulet
+				Tooltip:
+					'''
+					Allows player to dash into an enemy
+					Double tap into a direction
+					May confuse nearby enemies after being struck
+					Increases length of invincibility after taking damage
+					'You see your future in the jewel'
+					[c/2E86C1:ZoaklenMod Port]
+					'''
+			}
+
+			NinjaKnuckles: {
+				DisplayName: Ninja Knuckles
+				Tooltip:
+					'''
+					Increases armor penetration by 5
+					4% increased damage and critical strike chance
+					'Punch them at the super sonic speed'
+					'''
+			}
+
+			NinjaSkills: {
+				DisplayName: Stellar Ninja Soul
+				Tooltip:
+					'''
+					15% increased throwing damage, velocity and critical strike chance
+					Increases armor penetration by 50
+					Allows player ability to dash
+					Double tap into a direction
+					May confuse nearby enemies after being struck
+					Increases length of invincibility after taking damage
+					'''
+			}
+
+			PerfectAmulet: {
+				DisplayName: Perfect Amulet
+				Tooltip: It's split in half
+			}
+
+			PlateBelt: {
+				DisplayName: Plate Belt
+				Tooltip: Deal 30% less damage but take 30% less damage
+			}
+
+			ProjectileDeflectorAccessory: {
+				DisplayName: Projectile Deflector
+				Tooltip: The deflector will protect you
+			}
+
+			SolarEmblem: {
+				DisplayName: Solar Emblem
+				Tooltip:
+					'''
+					25% increase melee damage
+					[c/2E86C1:ZoaklenMod Port]
+					'''
+			}
+
+			SpinalShield: {
+				DisplayName: Spinal Shield
+				Tooltip:
+					'''
+					Allows the player to dash into the enemy
+					Double tap a direction
+					Reduces damage taken by 17%
+					Increases damage and defense by 2% and 2 respectivelly for each enemy killed
+					Max of 40% and 20 defense
+					Increases max health by 50 and life regen by 5
+					'''
+			}
+
+			SpookyQuiver: {
+				DisplayName: Spooky Quiver
+				Tooltip:
+					'''
+					20% increased arrow damage and speed,
+					using arrows will spawn an additional arrow that deals 80% attack damage
+					Turns the holder into a werewolf at night and a merfolk when entering water
+					Mild increase to damage, melee speed, critical strike chance,
+					life, life regeneration, defense, mining speed, and minion knockback
+					'''
+			}
+
+			StardustEmblem: {
+				DisplayName: Stardust Emblem
+				Tooltip:
+					'''
+					25% increased summon damage
+					[c/2E86C1:ZoaklenMod Port]
+					'''
+			}
+
+			SummonerNecklace: {
+				DisplayName: Invoker Emblem
+				Tooltip:
+					'''
+					Increases your max number of minions by 3
+					15% increased minion damage
+					'If the pygmies knew what you did'
+					[c/2E86C1:ZoaklenMod Port]
+					'''
+			}
+
+			SwordSpirit: {
+				DisplayName: Sword Spirit
+				Tooltip:
+					'''
+					Hitting enemies with melee damage will spawn
+					a sword spirit that will attack enemies
+					'''
+			}
+
+			TestAcce: {
+				DisplayName: TestAcce
+				Tooltip: You're not supposed to have this
+			}
+
+			TikiLordEmblem: {
+				DisplayName: Tiki Lord Emblem
+				Tooltip:
+					'''
+					Increases your max number of minions by 6
+					45% increased minion damage
+					The ultimate summoning
+					'''
+			}
+
+			VikingDream: {
+				DisplayName: Vikings Dream
+				Tooltip:
+					'''
+					Increases damage and defense by 1% and 1 respectivelly for each enemy killed
+					Max of 20% and 10 defense
+					'''
+			}
+
+			VortexEmblem: {
+				DisplayName: Vortex Emblem
+				Tooltip:
+					'''
+					25% increased ranged damage
+					[c/2E86C1:ZoaklenMod Port]
+					'''
+			}
+
+			WormyShield: {
+				DisplayName: Wormy Shield
+				Tooltip:
+					'''
+					Allows the player to dash into the enemy
+					Double tap a direction
+					Reduces damage taken by 17%
+					'''
+			}
+
+			ActualBoneArrow.DisplayName: Bone Marrow Arrow
+
+			DoomArrow: {
+				DisplayName: Doom Arrow
+				Tooltip:
+					'''
+					Inflicts every debuff know to man and spawns additional arrows on impact.
+					Gains velocity while travelling thru blocks, non consumable.
+					[c/E5AD00:Hit them and watch them melt]
+					'''
+			}
+
+			JarateAmmo: {
+				DisplayName: Jarate Bullet
+				Tooltip: Coated enemies take 35% more damage
+			}
+
+			ChameleonWarriorBreastplate: {
+				DisplayName: Chameleon Warrior Breastplate
+				Tooltip:
+					'''
+					9% increased damage
+					11% increased critical strike chance
+					[c/2E86C1:ZoaklenMod Port]
+					'''
+			}
+
+			ChameleonWarriorHelmet: {
+				DisplayName: Chameleon Warrior Helmet
+				Tooltip:
+					'''
+					16% increased damage
+					[c/2E86C1:ZoaklenMod Port]
+					'''
+			}
+
+			ChameleonWarriorLeggings: {
+				DisplayName: Chameleon Warrior Leggings
+				Tooltip:
+					'''
+					9% increased critical strike chance
+					15% increased movement speed
+					[c/2E86C1:ZoaklenMod Port]
+					'''
+			}
+
+			HiddenShooterCoat: {
+				DisplayName: Hidden Shooter Coat
+				Tooltip:
+					'''
+					15% increased throwing and ranged damage
+					Enemies will focus other person if possible
+					[c/2E86C1:ZoaklenMod Port]
+					'''
+			}
+
+			HiddenShooterHood: {
+				DisplayName: Hidden Shooter Hood
+				Tooltip:
+					'''
+					15% increased throwing and ranged critical strike chance
+					Enables zoom out (right click) with throwing and ranged weapons
+					[c/2E86C1:ZoaklenMod Port]
+					'''
+			}
+
+			HiddenShooterPants: {
+				DisplayName: Hidden Shooter Pants
+				Tooltip:
+					'''
+					50% chance to not consume thrown or ranged ammo
+					[c/2E86C1:ZoaklenMod Port]
+					'''
+			}
+
+			StellarNinjaBreastplate: {
+				DisplayName: Stellar Ninja Breastplate
+				Tooltip:
+					'''
+					30% increased throwing damage
+					You are now resistant as a ninja.
+					'''
+			}
+
+			StellarNinjaHelmet: {
+				DisplayName: Stellar Ninja Helmet
+				Tooltip:
+					'''
+					50% chance to not consume thrown item
+					You are now smart as a ninja.
+					'''
+			}
+
+			StellarNinjaLeggings: {
+				DisplayName: Stellar Ninja Leggings
+				Tooltip:
+					'''
+					20% increased throwing critical strike chance
+					You are now light as a ninja.
+					'''
+			}
+
+			JarateFlask: {
+				DisplayName: Flask of Jarate
+				Tooltip: Melee attacks makes enemies take 35% more damage
+			}
+
+			FireEssence: {
+				DisplayName: Fire Core
+				Tooltip:
+					'''
+					'A red smoke comes out of this stone'
+					[c/2E86C1:ZoaklenMod Port]
+					'''
+			}
+
+			IceEssence: {
+				DisplayName: Ice Core
+				Tooltip:
+					'''
+					'A blue smoke comes out of this stone'
+					[c/2E86C1:ZoaklenMod Port]
+					'''
+			}
+
+			MoonFragment: {
+				DisplayName: Moon Fragment
+				Tooltip:
+					'''
+					'Seems to have some imbued power'
+					[c/2E86C1:ZoaklenMod Port]
+					'''
+			}
+
+			PaladinBar: {
+				DisplayName: Paladin Bar
+				Tooltip: "[c/2E86C1:ZoaklenMod Port]"
+			}
+
+			ShadowEssence: {
+				DisplayName: Shadow Core
+				Tooltip:
+					'''
+					'A purple smoke comes out of this stone'
+					[c/2E86C1:ZoaklenMod Port]
+					'''
+			}
+
+			StellarFragment: {
+				DisplayName: Stellar Fragment
+				Tooltip:
+					'''
+					'It is pulsing out'
+					[c/2E86C1:ZoaklenMod Port]
+					'''
+			}
+
+			ThrowingMastery: {
+				DisplayName: Throwing Mastery
+				Tooltip:
+					'''
+					Right-click the mentioned item to convert its damage to throwing
+					* This is not a material
+					[c/2E86C1:ZoaklenMod Port]
+					'''
+			}
+
+			CelestialClock: {
+				DisplayName: Celestial Clock
+				Tooltip:
+					'''
+					Indefinitely switch between day and night
+					[c/2E86C1:ZoaklenMod Port]
+					'''
+			}
+
+			ComplexCube: {
+				DisplayName: Complex Cube
+				Tooltip: Summons the techno doom
+			}
+
+			Cookie: {
+				DisplayName: Cookie
+				Tooltip:
+					'''
+					'Clap along if you feel...'
+					[c/2E86C1:ZoaklenMod Port]
+					'''
+			}
+
+			CrackedDoomArrow.DisplayName: Cracked Doom Arrow
+
+			FireBirdUpgrade: {
+				DisplayName: Bird Snack
+				Tooltip: Place into piggy bank to increase Fire Bird power
+			}
+
+			MagicalCubeTreasureBag: {
+				DisplayName: Treasure Bag
+				Tooltip: Right Click to open
+			}
+
+			SashaUpgrade: {
+				DisplayName: Sandvich
+				Tooltip:
+					'''
+					Sandvich makes me strong!
+					Place in piggy bank to increase Sasha power
+					'''
+			}
+
+			SuspiciousLookingJoystick: {
+				DisplayName: Suspicious Looking Joystick
+				Tooltip: "'Reward for defeating the techno doom'"
+			}
+
+			TerrariaBronzePlate: {
+				DisplayName: Terraria Bronze Plate
+				Tooltip:
+					'''
+					'Thanks for downloading ZoaklenMod'
+					'And for downloading BagOfNonsense'
+					[c/2E86C1:ZoaklenMod Port]
+					'''
+			}
+
+			MechanicPickaxe.DisplayName: Mechanical Pickaxe
+
+			BitCannon: {
+				DisplayName: Bit Cannon
+				Tooltip:
+					'''
+					'Let me hurt you a bit'
+					[c/2E86C1:ZoaklenMod Port]
+					'''
+			}
+
+			BlinkSword: {
+				DisplayName: Blink Blade
+				Tooltip:
+					'''
+					'The closer you are, the less you see'
+					[c/2E86C1:ZoaklenMod Port]
+					'''
+			}
+
+			CyberStaff: {
+				DisplayName: Arcade Staff
+				Tooltip:
+					'''
+					'Press left click to insert a coin'
+					[c/2E86C1:ZoaklenMod Port]
+					'''
+			}
+
+			AirControlUnit: {
+				DisplayName: Air Control Unit
+				Tooltip:
+					'''
+					From another world
+					Summons a Spectre to fight for you
+					'''
+			}
+
+			Egon.DisplayName: Egon
+			EXExcalibur.DisplayName: Calesvol
+
+			MonkeyGlasses: {
+				DisplayName: Golden Monkey Glasses
+				Tooltip: From another world
+			}
+
+			staffofEP: {
+				DisplayName: Staff of Extreme Prejudice
+				Tooltip:
+					'''
+					From another world.
+					Holding it seems to make you stronger
+					'''
+			}
+
+			SuperMonkeyGlasses: {
+				DisplayName: Super Golden Monkey Glasses
+				Tooltip: From another world
+			}
+
+			CorruptSpear: {
+				DisplayName: Corrupstation
+				Tooltip:
+					'''
+					Ignores enemy defense
+					Killing enemies will spawn tiny eaters defined by
+					the amount of spears stuck into said enemy
+					'''
+			}
+
+			HeatshimmerSpear: {
+				DisplayName: Heatshimmer Spear
+				Tooltip: Consumes HP to power itself up
+			}
+
+			IceScythe: {
+				DisplayName: Sub Zero Scythe
+				Tooltip: It's burning but it's still cold, somehow
+			}
+
+			Xenobuster.DisplayName: Xenobuster
+			AutomaticShotgun.DisplayName: Automatic Boomstick
+			ChloroMinigun.DisplayName: Chloro Rifle
+			Coldrevolver.DisplayName: Chilled Magnum
+
+			FireBird: {
+				DisplayName: Fire Bird
+				Tooltip:
+					'''
+					Rain down phoenixes on your foes
+					Deals double damage to ice enemies
+					'''
+			}
+
+			HLRocketGun: {
+				DisplayName: Laser Guided Rocket Launcher
+				Tooltip: Follows your mouse
+			}
+
+			HMphantasm: {
+				DisplayName: Phantasmal
+				Tooltip: 33% chance not to consume ammo
+			}
+
+			HolyCrossbow: {
+				DisplayName: Holy Crossbow
+				Tooltip: Unleashes tiny crosses that homes in on enemies
+			}
+
+			Icechinigun: {
+				DisplayName: Icechinigun
+				Tooltip: 40% chance not to consume ammo
+			}
+
+			MarrowUp: {
+				DisplayName: Marrowned
+				Tooltip: 50% chance not to consume ammo
+			}
+
+			MiniatureSMG: {
+				DisplayName: Miniature SMG
+				Tooltip: 45% chance not to consume ammo
+			}
+
+			MoltenSMG: {
+				DisplayName: Molten SMG
+				Tooltip: 57% chance not to consume ammo
+			}
+
+			PhantasmalCelebration.DisplayName: Phantasm Buster
+			Sasha.DisplayName: Sasha
+
+			SpaceBlaster: {
+				DisplayName: Space Blaster
+				Tooltip:
+					'''
+					'Headshots the Brain of Cthulhu'
+					[c/2E86C1:ZoaklenMod Port]
+					'''
+			}
+
+			ThunderballFists: {
+				DisplayName: Thunderball Fists
+				Tooltip: Spawns a eletric ball on hit
+			}
+
+			WintryRevolver: {
+				DisplayName: Wintry Handcannon
+				Tooltip: 5% chance to shoot a rocket!!
+			}
+
+			GhostlySword: {
+				DisplayName: Ghostly Sword
+				Tooltip: A ghostly sword will protect you
+			}
+
+			InfluxWepSummon: {
+				DisplayName: Influx Waver
+				Tooltip: Influx Waver but good
+			}
+
+			PrismaticDream: {
+				DisplayName: Prismatic Dreams
+				Tooltip:
+					'''
+					A star will fight for you
+					Only one can be active.
+					Does not consume minion slots
+					'''
+			}
+
+			UfoSpawnerItem: {
+				DisplayName: Ufo Spawner
+				Tooltip:
+					'''
+					Spawns tiny ufos to fight for you
+					 Ufos will attack nearby enemies and sometimes launch missiles
+					 Ufos will try to stay near base
+					'''
+			}
+
+			TechSmite: {
+				DisplayName: Tech Smite
+				Tooltip:
+					'''
+					'Do you think even the worst person can change...?'
+					[c/2E86C1:ZoaklenMod Port]
+					'''
+			}
+
+			Aposthos.DisplayName: Aposthos
+
+			ElementalDagger: {
+				DisplayName: Elemental Dagger
+				Tooltip:
+					'''
+					'It's temperature changes everytime'
+					[c/2E86C1:ZoaklenMod Port]
+					'''
+			}
+
+			Jarate: {
+				DisplayName: Jarate
+				Tooltip: Coated enemies take 35% more damage
+			}
+
+			Nightfire: {
+				DisplayName: Nightfire
+				Tooltip:
+					'''
+					[c/7C85FF:Don't love me quietly]
+					[c/7C85FF:Do it with intensity]
+					'''
+			}
+
+			Sunfire: {
+				DisplayName: Sunfire
+				Tooltip: Explodes on hit
+			}
+
+			CursedSkull: {
+				DisplayName: Cursed Skull
+				Tooltip: Enemies drop 10x coins but get 10x the health
+			}
+
+			AR2Item: {
+				DisplayName: Overwatch Standard Issue Pulse Rifle
+				Tooltip:
+					'''
+					Can shoot energy balls
+					66% chance not to consume ammo
+					'''
+			}
+
+			PulseAmmo: {
+				DisplayName: Pulse Ammo
+				Tooltip: ""
+			}
+
+			Bouncer: {
+				DisplayName: Bouncer
+				Tooltip: ""
+			}
+
+			AttackCyclingWeapon: {
+				DisplayName: Attack Cycling Weapon
+				Tooltip: ""
+			}
+
+			M1Garand: {
+				DisplayName: M1 Garand
+				Tooltip: Ping!
+			}
+		}
+
+		InfoDisplays.SashaDamageShow.DisplayName: Damage Done
+
+		NPCs: {
+			MagicalCube.DisplayName: Magical Cube
+			TestNPC.DisplayName: TestNPC
+		}
+
+		Projectiles: {
+			AposthosProj.DisplayName: Aposthos
+			CorruptedSac.DisplayName: Corrupted Sac
+			CorruptSpearProj.DisplayName: Corruptor
+			CrossbowBolt.DisplayName: Crossbow Bolt
+			CyberBit.DisplayName: Cyber Neon
+			CyberBoss.DisplayName: Cyber Bits
+			CyberCut.DisplayName: Cyber Cut
+			CyberInsta.DisplayName: Cyber Neon
+			CyberInstaF.DisplayName: Cyber Neon
+			DoomArrowEX1.DisplayName: Doom Arrow
+			DoomArrowEX2.DisplayName: Doom Arrow
+			DoomArrowEX3.DisplayName: Doom Arrow
+			DoomArrowEX4.DisplayName: Doom Arrow
+			DoomArrowProj.DisplayName: Doom Arrow
+			EgonProj.DisplayName: Egon Proj
+			ElementalDaggerProj.DisplayName: Elemental Dagger
+			FireBirdBase.DisplayName: Fire Bird Base
+			FireBirdProj.DisplayName: Fire Bird
+			GhostlyArrowProj.DisplayName: Ghostly Arrow
+			GhostlySwordSummonProj.DisplayName: Ghostly Sword
+			GhostlySwordSummonProjShooter.DisplayName: Ghostly SwordS
+			HeatshimmerProj.DisplayName: Heatshimmer Spear
+			HeatshimmerProjAwoken.DisplayName: Heatshimmer Spear
+			HLRocket.DisplayName: Rocket
+			HLRocketGunProj.DisplayName: Rocket Launcher
+			HLRocketLaser.DisplayName: Rocket Laser
+			HolyCross.DisplayName: Holy Cross
+			IcegunProj1.DisplayName: Ice bolt
+			IcegunProj2.DisplayName: Ice bolt
+			IcegunProj3.DisplayName: Ice bolt
+			Invader2Shot.DisplayName: Invader Shot
+			Invader3Shot.DisplayName: Invader Shot
+			InvaderShot.DisplayName: Invader Shot
+			JarateBullet.DisplayName: Jarate Bullet
+			JarateProjBottle.DisplayName: Piss Jar
+			Invader1.DisplayName: Invader
+			Invader2.DisplayName: Invader
+			Invader3.DisplayName: Invader
+			Pacman.DisplayName: Pacman
+			PrismaticDreamProj.DisplayName: PrismaticDreamProj
+			PrismStarBlue.DisplayName: PrismaticStar
+			PrismStarRed.DisplayName: PrismaticStar
+			MonkeyDart.DisplayName: Monkey Dart
+			NightfireProj.DisplayName: Nightfire
+			PacPellets.DisplayName: Pac Pellets
+			EXExcaliburHover.DisplayName: EXExcalibur
+			LightBeamModded.DisplayName: LightBeam
+			PracticalCube.DisplayName: Practical Cube
+			SwordThrower.DisplayName: SwordSpirit
+			SwordThrowerProjectiles.DisplayName: Sword
+			PhantasmalCelebrationArrow.DisplayName: Phantasm Buster
+			PhantasmalGun.DisplayName: Phantasmal Missile
+			PlasmaBall.DisplayName: Sunray
+			PrismShot.DisplayName: PrismShot
+			PrismShot1.DisplayName: PrismShot
+			PrismShot2.DisplayName: PrismShot
+			PrismShot3.DisplayName: PrismShot
+			ProjectileReflector.DisplayName: Projectile Deflector
+			RoboMonkey.DisplayName: RoboMonkey
+			SashaProj.DisplayName: Sasha
+			ScytheProj.DisplayName: Cold Touch
+			Spectre.DisplayName: Spectre
+			SpectreBomb.DisplayName: Spectre Bomb
+			SpectreCenter.DisplayName: Spectre Center
+			staffproj.DisplayName: Staff of Extreme Prejudice bolt
+			SummonedSword.DisplayName: Summoned Sword
+			SunfireProj.DisplayName: Sunfire
+			SunGod.DisplayName: SunGod
+			SunRay.DisplayName: Sunray
+			ThunderballBomb.DisplayName: Thunderball
+			ThunderballProj.DisplayName: Thunderball
+			ThunderballProj1.DisplayName: Thunderball
+			TinyUfoBlue.DisplayName: TinyUfo
+			TinyUfoGreen.DisplayName: TinyUfo
+			TinyUfoRed.DisplayName: TinyUfo
+			TinyUfoYellow.DisplayName: TinyUfo
+			UfoMissile.DisplayName: Ufo Missile
+			UfoMissileBits.DisplayName: Ufo Missile Bits
+			UfoShotBlue.DisplayName: Ufo Shots
+			UfoShotGreen.DisplayName: Ufo Shots
+			UfoShotRed.DisplayName: Ufo Shots
+			UfoShotYellow.DisplayName: Ufo Shots
+			UfoSpawner.DisplayName: UfoSpawner
+			WaverSummon.DisplayName: Waver Summon
+			XenobusterProjBlue.DisplayName: Xenobuster
+			XenobusterProjGreen.DisplayName: Xenobuster
+			WaverSummonShot.DisplayName: Waver Summon Shot
+			AR2Held.DisplayName: AR2 Held
+			PulseBullet.DisplayName: Pulse Bullet
+			PulseBall.DisplayName: Pulse Ball
+			BouncerProjectile.DisplayName: Bouncer Projectile
+			M1GarandEnbloc.DisplayName: M1 Garand Enbloc
+			M1GarandHeld.DisplayName: M1 Garand Held
+			NormalBullet.DisplayName: Normal Bullet
+		}
+
+		Configs: {
+			AR2FireNoiseSelection: {
+				DisplayName: AR2 Fire Noise Selection
+				Headers.AR2FireSoundType: AR2 Fire Sound Type
+
+				AR2AlternateFireSFXType: {
+					Label: AR2 Alternate Fire SFX Type
+					Tooltip: Changes how this weapons sounds. Vanilla or SMOD Elite
+				}
+			}
+		}
+	}
+}

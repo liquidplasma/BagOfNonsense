@@ -1,0 +1,362 @@
+Items: {
+	PerfectAmulet: {
+	}
+
+	NinjaSkills: {
+	}
+
+	NinjaKnuckles: {
+	}
+
+	NinjaAmulet: {
+	}
+
+	NebulaEmblem: {
+	}
+
+	ManaCore: {
+	}
+
+	ManaTear: {
+	}
+
+	LeechAccessory: {
+	}
+
+	IchorSack: {
+	}
+
+	HardCoded: {
+	}
+
+	GodlyEmblem: {
+	}
+
+	GhostlyArrow: {
+	}
+
+	FrozenShinyStone: {
+	}
+
+	EnhancedSniperScope: {
+	}
+
+	DivineShield: {
+	}
+
+	CursedEye: {
+	}
+
+	CardGlove: {
+	}
+
+	BullseyeEmblem50: {
+	}
+
+	BullseyeEmblem33: {
+	}
+
+	BullseyeEmblem16: {
+	}
+
+	BloodyOrb: {
+	}
+
+	PlateBelt: {
+	}
+
+	ProjectileDeflectorAccessory: {
+	}
+
+	SolarEmblem: {
+	}
+
+	SpinalShield: {
+	}
+
+	SpookyQuiver: {
+	}
+
+	StardustEmblem: {
+	}
+
+	SummonerNecklace: {
+	}
+
+	SwordSpirit: {
+	}
+
+	TeraCardGlove: {
+	}
+
+	TestAcce: {
+	}
+
+	TikiLordEmblem: {
+	}
+
+	VikingDream: {
+	}
+
+	VortexEmblem: {
+	}
+
+	WormyShield: {
+	}
+
+	ActualBoneArrow.Tooltip: ""
+
+	DoomArrow: {
+	}
+
+	JarateAmmo: {
+	}
+
+	ChameleonWarriorBreastplate: {
+	}
+
+	ChameleonWarriorHelmet: {
+	}
+
+	ChameleonWarriorLeggings: {
+	}
+
+	HiddenShooterCoat: {
+	}
+
+	HiddenShooterHood: {
+	}
+
+	HiddenShooterPants: {
+	}
+
+	StellarNinjaBreastplate: {
+	}
+
+	StellarNinjaHelmet: {
+	}
+
+	StellarNinjaLeggings: {
+	}
+
+	JarateFlask: {
+	}
+
+	Jarate: {
+	}
+
+	FireEssence: {
+	}
+
+	IceEssence: {
+	}
+
+	MoonFragment: {
+	}
+
+	PaladinBar: {
+	}
+
+	ShadowEssence: {
+	}
+
+	StellarFragment: {
+	}
+
+	ThrowingMastery: {
+	}
+
+	CelestialClock: {
+	}
+
+	ComplexCube: {
+	}
+
+	Cookie: {
+	}
+
+	CrackedDoomArrow.Tooltip: ""
+
+	FireBirdUpgrade: {
+	}
+
+	FireBird: {
+	}
+
+	MagicalCubeTreasureBag: {
+	}
+
+	SashaUpgrade: {
+	}
+
+	Sasha.Tooltip: ""
+
+	SuspiciousLookingJoystick: {
+	}
+
+	TerrariaBronzePlate: {
+	}
+
+	MechanicPickaxe.Tooltip: ""
+
+	BitCannon: {
+	}
+
+	BlinkSword: {
+	}
+
+	CyberStaff: {
+	}
+
+	AirControlUnit: {
+	}
+
+	Egon.Tooltip: ""
+	EXExcalibur.Tooltip: ""
+
+	MonkeyGlasses: {
+	}
+
+	staffofEP: {
+	}
+
+	SuperMonkeyGlasses: {
+	}
+
+	CorruptSpear: {
+	}
+
+	HeatshimmerSpear: {
+	}
+
+	IceScythe: {
+	}
+
+	Xenobuster.Tooltip: ""
+	AutomaticShotgun.Tooltip: ""
+	ChloroMinigun.Tooltip: ""
+	Coldrevolver.Tooltip: ""
+
+	HLRocketGun: {
+	}
+
+	HMphantasm: {
+	}
+
+	HolyCrossbow: {
+	}
+
+	Icechinigun: {
+	}
+
+	MarrowUp: {
+	}
+
+	MiniatureSMG: {
+	}
+
+	MoltenSMG: {
+	}
+
+	PhantasmalCelebration.Tooltip: ""
+
+	SpaceBlaster: {
+	}
+
+	ThunderballFists: {
+	}
+
+	WintryRevolver: {
+	}
+
+	GhostlySword: {
+	}
+
+	InfluxWepSummon: {
+	}
+
+	PrismaticDream: {
+	}
+
+	UfoSpawnerItem: {
+	}
+
+	TechSmite: {
+	}
+
+	Aposthos.Tooltip: ""
+
+	ElementalDagger: {
+	}
+
+	Nightfire: {
+	}
+
+	Sunfire: {
+	}
+
+	EgonDupe: {
+		DisplayName: Egon Dupe
+		Tooltip: ""
+	}
+
+	ColdRevolver: {
+		DisplayName: Cold Revolver
+		Tooltip: ""
+	}
+}
+
+Buffs: {
+	DVirus: {
+	}
+
+	DJarate: {
+	}
+
+	DHighwattage: {
+	}
+
+	DGreenRot: {
+	}
+
+	DFireBurn: {
+	}
+
+	DCorruptTouch: {
+	}
+
+	DColdtouch: {
+	}
+
+	BWeaponJarate.Description: Mods.BagOfNonsense.Buffs.BWeaponJarate.Description
+	BWaver.Description: Mods.BagOfNonsense.Buffs.BWaver.Description
+
+	Bstaffbuff: {
+	}
+
+	BShimmerSpear: {
+	}
+
+	BPrismDream: {
+	}
+
+	BPracticalCube: {
+	}
+
+	BPacman: {
+	}
+
+	BInvader: {
+	}
+
+	BGhostlySword.Description: Mods.BagOfNonsense.Buffs.BGhostlySword.Description
+
+	BBloodyRage: {
+	}
+}
+
+NPCs: {
+}
+
+Projectiles: {
+}
