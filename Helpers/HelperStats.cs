@@ -18,6 +18,7 @@ namespace BagOfNonsense
     {
         private static int
             KnifeDustEffect;
+
         /// <summary>
         /// Muzzleflash effect, has 6 frames
         /// </summary>
@@ -71,6 +72,26 @@ namespace BagOfNonsense
             Vector2 distance = target - source;
             distance.Normalize();
             return distance * speed;
+        }
+
+        /// <summary>
+        /// Finds said item type in the player inventory
+        /// </summary>
+        /// <param name="player"></param>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public static Item FindItemInInventory(this Player player, int type)
+        {
+            Item Item = null;
+            for (int i = 0; i < player.inventory.Length; i++)
+            {
+                Item p = player.inventory[i];
+                if (p != null && !p.IsAir && p.active && p.type == type)
+                {
+                    Item = p;
+                }
+            }
+            return Item;
         }
 
         /// <summary>
@@ -420,7 +441,7 @@ namespace BagOfNonsense
                 && ProjectileID.Sets.MinionShot[projectile.type] != true
                 && !projectile.sentry
                 && Main.projPet[projectile.type] != true
-                && !projectile.CountsAsClass(DamageClass.Summon)                
+                && !projectile.CountsAsClass(DamageClass.Summon)
                 && projectile.damage > 0)
             {
                 return true;

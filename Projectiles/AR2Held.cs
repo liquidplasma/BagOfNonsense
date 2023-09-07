@@ -1,4 +1,5 @@
 ﻿using BagOfNonsense.Helpers;
+using BagOfNonsense.Items.Ammo;
 using BagOfNonsense.Items.Weapons.Ranged;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -25,6 +26,7 @@ namespace BagOfNonsense.Projectiles
     public class AR2Held : ModProjectile
     {
         private Player Player => Main.player[Projectile.owner];
+        private Item CombineBall { get; set; }
         private int BallType => ModContent.ProjectileType<PulseBall>();
         public bool AllowedToFire => Player.channel && !ChargingAltFire && Player.HasAmmo(Player.HeldItem);
         private bool ChargingAltFire => AltFireDelay >= 60;
@@ -133,6 +135,9 @@ namespace BagOfNonsense.Projectiles
 
         public override bool PreAI()
         {
+            CombineBall ??= HelperStats.FindItemInInventory(Player, ModContent.ItemType<CombineBalls>());
+            if (CombineBall.stack <= 0)
+                CombineBall.TurnToAir();
             Projectile.CheckPlayerActiveAndNotDead(Player);
             if (AllowedToFire)
             {
@@ -194,7 +199,7 @@ namespace BagOfNonsense.Projectiles
 
             //alternate fire
             #region
-            if (RightMousePressed && AltFireDelay == 0 && Player.HasAmmo(Player.HeldItem) && Player.ownedProjectileCounts[BallType] < 1 && !Player.mouseInterface)
+            if (RightMousePressed && AltFireDelay == 0 && Player.HasAmmo(Player.HeldItem) && Player.ownedProjectileCounts[BallType] < 1 && !Player.mouseInterface && CombineBall != null && CombineBall.stack > 0)
             {
                 Item ammo = Player.ChooseAmmo(Player.HeldItem);
                 if (ammo != null && ammo.stack >= 20)
@@ -207,14 +212,10 @@ namespace BagOfNonsense.Projectiles
             {
                 SoundEngine.PlaySound(BallLaunch, Projectile.Center);
                 Vector2 aim = Projectile.Center.DirectionTo(MouseAim) * 12f;
-                Item ammo = Player.ChooseAmmo(Player.HeldItem);
                 int damage = 1000;
-                if (ammo != null && Player.whoAmI == Main.myPlayer && ammo.stack >= 20)
+                if (CombineBall != null && Player.whoAmI == Main.myPlayer)
                 {
-                    ammo.stack -= 20;
-                    if (ammo.stack <= 0)
-                        ammo.TurnToAir();
-
+                    CombineBall.stack--;
                     var shot = Projectile.NewProjectileDirect(Player.GetSource_ItemUse_WithPotentialAmmo(Player.HeldItem, Player.HeldItem.useAmmo), Projectile.Center, aim * Main.rand.NextFloat(0.9f, 1.1f), BallType, damage, 10f, Player.whoAmI);
                 }
             }
