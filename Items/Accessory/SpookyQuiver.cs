@@ -55,7 +55,7 @@ namespace BagOfNonsense.Items.Accessory
             player.GetDamage(DamageClass.Throwing) += 0.2f;
             player.GetCritChance(DamageClass.Throwing) += 5;
             player.statLifeMax2 += 25;
-            player.GetModPlayer<ArrowSpawn>().spawnarrowquiver = true;
+            player.GetModPlayer<ArrowSpawn>().SpawnArrowQuiver = true;
         }
 
         public override void AddRecipes()

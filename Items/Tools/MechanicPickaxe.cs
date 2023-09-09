@@ -21,7 +21,7 @@ namespace BagOfNonsense.Items.Tools
             Item.width = 40;
             Item.height = 40;
             Item.useTime = 9;
-            Item.useAnimation = 27;
+            Item.useAnimation = 23;
             Item.useStyle = ItemUseStyleID.Swing;
             Item.knockBack = 6;
             Item.value = 10000;
@@ -34,9 +34,12 @@ namespace BagOfNonsense.Items.Tools
 
         public override void MeleeEffects(Player player, Rectangle hitbox)
         {
-            if (Main.rand.NextBool(10))
+            for (int i = 0; i < 10; i++)
             {
-                Dust.NewDust(new Vector2(hitbox.X, hitbox.Y), hitbox.Width, hitbox.Height, DustID.MechanicalCart);
+                Dust effect = Dust.NewDustDirect(hitbox.TopLeft(), hitbox.Width, hitbox.Height, DustID.t_SteampunkMetal);
+                effect.scale *= 1.2f * Main.rand.NextFloat();
+                effect.velocity = Utils.RandomVector2(Main.rand, -2, 2);
+                effect.noGravity = true;
             }
         }
 

@@ -41,5 +41,10 @@ namespace BagOfNonsense
                     break;
             }
         }
+
+        public override void Unload()
+        {
+            HelperStats.MuzzleFlash = null;
+        }
     }
 }

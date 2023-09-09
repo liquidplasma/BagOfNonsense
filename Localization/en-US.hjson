@@ -867,6 +867,11 @@ Mods: {
 				DisplayName: M1 Garand
 				Tooltip: Ping!
 			}
+
+			CombineBalls: {
+				DisplayName: Combine Balls
+				Tooltip: ""
+			}
 		}
 
 		InfoDisplays.SashaDamageShow.DisplayName: Damage Done

@@ -22,7 +22,7 @@ namespace BagOfNonsense
         /// <summary>
         /// Muzzleflash effect, has 6 frames
         /// </summary>
-        public static Texture2D MuzzleFlash => ModContent.Request<Texture2D>("BagOfNonsense/Assets/AR2MuzzleFlashFixed").Value;
+        public static Texture2D MuzzleFlash = ModContent.Request<Texture2D>("BagOfNonsense/Assets/AR2MuzzleFlashFixed").Value;
 
         public static int RandomCyanDust => Utils.SelectRandom(Main.rand, 226, 300);
 

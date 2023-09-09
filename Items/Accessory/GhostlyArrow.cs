@@ -66,7 +66,7 @@ namespace BagOfNonsense.Items.Accessory
         public override void UpdateEquip(Player player)
         {
             player.arrowDamage += 0.15f;
-            player.GetModPlayer<ArrowSpawn>().spawnarrow = true;
+            player.GetModPlayer<ArrowSpawn>().SpawnArrow = true;
         }
     }
 }

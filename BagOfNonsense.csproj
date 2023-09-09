@@ -11,6 +11,7 @@
     <AdditionalFiles Remove="Localization\en-US.hjson" />
   </ItemGroup>
   <ItemGroup>
+    <None Remove="Items\Weapons\Ranged\M1Garand.png" />
     <None Remove="Projectiles\PulseBall.png" />
     <None Remove="Projectiles\PulseBullet.png" />
   </ItemGroup>

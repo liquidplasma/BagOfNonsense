@@ -12,20 +12,20 @@ namespace BagOfNonsense.CoolStuff
 {
     public class ArrowSpawn : ModPlayer
     {
-        public bool spawnarrow, spawnarrowquiver;
+        public bool SpawnArrow, SpawnArrowQuiver;
         private float GetKnockback => Player.HeldItem.knockBack * 0.1f;
         private int spread = 22;
 
         public override void ResetEffects()
         {
-            spawnarrow = false;
-            spawnarrowquiver = false;
+            SpawnArrow = false;
+            SpawnArrowQuiver = false;
         }
 
         public override void OnHitNPCWithProj(Projectile proj, NPC target, NPC.HitInfo hit, int damageDone)/* tModPorter If you don't need the Projectile, consider using OnHitNPC instead */
         {
             Player projowner = Main.player[proj.owner];
-            if (spawnarrow
+            if (SpawnArrow
                 && HelperStats.GhostlyArrowCheck(proj)
                 && Player.HeldItem.useAmmo == AmmoID.Arrow)
             {
@@ -45,7 +45,7 @@ namespace BagOfNonsense.CoolStuff
                 }
             }
 
-            if (spawnarrowquiver
+            if (SpawnArrowQuiver
                 && HelperStats.GhostlyArrowCheck(proj)
                 && Player.HeldItem.useAmmo == AmmoID.Arrow)
             {

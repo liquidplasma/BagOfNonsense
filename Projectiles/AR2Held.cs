@@ -135,7 +135,7 @@ namespace BagOfNonsense.Projectiles
 
         public override bool PreAI()
         {
-            CombineBall ??= HelperStats.FindItemInInventory(Player, ModContent.ItemType<CombineBalls>());
+            CombineBall ??= HelperStats.FindItemInInventory(Player, BallType);
             if (CombineBall.stack <= 0)
                 CombineBall.TurnToAir();
             Projectile.CheckPlayerActiveAndNotDead(Player);
@@ -199,7 +199,7 @@ namespace BagOfNonsense.Projectiles
 
             //alternate fire
             #region
-            if (RightMousePressed && AltFireDelay == 0 && Player.HasAmmo(Player.HeldItem) && Player.ownedProjectileCounts[BallType] < 1 && !Player.mouseInterface && CombineBall != null && CombineBall.stack > 0)
+            if (RightMousePressed && AltFireDelay == 0 && Player.ownedProjectileCounts[BallType] < 1 && !Player.mouseInterface && CombineBall != null && CombineBall.stack > 0)
             {
                 Item ammo = Player.ChooseAmmo(Player.HeldItem);
                 if (ammo != null && ammo.stack >= 20)
