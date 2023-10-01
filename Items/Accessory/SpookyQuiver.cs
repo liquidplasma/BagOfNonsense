@@ -1,5 +1,4 @@
-﻿using BagOfNonsense.CoolStuff;
-using Terraria;
+﻿using Terraria;
 using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -55,7 +54,7 @@ namespace BagOfNonsense.Items.Accessory
             player.GetDamage(DamageClass.Throwing) += 0.2f;
             player.GetCritChance(DamageClass.Throwing) += 5;
             player.statLifeMax2 += 25;
-            player.GetModPlayer<ArrowSpawn>().SpawnArrowQuiver = true;
+            player.GetModPlayer<BagOfNonsenseModPlayer>().SpawnArrowQuiver = true;
         }
 
         public override void AddRecipes()

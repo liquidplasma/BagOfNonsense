@@ -1,4 +1,5 @@
-﻿using BagOfNonsense.Items.Ammo;
+﻿using BagOfNonsense.Helpers;
+using BagOfNonsense.Items.Ammo;
 using BagOfNonsense.Projectiles;
 using Microsoft.Xna.Framework;
 using Terraria;

@@ -3,8 +3,6 @@ using Terraria;
 
 namespace BagOfNonsense
 {
-    
-
     public class BiomeInformations
     {
         public string currentbuff = "???";

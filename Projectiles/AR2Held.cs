@@ -135,8 +135,8 @@ namespace BagOfNonsense.Projectiles
 
         public override bool PreAI()
         {
-            CombineBall ??= HelperStats.FindItemInInventory(Player, BallType);
-            if (CombineBall.stack <= 0)
+            CombineBall ??= HelperStats.FindItemInInventory(Player, ModContent.ItemType<CombineBalls>());
+            if (CombineBall != null && CombineBall.stack <= 0)
                 CombineBall.TurnToAir();
             Projectile.CheckPlayerActiveAndNotDead(Player);
             if (AllowedToFire)
@@ -201,12 +201,8 @@ namespace BagOfNonsense.Projectiles
             #region
             if (RightMousePressed && AltFireDelay == 0 && Player.ownedProjectileCounts[BallType] < 1 && !Player.mouseInterface && CombineBall != null && CombineBall.stack > 0)
             {
-                Item ammo = Player.ChooseAmmo(Player.HeldItem);
-                if (ammo != null && ammo.stack >= 20)
-                {
-                    AltFireDelay = 120;
-                    SoundEngine.PlaySound(Charging, Projectile.Center);
-                }
+                AltFireDelay = 120;
+                SoundEngine.PlaySound(Charging, Projectile.Center);
             }
             if (AltFireDelay == 60)
             {
@@ -230,11 +226,7 @@ namespace BagOfNonsense.Projectiles
 
             // velocity / position
             #region
-            Vector2 recoil = Player.MountedCenter.DirectionFrom(MouseAim) * (ShotDelay / 3f);
-            if (ShotDelay % 4 == 0)
-            {
-                recoil += recoil.RotatedBy(MathHelper.ToRadians(AR2Spread));
-            }
+            Vector2 recoil = Player.MountedCenter.DirectionFrom(MouseAim) * (ShotDelay / 2f);
             Vector2 distance = Player.Center.DirectionTo(MouseAim) * 16f - recoil;
             drawPos = Projectile.Center = Player.MountedCenter + distance;
             Projectile.velocity = Vector2.Zero;
@@ -245,7 +237,7 @@ namespace BagOfNonsense.Projectiles
             Projectile.rotation = Player.AngleTo(MouseAim) + MathHelper.PiOver2;
             if (Player.channel || AltFireDelay >= 60)
             {
-                Player.HoldOutArm(Projectile);
+                Player.HoldOutArm(Projectile, MouseAim);
                 Projectile.alpha = 0;
             }
             else

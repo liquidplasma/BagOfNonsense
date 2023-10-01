@@ -1,4 +1,6 @@
 ﻿using BagOfNonsense.Dusts;
+using BagOfNonsense.Items.Ingredients;
+using BagOfNonsense.Rarities;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
@@ -12,10 +14,7 @@ namespace BagOfNonsense.Items.Accessory
         private int frameCounter = 0;
 
         public override void SetStaticDefaults()
-        {
-            // DisplayName.SetDefault("Hard coded");
-            /* Tooltip.SetDefault("This can't be simplified\n" +
-                "[c/2E86C1:ZoaklenMod Port]"); */
+        {           
         }
 
         public override void SetDefaults()
@@ -23,7 +22,7 @@ namespace BagOfNonsense.Items.Accessory
             Item.width = 26;
             Item.height = 38;
             Item.value = 300000;
-            Item.rare = ItemRarityID.Red;
+            Item.rare = ModContent.RarityType<MoonFragmentRarity>();
             Item.accessory = true;
             Item.hasVanityEffects = true;
         }
@@ -31,13 +30,13 @@ namespace BagOfNonsense.Items.Accessory
         public override void UpdateAccessory(Player player, bool hideVisual)
         {
             frameCounter++;
-            player.wingTimeMax = 1800;
+            player.wingTimeMax = 180000;
             if (!hideVisual)
             {
                 if (frameCounter >= 15)
                 {
                     frameCounter = 0;
-                    for (int i = 0; i < 3; i++)
+                    for (int i = 0; i < Utils.SelectRandom(Main.rand, 3, 5, 7, 9); i++)
                     {
                         int deloc;
                         if (player.direction < 0)
@@ -65,6 +64,18 @@ namespace BagOfNonsense.Items.Accessory
         {
             speed = 9f;
             acceleration = 1.5f;
+        }
+
+        public override void AddRecipes()
+        {
+            CreateRecipe()
+                .AddIngredient(ItemID.WingsSolar)
+                .AddIngredient(ItemID.WingsNebula)
+                .AddIngredient(ItemID.WingsStardust)
+                .AddIngredient(ItemID.WingsVortex)
+                .AddIngredient(ModContent.ItemType<MoonFragment>(), 8)
+                .AddTile(TileID.LunarCraftingStation)
+                .Register();
         }
     }
 }

@@ -11,7 +11,8 @@ namespace BagOfNonsense.Rarities
             Color.Cyan,
             Color.Blue,
             Color.Lime,
-            Color.Purple
+            Color.Purple,
+            Color.Red,
         };
 
         private int numColors = RarityColorLerp.Length;

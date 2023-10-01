@@ -12,7 +12,7 @@ namespace BagOfNonsense.Buffs
             // DisplayName.SetDefault("Cold touch");
             Main.debuff[Type] = true;
             Main.buffNoTimeDisplay[Type] = false;
-            BuffID.Sets.IsAnNPCWhipDebuff[Type] = true;
+            BuffID.Sets.IsATagBuff[Type] = true;
         }
 
         public override void Update(NPC npc, ref int buffIndex)

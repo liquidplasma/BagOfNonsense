@@ -5,7 +5,6 @@ using Microsoft.Xna.Framework.Graphics;
 using System.IO;
 using Terraria;
 using Terraria.Audio;
-using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -33,7 +32,7 @@ namespace BagOfNonsense.Projectiles
 
         public override void OnHitNPCWithProj(Projectile proj, NPC target, NPC.HitInfo hit, int damageDone)/* tModPorter If you don't need the Projectile, consider using OnHitNPC instead */
         {
-            if (allowed && proj.owner == Player.whoAmI && proj.CountsAsClass(DamageClass.Ranged) && proj.GetGlobalProjectile<VanillaAdditionsProjs>().SashaProjBool)
+            if (allowed && proj.owner == Player.whoAmI && proj.CountsAsClass(DamageClass.Ranged) && proj.GetGlobalProjectile<BagOfNonsenseGlobalProjectile>().SashaProjBool)
             {
                 if (critTimer == 0)
                     damageTracker += damageDone;
@@ -198,9 +197,11 @@ namespace BagOfNonsense.Projectiles
                     {
                         Vector2 aim = (Player.Center.DirectionTo(mousePosSasha) * 16f).RotatedByRandom(MathHelper.ToRadians(8)) * Main.rand.NextFloat(0.95f, 1.05f);
                         int type = ammo.shoot;
-                        if (type == ProjectileID.Bullet) type = ProjectileID.GoldenBullet;
+                        if (type == ProjectileID.Bullet)
+                            type = ProjectileID.GoldenBullet;
+
                         var shot = Projectile.NewProjectileDirect(Player.GetSource_ItemUse_WithPotentialAmmo(Player.HeldItem, Player.HeldItem.useAmmo), Projectile.Center, aim, type, 9 * (Player.HasSashaUpgrade() ? 2 : 1), Player.HeldItem.knockBack, Player.whoAmI);
-                        shot.GetGlobalProjectile<VanillaAdditionsProjs>().SashaProjBool = true;
+                        shot.GetGlobalProjectile<BagOfNonsenseGlobalProjectile>().SashaProjBool = true;
                         shot.ArmorPenetration = 50;
                         if (type == ProjectileID.GoldenBullet)
                             shot.extraUpdates += 1;

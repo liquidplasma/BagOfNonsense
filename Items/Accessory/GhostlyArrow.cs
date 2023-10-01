@@ -1,6 +1,4 @@
-﻿using BagOfNonsense.CoolStuff;
-using BagOfNonsense.Helpers;
-using BagOfNonsense.Items.Accessory;
+﻿using BagOfNonsense.Helpers;
 using Microsoft.Xna.Framework;
 using System.Linq;
 using Terraria;
@@ -9,7 +7,7 @@ using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace BagOfNonsense
+namespace BagOfNonsense.Items.Accessory
 {
     internal class GhostlyArrowTrail : GlobalProjectile
     {
@@ -66,7 +64,7 @@ namespace BagOfNonsense.Items.Accessory
         public override void UpdateEquip(Player player)
         {
             player.arrowDamage += 0.15f;
-            player.GetModPlayer<ArrowSpawn>().SpawnArrow = true;
+            player.GetModPlayer<BagOfNonsenseModPlayer>().SpawnArrow = true;
         }
     }
 }

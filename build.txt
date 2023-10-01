@@ -1,4 +1,4 @@
 displayName = [c/0171E1:Bag of Nonsense]
 author = marviN
-version = 1.7.1
+version = 1.7.2
 homepage = https://forums.terraria.org/index.php?threads/bag-of-nonsense.95471/

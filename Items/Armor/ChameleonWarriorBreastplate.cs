@@ -1,4 +1,3 @@
-using BagOfNonsense.CoolStuff;
 using BagOfNonsense.Items.Ingredients;
 using Microsoft.Xna.Framework;
 using Terraria;
@@ -12,7 +11,7 @@ namespace BagOfNonsense.Items.Armor
     {
         public override void DrawArmorColor(Player drawPlayer, float shadow, ref Color color, ref int glowMask, ref Color glowMaskColor)
         {
-            if (Main.gameMenu || !drawPlayer.GetModPlayer<BONPlayer>().chameleonMode)
+            if (Main.gameMenu || !drawPlayer.GetModPlayer<BagOfNonsenseSetBonuses>().chameleonMode)
             {
                 color = new Color(43, 163, 80);
             }

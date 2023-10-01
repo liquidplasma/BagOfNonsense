@@ -52,7 +52,7 @@ namespace BagOfNonsense.Projectiles
             return true;
         }
 
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             for (int i = 0; i < 4; i++)
             {

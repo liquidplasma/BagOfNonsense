@@ -55,7 +55,7 @@ namespace BagOfNonsense.Projectiles
             Projectile.velocity = Projectile.velocity * 0.96f;
         }
 
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             for (int i = 0; i < 31; i++)
             {

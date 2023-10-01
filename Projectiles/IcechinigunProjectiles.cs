@@ -48,7 +48,7 @@ namespace BagOfNonsense.Projectiles
                 Dust.NewDust(Projectile.position, 5, 5, DustID.IceTorch, 0f, 0f, 100, default, 1f); ;
         }
 
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             SoundEngine.PlaySound(SoundID.Item10, Projectile.position);
             for (int i = 0; i < 10; i++)
@@ -105,7 +105,7 @@ namespace BagOfNonsense.Projectiles
                 Dust.NewDust(Projectile.position, 5, 5, DustID.IceTorch, 0f, 0f, 100, default, 1f);
         }
 
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             SoundEngine.PlaySound(SoundID.Item10, Projectile.position);
             for (int i = 0; i < 10; i++)
@@ -162,7 +162,7 @@ namespace BagOfNonsense.Projectiles
                 Dust.NewDust(new Vector2(Projectile.position.X, Projectile.position.Y), 5, 5, DustID.IceTorch, 0f, 0f, 100, default, 1f);
         }
 
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             SoundEngine.PlaySound(SoundID.Item10, Projectile.position);
             for (int i = 0; i < 10; i++)

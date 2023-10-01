@@ -67,13 +67,13 @@ namespace BagOfNonsense.Projectiles
             Projectile.FaceForward();
         }
 
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             for (int i = 0; i < 5; i++)
             {
                 Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Ichor, Main.rand.NextFloat(-2f, 2f), Main.rand.NextFloat(-2f, 2f), 0, default);
             }
-            base.Kill(timeLeft);
+            base.OnKill(timeLeft);
         }
     }
 }

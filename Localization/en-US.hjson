@@ -172,10 +172,11 @@ Mods: {
 			}
 
 			HardCoded: {
-				DisplayName: Hard coded
+				DisplayName: Hard Coded
 				Tooltip:
 					'''
 					This can't be simplified
+					Grants almost infinite flight
 					[c/2E86C1:ZoaklenMod Port]
 					'''
 			}

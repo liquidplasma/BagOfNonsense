@@ -12,12 +12,14 @@ namespace BagOfNonsense.Projectiles
     {
         private Player Player => Main.player[Projectile.owner];
         private VertexStrip _vertexStrip = new();
+
         // public override void SetStaticDefaults() => DisplayName.SetDefault("Doom Arrow");
         public override void SetStaticDefaults()
         {
             ProjectileID.Sets.TrailCacheLength[Type] = 1000;
             ProjectileID.Sets.TrailingMode[Type] = 3;
         }
+
         public override void SetDefaults()
         {
             Projectile.arrow = true;
@@ -100,7 +102,7 @@ namespace BagOfNonsense.Projectiles
             return false;
         }
 
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             Color color = new(255, 249, 70, 255);
             int num1 = Main.rand.Next(15, 20);

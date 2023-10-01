@@ -1,6 +1,5 @@
 ﻿using BagOfNonsense.Helpers;
 using Microsoft.Xna.Framework;
-using System.Data;
 using Terraria;
 using Terraria.Graphics;
 using Terraria.Graphics.Shaders;
@@ -105,7 +104,7 @@ namespace BagOfNonsense.Projectiles
             Behavior(Color.Blue);
         }
 
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             Dusts(Color.Blue);
         }
@@ -146,7 +145,7 @@ namespace BagOfNonsense.Projectiles
             Behavior(Color.Yellow);
         }
 
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             Dusts(Color.Yellow);
         }
@@ -187,7 +186,7 @@ namespace BagOfNonsense.Projectiles
             Behavior(Color.Green);
         }
 
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             Dusts(Color.Green);
         }
@@ -228,7 +227,7 @@ namespace BagOfNonsense.Projectiles
             Behavior(Color.Red);
         }
 
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             Dusts(Color.Red);
         }

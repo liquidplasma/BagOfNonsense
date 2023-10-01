@@ -1,4 +1,3 @@
-using BagOfNonsense.CoolStuff;
 using BagOfNonsense.Items.Ingredients;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
@@ -13,7 +12,7 @@ namespace BagOfNonsense.Items.Armor
     {
         public override void DrawArmorColor(Player drawPlayer, float shadow, ref Color color, ref int glowMask, ref Color glowMaskColor)
         {
-            if (Main.gameMenu || !drawPlayer.GetModPlayer<BONPlayer>().chameleonMode)
+            if (Main.gameMenu || !drawPlayer.GetModPlayer<BagOfNonsenseSetBonuses>().chameleonMode)
             {
                 color = new Color(43, 163, 80);
             }
@@ -60,7 +59,7 @@ namespace BagOfNonsense.Items.Armor
                 Player = player
             };
             Biome.Update();
-            player.GetModPlayer<BONPlayer>().chameleonMode = true;
+            player.GetModPlayer<BagOfNonsenseSetBonuses>().chameleonMode = true;
             player.yoraiz0rDarkness = true;
             player.setBonus = "Grants buffs depending on biome\n" + "Inflicts [c/7A4E1E:Rot] on hit enemies\n" + "[c/7A4E1E:Rot] deals massive damage";
             if (player.ZoneForest)
@@ -144,7 +143,7 @@ namespace BagOfNonsense.Items.Armor
 
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
-            if (Main.LocalPlayer.GetModPlayer<BONPlayer>().chameleonMode)
+            if (Main.LocalPlayer.GetModPlayer<BagOfNonsenseSetBonuses>().chameleonMode)
             {
                 BiomeInformations Biome = new()
                 {

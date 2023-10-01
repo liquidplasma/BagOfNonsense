@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.IO;
 using Terraria;
 using Terraria.Audio;
-using Terraria.GameContent;
 using Terraria.Graphics;
 using Terraria.Graphics.CameraModifiers;
 using Terraria.Graphics.Shaders;
@@ -117,12 +116,15 @@ namespace BagOfNonsense.Projectiles
             if (target.life >= 0)
                 IgnoredNPCS.Add(target.whoAmI);
 
-            int npcIndex = HelperStats.FindTargetLOSProjectile(Projectile, 4000f);
-            if (Main.npc.IndexInRange(npcIndex) && !IgnoredNPCS.Contains(target.whoAmI) && !Main.rand.NextBool(8))
+            int npcIndex = HelperStats.FindNextNPC(Projectile, target, 4000f);
+            if (Main.npc.IndexInRange(npcIndex) && !Main.rand.NextBool(8))
             {
                 NPC otherNPC = Main.npc[npcIndex];
-                Projectile.velocity = Projectile.Center.DirectionTo(otherNPC.Center) * oldVel.Length();
-                Projectile.netUpdate = true;
+                if (!IgnoredNPCS.Contains(otherNPC.whoAmI))
+                {
+                    Projectile.velocity = Projectile.Center.DirectionTo(otherNPC.Center) * oldVel.Length();
+                    Projectile.netUpdate = true;
+                }
             }
             else
             {
@@ -160,7 +162,9 @@ namespace BagOfNonsense.Projectiles
         {
             if (PlayHitSound)
                 SoundEngine.PlaySound(BallHit, Projectile.Center);
-            if (BallHitTimer > 0) BallHitTimer--;
+
+            if (BallHitTimer > 0)
+                BallHitTimer--;
 
             aBallLoop = SoundEngine.FindActiveSound(BallLoop);
             if (aBallLoop == null)
@@ -186,7 +190,7 @@ namespace BagOfNonsense.Projectiles
             return false;
         }
 
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             IgnoredNPCS.Clear();
             aBallLoop?.Stop();

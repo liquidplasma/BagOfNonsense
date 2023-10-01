@@ -46,7 +46,7 @@ namespace BagOfNonsense.Projectiles.Pets
             Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver4;
         }
 
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             for (int i = 0; i < 8; i++)
             {
@@ -186,11 +186,6 @@ namespace BagOfNonsense.Projectiles.Pets
                     }
                 }
             }
-        }
-
-        public override void Kill(int timeLeft)
-        {
-            base.Kill(timeLeft);
         }
     }
 }

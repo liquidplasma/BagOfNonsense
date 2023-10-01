@@ -152,7 +152,7 @@ namespace BagOfNonsense.Projectiles
             }
         }
 
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             Dusts(Color.Blue);
         }
@@ -184,7 +184,7 @@ namespace BagOfNonsense.Projectiles
             }
         }
 
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             Dusts(Color.Red);
         }
@@ -216,7 +216,7 @@ namespace BagOfNonsense.Projectiles
             }
         }
 
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             Dusts(Color.Green);
         }
@@ -248,7 +248,7 @@ namespace BagOfNonsense.Projectiles
             }
         }
 
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             Dusts(Color.Yellow);
         }
@@ -298,7 +298,7 @@ namespace BagOfNonsense.Projectiles
             }
         }
 
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             Vector2 launchVelocity;
             if (Projectile.ai[1] != 1)
@@ -419,7 +419,7 @@ namespace BagOfNonsense.Projectiles
             return false;
         }
 
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             switch (Behavior)
             {

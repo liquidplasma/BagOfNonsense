@@ -12,18 +12,20 @@ namespace BagOfNonsense.Projectiles
     {
         private Player Player => Main.player[Projectile.owner];
         private int timer;
-        VertexStrip _vertexStrip = new();
+        private VertexStrip _vertexStrip = new();
         // public override void SetStaticDefaults() => DisplayName.SetDefault("Ghostly Arrow");
 
         private int R => Main.rand.Next(220, 255);
         private int G => Main.rand.Next(90, 125);
         private int B => Main.rand.Next(0, 25);
         private Color RandomColor => new(R, G, B);
+
         public override void SetStaticDefaults()
         {
             ProjectileID.Sets.TrailCacheLength[Type] = 1000;
             ProjectileID.Sets.TrailingMode[Type] = 3;
         }
+
         public override void SetDefaults()
         {
             Projectile.arrow = false;

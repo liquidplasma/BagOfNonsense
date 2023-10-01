@@ -1,6 +1,5 @@
 ﻿using BagOfNonsense.Helpers;
 using Microsoft.Xna.Framework;
-using System;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -15,8 +14,9 @@ namespace BagOfNonsense.Projectiles
     {
         public override string Texture => "BagOfNonsense/Items/Weapons/Ranged/Bouncer";
         private VertexStrip _vertexStrip = new();
-        Player Player => Main.player[Projectile.owner];
+        private Player Player => Main.player[Projectile.owner];
         private bool HitOnce = false;
+
         private SoundStyle Tick => new("BagOfNonsense/Sounds/Weapons/Bouncer/tick1")
         {
             Volume = 0.33f,
@@ -27,6 +27,7 @@ namespace BagOfNonsense.Projectiles
             get => (int)Projectile.ai[0];
             set => Projectile.ai[0] = value;
         }
+
         private int SoundTimer
         {
             get => (int)Projectile.localAI[1];
@@ -38,10 +39,12 @@ namespace BagOfNonsense.Projectiles
             get => (int)Projectile.localAI[0];
             set => Projectile.localAI[0] = value;
         }
+
         private bool NotExploding
         {
             get => Timer <= 444;
         }
+
         public override void SetStaticDefaults()
         {
             ProjectileID.Sets.TrailCacheLength[Type] = 300;
@@ -83,8 +86,8 @@ namespace BagOfNonsense.Projectiles
         }
 
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
-        {         
-            if(HitOnce)
+        {
+            if (HitOnce)
                 return false;
             return base.Colliding(projHitbox, targetHitbox);
         }
@@ -110,7 +113,7 @@ namespace BagOfNonsense.Projectiles
 
         public override void AI()
         {
-            if (LightTimer > 0) 
+            if (LightTimer > 0)
             {
                 LightTimer--;
                 Lighting.AddLight(Projectile.Center, Color.Red.ToVector3());
@@ -141,14 +144,14 @@ namespace BagOfNonsense.Projectiles
             base.AI();
         }
 
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             for (int i = 0; i < 32; i++)
             {
                 var gore = Gore.NewGoreDirect(Projectile.GetSource_Death(), Projectile.Center, default, HelperStats.GrenadeGore);
                 gore.velocity = Utils.RandomVector2(Main.rand, -1f, 1f) * Main.rand.NextFloat(8, 14);
             }
-            for(int i = 0;i < 32; i++)
+            for (int i = 0; i < 32; i++)
             {
                 Dust deathEffect = Dust.NewDustDirect(Projectile.Center, 6, 6, HelperStats.SmokeyDust);
                 deathEffect.velocity = Utils.RandomVector2(Main.rand, -5, 5);
@@ -166,9 +169,8 @@ namespace BagOfNonsense.Projectiles
                     Knockback = 6f
                 };
                 Player.Hurt(greandeSelfDamage);
-
             }
-            base.Kill(timeLeft);
+            base.OnKill(timeLeft);
         }
 
         public override bool OnTileCollide(Vector2 oldVelocity)

@@ -51,7 +51,7 @@ namespace BagOfNonsense.Projectiles
             Lighting.AddLight(Projectile.Center, Color.Cyan.ToVector3());
         }
 
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             SoundEngine.PlaySound(new SoundStyle("BagOfNonsense/Sounds/Custom/summonedbreak"), Projectile.Center);
             for (int i = 0; i < 10; i++)

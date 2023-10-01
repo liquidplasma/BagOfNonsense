@@ -1,6 +1,5 @@
 ﻿using BagOfNonsense.Items.Ingredients;
 using Microsoft.Xna.Framework;
-using System;
 using System.Collections.Generic;
 using Terraria;
 using Terraria.ID;
@@ -30,8 +29,9 @@ namespace BagOfNonsense.Items.Accessory
             if (HealCapMax2 <= 14)
                 regen = true;
             else if (HealCapMax2 >= 90)
-                regen = false;            
+                regen = false;
         }
+
         public override void PostUpdateEquips()
         {
             if (regen && isActive)
@@ -54,6 +54,7 @@ namespace BagOfNonsense.Items.Accessory
             }
             HealCapMax2 = Utils.Clamp(HealCapMax2, 0, HealCapMax);
         }
+
         public override void Initialize()
         {
             HealCapMax = DefaultMaxHeal;
@@ -69,7 +70,7 @@ namespace BagOfNonsense.Items.Accessory
             if (isActive)
             {
                 int healAmount = 1 + damageDone / 10;
-                if(healAmount >= 10) 
+                if (healAmount >= 10)
                     healAmount /= 2;
                 if (healAmount <= DefaultMaxHeal / 2 && HealCapMax2 >= 15 && Main.rand.NextBool(6))
                 {
@@ -112,10 +113,11 @@ namespace BagOfNonsense.Items.Accessory
             LeechAccessoryModPlayer leechEmblem = player.GetModPlayer<LeechAccessoryModPlayer>();
             leechEmblem.isActive = true;
         }
+
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
             LeechAccessoryModPlayer leechModPlayer = Main.LocalPlayer.GetModPlayer<LeechAccessoryModPlayer>();
-            if(leechModPlayer.isActive)
+            if (leechModPlayer.isActive)
             {
                 TooltipLine healing = new(Mod, "MaxHeal", "Healing left: " + leechModPlayer.HealCapMax2) { OverrideColor = Color.Red };
                 TooltipLine healingTimeleft = new(Mod, "HealingTimeleft", "Time until healing recharge: " + (5 - leechModPlayer.ticks / 60)) { OverrideColor = Color.Yellow };
@@ -123,6 +125,7 @@ namespace BagOfNonsense.Items.Accessory
                 tooltips.Add(healingTimeleft);
             }
         }
+
         public override void AddRecipes()
         {
             CreateRecipe()

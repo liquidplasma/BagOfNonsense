@@ -9,7 +9,7 @@ using Terraria.DataStructures;
 using Terraria.ID;
 using Terraria.ModLoader;
 
-namespace BagOfNonsense
+namespace BagOfNonsense.Helpers
 {
     /// <summary>
     /// Useful random stuff
@@ -40,6 +40,16 @@ namespace BagOfNonsense
         /// Goes from 0f to 1f slowly, MP friendly (probably?)
         /// </summary>
         public static float GlobalTick => Main.GameUpdateCount % 1500 / 1500f;
+
+        public static bool TestRange(float numberToCheck, float bottom, float top)
+        {
+            return numberToCheck >= bottom && numberToCheck <= top;
+        }
+
+        public static bool TestRange(int numberToCheck, int bottom, int top)
+        {
+            return numberToCheck >= bottom && numberToCheck <= top;
+        }
 
         public static void Fire(Vector2 position, int amount, float scale, float magnitudeRange, float rotationRange = MathHelper.TwoPi)
         {
@@ -267,7 +277,7 @@ namespace BagOfNonsense
             if (KnifeDustEffect > 0)
             {
                 Dust dust = Dust.NewDustDirect(position, proj.width / 2, proj.height, KnifeDustEffect, proj.velocity.X, proj.velocity.Y, 100, default, 1);
-                dust.velocity *= (0.25f * Main.rand.NextFloat());
+                dust.velocity *= 0.25f * Main.rand.NextFloat();
                 dust.position -= proj.velocity * 0.5f;
                 dust.scale += Main.rand.Next(150) * 0.001f;
                 if (Main.rand.NextBool(5))

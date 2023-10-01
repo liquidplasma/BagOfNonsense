@@ -91,28 +91,7 @@ namespace BagOfNonsense.Projectiles
 
             Projectile.spriteDirection = Player.direction;
 
-            //Vanilla code below, ech
-            float num7 = -(float)Math.PI / 10f;
-            if (Player.direction == -1)
-            {
-                num7 *= -1f;
-            }
-            float num8 = Projectile.rotation - (float)Math.PI / 4f + (float)Math.PI;
-            if (Player.direction == 1)
-            {
-                num8 += (float)Math.PI / 2f;
-            }
-            float rotation = num8 + num7;
-            if (Player.direction == 1)
-            {
-                Player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, rotation);
-                Projectile.Center = Player.MountedCenter + new Vector2(0, -4);
-            }
-            else
-            {
-                Player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, rotation);
-                Projectile.Center = Player.MountedCenter + new Vector2(0, -4);
-            }
+            Player.HoldOutArm(Projectile, mousePosLauncher);
 
             Player.heldProj = Projectile.whoAmI;
             if (Player.HeldItem.type != ModContent.ItemType<HLRocketGun>())
@@ -284,7 +263,7 @@ namespace BagOfNonsense.Projectiles
             return base.PreKill(timeLeft);
         }
 
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             for (int i = 0; i < 60; i++)
             {

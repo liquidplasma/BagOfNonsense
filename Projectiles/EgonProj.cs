@@ -1,5 +1,4 @@
 ﻿using BagOfNonsense.Dusts;
-using BagOfNonsense.Helpers;
 using BagOfNonsense.Items.Weapons.Magic;
 using Microsoft.Xna.Framework;
 using System;
@@ -8,7 +7,6 @@ using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.Graphics;
-using Terraria.Graphics.Shaders;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -20,6 +18,7 @@ namespace BagOfNonsense.Projectiles
     {
         // This field is used in this projectie's custom AI
         public Vector2 initialCenter;
+
         private VertexStrip _vertexStrip = new();
         private Player Player => Main.player[Projectile.owner];
 
@@ -58,8 +57,9 @@ namespace BagOfNonsense.Projectiles
             Projectile.timeLeft = 120; // The live time for the projectile (60 = 1 second, so 600 is 10 seconds)
             Projectile.extraUpdates = 6;
         }
+
         public override bool PreDraw(ref Color lightColor)
-        {            
+        {
             return base.PreDraw(ref lightColor);
         }
 
@@ -153,7 +153,7 @@ namespace BagOfNonsense.Projectiles
             sineTimer++;
         }
 
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             if (Projectile.ai[0] == 1)
             {

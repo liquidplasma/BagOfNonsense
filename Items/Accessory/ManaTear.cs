@@ -1,3 +1,4 @@
+using BagOfNonsense.Helpers;
 using BagOfNonsense.Items.Ingredients;
 using BagOfNonsense.Rarities;
 using Microsoft.Xna.Framework;

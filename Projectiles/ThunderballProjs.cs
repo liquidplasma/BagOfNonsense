@@ -85,7 +85,7 @@ namespace BagOfNonsense.Projectiles
             target.AddBuff(ModContent.BuffType<DHighwattage>(), 300);
         }
 
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             var owner = Main.player[Projectile.owner];
             int damage = owner.inventory[owner.selectedItem].damage;
@@ -148,7 +148,7 @@ namespace BagOfNonsense.Projectiles
             }
         }
 
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             var owner = Main.player[Projectile.owner];
             int damage = owner.inventory[owner.selectedItem].damage;

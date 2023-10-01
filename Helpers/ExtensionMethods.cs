@@ -21,26 +21,33 @@ namespace BagOfNonsense.Helpers
         /// </summary>
         /// <param name="Player"></param>
         /// <param name="Projectile"></param>
-        public static void HoldOutArm(this Player Player, Projectile Projectile)
+        public static void HoldOutArm(this Player Player, Projectile Projectile, Vector2 angleVector)
         {
             //Vanilla code below, ech
-            float num7 = -(float)Math.PI / 10f;
+            float angleFloat = MathF.Sin(Player.Center.AngleTo(angleVector));
+            bool addAngle = HelperStats.TestRange(angleFloat, 0.12f, 1f);
+            angleFloat /= 2f;
+            float num7 = -MathF.PI / 10f;
             if (Player.direction == -1)
             {
                 num7 *= -1f;
             }
-            float num8 = Projectile.rotation - (float)Math.PI / 4f + (float)Math.PI;
+            float num8 = Projectile.rotation - MathF.PI / 4f + MathF.PI;
             if (Player.direction == 1)
             {
-                num8 += (float)Math.PI / 2f;
+                num8 += MathF.PI / 2f;
             }
             float rotation = num8 + num7;
             if (Player.direction == 1)
             {
+                if (addAngle)
+                    rotation -= angleFloat;
                 Player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, rotation);
             }
             else
             {
+                if (addAngle)
+                    rotation += angleFloat;
                 Player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, rotation);
             }
         }

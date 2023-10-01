@@ -29,6 +29,16 @@ namespace BagOfNonsense.Items.Accessory
             if (Bullseye16)
                 modifiers.CritDamage += 0.16f;
         }
+
+        public override void ModifyHitNPCWithProj(Projectile proj, NPC target, ref NPC.HitModifiers modifiers)
+        {
+            if (Bullseye50)
+                modifiers.CritDamage += 0.5f;
+            if (Bullseye33)
+                modifiers.CritDamage += 0.33f;
+            if (Bullseye16)
+                modifiers.CritDamage += 0.16f;
+        }
     }
 
     public class BullseyeEmblem50 : ModItem

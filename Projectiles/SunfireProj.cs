@@ -117,7 +117,7 @@ namespace BagOfNonsense.Projectiles
             Projectile.spriteDirection = Projectile.direction;
         }
 
-        public override void Kill(int timeLeft)
+        public override void OnKill(int timeLeft)
         {
             for (int num636 = 0; num636 < 6; num636++)
             {

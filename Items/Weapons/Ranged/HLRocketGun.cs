@@ -41,7 +41,7 @@ namespace BagOfNonsense.Items.Weapons.Ranged
 
         public override void HoldItem(Player player)
         {
-            if (player.ownedProjectileCounts[ModContent.ProjectileType<HLRocketGunProj>()] < 1)
+            if (player.ownedProjectileCounts[ModContent.ProjectileType<HLRocketGunProj>()] < 1 && player.whoAmI == Main.myPlayer)
             {
                 Projectile shot = Projectile.NewProjectileDirect(player.GetSource_ItemUse_WithPotentialAmmo(player.HeldItem, player.HeldItem.useAmmo), player.Center, Vector2.Zero, ModContent.ProjectileType<HLRocketGunProj>(), Item.damage, Item.knockBack, player.whoAmI, 30f);
                 shot.originalDamage = Item.damage;
