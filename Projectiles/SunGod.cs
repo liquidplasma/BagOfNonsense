@@ -12,6 +12,7 @@ namespace BagOfNonsense.Projectiles
     {
         private Player Player => Main.player[Projectile.owner];
         private bool playerHasMana;
+
         private static int MonkeyGlasses => ModContent.ItemType<MonkeyGlasses>();
         private static int SuperMonkeyGlasses => ModContent.ItemType<SuperMonkeyGlasses>();
 
@@ -34,6 +35,11 @@ namespace BagOfNonsense.Projectiles
             Projectile.friendly = true;
         }
 
+        public override bool? CanCutTiles()
+        {
+            return false;
+        }
+
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
         {
             return false;
@@ -42,9 +48,9 @@ namespace BagOfNonsense.Projectiles
         public override void AI()
         {
             Lighting.AddLight(Projectile.Center, Color.Gold.ToVector3());
-            if (Player.whoAmI == Main.myPlayer && Main.mouseRight && !Player.controlInv && (Player.HeldItem.type == SuperMonkeyGlasses || Player.HeldItem.type == MonkeyGlasses))
+            if (!Player.mouseInterface && Player.whoAmI == Main.myPlayer && Main.mouseRight && !Player.controlInv && (Player.HeldItem.type == SuperMonkeyGlasses || Player.HeldItem.type == MonkeyGlasses))
                 Projectile.Kill();
-            Projectile.CheckPlayerActiveAndNotDead(Player);
+            Projectile.KeepAliveIfOwnerIsAlive(Player);
             Projectile.velocity = Vector2.Zero;
             if (Player.channel && Main.myPlayer == Player.whoAmI && (Player.HeldItem.type == ModContent.ItemType<MonkeyGlasses>() || Player.HeldItem.type == ModContent.ItemType<SuperMonkeyGlasses>()))
             {
@@ -83,6 +89,9 @@ namespace BagOfNonsense.Projectiles
                     }
                 }
             }
+            bool tileBehind = Main.tile[(int)(Projectile.Center.X / 16), (int)(Projectile.Center.Y / 16)].HasTile;
+            if (tileBehind)
+                Projectile.Kill();
         }
 
         public override void OnKill(int timeLeft)

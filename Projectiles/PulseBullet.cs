@@ -54,7 +54,7 @@ namespace BagOfNonsense.Projectiles
             for (int i = 0; i < 3; i++)
             {
                 Dust hitEffect = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, HelperStats.RandomCyanDust);
-                hitEffect.velocity = (-Projectile.oldVelocity * 0.1f).RotatedByRandom(MathHelper.PiOver4);
+                hitEffect.velocity = (-Projectile.velocity * 0.1f).RotatedByRandom(MathHelper.PiOver4);
                 hitEffect.noGravity = true;
             }
         }

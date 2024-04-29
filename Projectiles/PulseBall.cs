@@ -27,10 +27,7 @@ namespace BagOfNonsense.Projectiles
             set => Projectile.ai[0] = value;
         }
 
-        private bool PlayHitSound
-        {
-            get => Projectile.ai[0] == 2;
-        }
+        private bool PlayHitSound => BallHitTimer == 2;
 
         private SoundStyle BallLoop => new("BagOfNonsense/Sounds/Weapons/AR2/PulseBall/ball_loop")
         {
@@ -106,7 +103,7 @@ namespace BagOfNonsense.Projectiles
             modifiers.Knockback *= 10f;
             modifiers.DamageVariationScale *= 0;
             modifiers.DisableCrit();
-            modifiers.ArmorPenetration += target.defense * 2;
+            modifiers.ArmorPenetration += target.defense * 2;            
         }
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)

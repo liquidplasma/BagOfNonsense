@@ -50,7 +50,7 @@ namespace BagOfNonsense.Projectiles
                 Projectile.TeleportToOrigin(Player, Player.Center, DustID.PurpleTorch);
 
             Lighting.AddLight(Projectile.Center, Color.Purple.ToVector3());
-            Projectile.CheckPlayerActiveAndNotDead(Player);
+            Projectile.KeepAliveIfOwnerIsAlive(Player);
             int hostileProjIndex = HelperStats.FindNearestHostileProj(112, Player);
             if (Main.projectile.IndexInRange(hostileProjIndex))
             {

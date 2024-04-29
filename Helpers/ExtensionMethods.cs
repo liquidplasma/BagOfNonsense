@@ -2,11 +2,15 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Terraria;
 using Terraria.Audio;
+using Terraria.Chat;
+using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
+using Terraria.Localization;
 using Terraria.ModLoader;
 
 namespace BagOfNonsense.Helpers
@@ -14,14 +18,82 @@ namespace BagOfNonsense.Helpers
     /// <summary>
     /// Useful extension methods
     /// </summary>
-    internal static class ExtensionMethods
+    public static class ExtensionMethods
     {
+        /// <summary>
+        /// This EntityDraw call already subtracts screen position
+        /// <code>position - Main.screenPosition</code>
+        /// </summary>
+        public static void BetterEntityDraw(Texture2D texture, Vector2 position, Rectangle? sourceRectangle, Color color, float rotation, Vector2 origin, float scale, SpriteEffects effects, float worthless = 0f) => Main.EntitySpriteDraw(texture, position - Main.screenPosition, sourceRectangle, color, rotation, origin, new Vector2(scale), effects, worthless);
+
+        /// <summary>
+        /// Already checks for if(Main.myPlayer == Player.whoAmI)
+        /// </summary>
+        /// <returns>Projectile, null if the above condition is false (it shouldn't be)</returns>
+        public static Projectile BetterNewProjectile(Player Player, IEntitySource spawnSource, Vector2 position, Vector2 velocity, int type, int damage, float knockback, int owner = -1, float ai0 = 0, float ai1 = 0, float ai2 = 0)
+        {
+            if (Player.whoAmI == Main.myPlayer)
+                return Projectile.NewProjectileDirect(spawnSource, position, velocity, type, damage, knockback, owner, ai0, ai1, ai2);
+            return null;
+        }
+
+        public static CombatText CreateCombatText(Player sourcePlayer, Color color, string text) => Main.combatText[CombatText.NewText(sourcePlayer.getRect(), color, text)];
+
+        public static CombatText CreateCombatText(NPC sourceNPC, Color color, string text) => Main.combatText[CombatText.NewText(sourceNPC.getRect(), color, text)];
+
+        /// <summary>
+        /// Uses either ChatHelper.BroadcastChatMessage or Main.NewText to send messages
+        /// </summary>
+        /// <param name="text"></param>
+        /// <param name="color"></param>
+        /// <param name="substitutions"></param>
+        public static void Announce(string text, Color color = default, params string[] substitutions)
+        {
+            if (color == default)
+                color = Color.White;
+
+            if (Main.netMode == NetmodeID.Server)
+            {
+                ChatHelper.BroadcastChatMessage(
+                    NetworkText.FromKey(text, substitutions.Select(text =>
+                        NetworkText.FromKey(text)
+                    ).ToArray()), color);
+            }
+            else
+            {
+                Main.NewText(
+                    Language.GetTextValue(text, substitutions.Select(text =>
+                        Language.GetTextValue(text)
+                    ).ToArray()), color);
+            }
+        }
+
+        /// <summary>
+        /// Finds said item type in the player inventory
+        /// </summary>
+        /// <param name="player"></param>
+        /// <param name="type"></param>
+        /// <returns></returns>
+        public static Item FindItemInInventory(this Player player, int type)
+        {
+            Item Item = null;
+            for (int i = 0; i < player.inventory.Length; i++)
+            {
+                Item p = player.inventory[i];
+                if (p != null && !p.IsAir && p.active && p.type == type)
+                {
+                    Item = p;
+                }
+            }
+            return Item;
+        }
+
         /// <summary>
         /// Used on my held projectiles
         /// </summary>
         /// <param name="Player"></param>
         /// <param name="Projectile"></param>
-        public static void HoldOutArm(this Player Player, Projectile Projectile, Vector2 angleVector)
+        public static int HoldOutArm(this Player Player, Projectile Projectile, Vector2 angleVector)
         {
             //Vanilla code below, ech
             float angleFloat = MathF.Sin(Player.Center.AngleTo(angleVector));
@@ -43,12 +115,14 @@ namespace BagOfNonsense.Helpers
                 if (addAngle)
                     rotation -= angleFloat;
                 Player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, rotation);
+                return 1;
             }
             else
             {
                 if (addAngle)
                     rotation += angleFloat;
                 Player.SetCompositeArmFront(true, Player.CompositeArmStretchAmount.Full, rotation);
+                return -1;
             }
         }
 
@@ -57,9 +131,32 @@ namespace BagOfNonsense.Helpers
         /// </summary>
         /// <param name="player"></param>
         /// <returns></returns>
-        public static float GetPlayerStealth(this Player player)
+        public static float GetStealth(this Player player)
         {
+            if (player.shroomiteStealth)
+                return Math.Clamp(Math.Abs(player.stealth - 2f), 0f, 1.6f);
             return Math.Clamp(Math.Abs(player.stealth - 2f), 0f, 1.8f);
+        }
+
+        /// <summary>
+        /// Associated texture for this Item type
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns></returns>
+        public static Texture2D MyTexture(this Item item) => TextureAssets.Item[item.type].Value;
+
+        /// <summary>
+        /// Associated texture for this Item type, with some useful outs
+        /// </summary>
+        /// <param name="Item"></param>
+        /// <param name="origin"></param>
+        /// <param name="dir"></param>
+        /// <returns></returns>
+        public static Texture2D MyTexture(this Item Item, out Vector2 origin)
+        {
+            Texture2D tex = TextureAssets.Item[Item.type].Value;
+            origin = tex.Size() / 2;
+            return tex;
         }
 
         /// <summary>
@@ -89,10 +186,7 @@ namespace BagOfNonsense.Helpers
         /// <para>projectile.rotation += (projectile.velocity.X * 0.04f) + (projectile.velocity.Y * 0.04f)</para>
         /// </summary>
         /// <param name="projectile"></param>
-        public static void RotateBasedOnVelocity(this Projectile projectile)
-        {
-            projectile.rotation += (projectile.velocity.X * 0.04f) + (projectile.velocity.Y * 0.04f);
-        }
+        public static void RotateBasedOnVelocity(this Projectile projectile, float mult = 0.04f) => projectile.rotation += (projectile.velocity.X * mult) + (projectile.velocity.Y * mult);
 
         /// <summary>
         /// Projectile will bounce back, best use in OnTileCollide
@@ -103,15 +197,12 @@ namespace BagOfNonsense.Helpers
         {
             // If the projectile hits the left or right side of the tile, reverse the X velocity
             if (Math.Abs(proj.velocity.X - proj.oldVelocity.X) > float.Epsilon)
-            {
                 proj.velocity.X = -proj.oldVelocity.X;
-            }
 
             // If the projectile hits the top or bottom side of the tile, reverse the Y velocity
             if (Math.Abs(proj.velocity.Y - proj.oldVelocity.Y) > float.Epsilon)
-            {
                 proj.velocity.Y = -proj.oldVelocity.Y;
-            }
+
             proj.velocity = proj.velocity.RotatedByRandom(MathHelper.ToRadians(radians));
             proj.netUpdate = true;
         }
@@ -145,10 +236,11 @@ namespace BagOfNonsense.Helpers
         }
 
         ///<summary>
+        ///Grabbed from <see href="https://github.com/Zeodexic/tsorcRevamp/blob/main/tsorcRevampUtils.cs#L774">here</see>.
         ///Accelerates an entity toward a target in a smooth way
-        ///Returns a Vector2 with length 'acceleration' that points in the optimal direction to accelerate the NPC toward the target
-        ///If the target is moving, then it accounts for that
-        ///(No, unfortunately the optimal direction is not actually a straight line most of the time)
+        ///Returns a Vector2 with length 'acceleration' that points in the optimal direction to accelerate the NPC toward the target.
+        ///If the target is moving, then it accounts for that.
+        ///(No, unfortunately the optimal direction is not actually a straight line most of the time).
         ///Accelerates until the NPC is moving fast enough that the acceleration can *just* slow it down in time, then does so
         ///Do not ask me how long this took 💀
         ///</summary>
@@ -220,7 +312,7 @@ namespace BagOfNonsense.Helpers
 
         /// <summary> Checks if the player that owns this projectile is alive, else kill this projectile. </summary>>
 
-        public static void CheckPlayerActiveAndNotDead(this Projectile proj, Player owner)
+        public static void KeepAliveIfOwnerIsAlive(this Projectile proj, Player owner)
         {
             if (owner.dead || !owner.active)
                 proj.Kill();
@@ -252,18 +344,15 @@ namespace BagOfNonsense.Helpers
         /// </summary>
         /// <param name="player"></param>
         /// <returns></returns>
-        public static Color TeamColor(this Player player)
+        public static Color TeamColor(this Player player) => player.team switch
         {
-            return player.team switch
-            {
-                1 => new(.9f, .3f, .3f, .85f),// Red
-                2 => new(.3f, .9f, .3f, .85f),// Green
-                3 => new(.4f, .8f, .8f, .8f),// Blue
-                4 => new(.8f, .8f, .25f, .8f),// Yellow
-                5 => new(.8f, .25f, .75f, .8f),// Pink
-                _ => new(.95f, .95f, .95f, .85f),// No team
-            };
-        }
+            1 => new(.9f, .3f, .3f, .85f),// Red
+            2 => new(.3f, .9f, .3f, .85f),// Green
+            3 => new(.4f, .8f, .8f, .8f),// Blue
+            4 => new(.8f, .8f, .25f, .8f),// Yellow
+            5 => new(.8f, .25f, .75f, .8f),// Pink
+            _ => new(.95f, .95f, .95f, .85f),// No team
+        };
 
         /// <summary>
         /// Returns true if you are within range of DD2 NPCs
@@ -271,11 +360,7 @@ namespace BagOfNonsense.Helpers
         /// <param name="player"></param>
         /// <param name="dist">The distance</param>
         /// <returns></returns>
-        public static bool AmINearDD2NPCs(this Player player, float dist)
-        {
-            if (Main.npc.Take(Main.maxNPCs).Where(npc => npc.active && !npc.friendly).Any(npc => NPCID.Search.GetName(npc.type).Contains("DD2") && npc.WithinRange(player.Center, dist))) return true;
-            return false;
-        }
+        public static bool AmINearDD2NPCs(this Player player, float dist) => Main.npc.Take(Main.maxNPCs).Where(npc => npc.active && !npc.friendly).Any(npc => NPCID.Search.GetName(npc.type).Contains("DD2") && npc.WithinRange(player.Center, dist));
 
         /// <summary>
         /// Calculates the multiplier for the damage class of this player
@@ -283,10 +368,7 @@ namespace BagOfNonsense.Helpers
         /// <param name="player"></param>
         /// <param name="dmgClass"></param>
         /// <returns></returns>
-        public static float GetPlayerDamageMultiplier(this Player player, DamageClass dmgClass)
-        {
-            return player.GetTotalDamage(dmgClass).Additive;
-        }
+        public static float GetPlayerDamageMultiplier(this Player player, DamageClass dmgClass) => player.GetTotalDamage(dmgClass).Additive;
 
         /// <summary>
         /// Adds this buff to every player of the same team, this player instance must be alive for this to work
@@ -312,50 +394,31 @@ namespace BagOfNonsense.Helpers
             }
         }
 
-        public static bool EveryOneIsDead(this Player _)
-        {
-            if (Main.player.Take(Main.maxPlayers).Where(x => x.active).All(x => x.dead)) return true;
-            return false;
-        }
+        /// <summary>
+        /// All players are dead
+        /// </summary>
+        /// <param name="_"></param>
+        /// <returns></returns>
+        public static bool EveryOneIsDead(this Player _) => Main.player.Take(Main.maxPlayers).Where(x => x.active).All(x => x.dead || x.ghost);
 
         public static bool AreMobsInRange(this Player player, int range)
         {
-            var loc = player.Center;
-            var mobs = Main.npc.Where(n => n.active && !n.friendly && n.Center.DistanceSQ(loc) <= range * range);
+            Vector2 position = player.Center;
+            IEnumerable<NPC> mobs = Main.npc.Where(n => n.active && !n.friendly && n.Center.DistanceSQ(position) <= range * range);
             return mobs.Any();
         }
 
-        public static bool HasSashaUpgrade(this Player player)
-        {
-            for (int i = 0; i < player.bank.item.Length; i++)
-            {
-                Item upgrade = player.bank.item[i];
-                if (upgrade.type == ModContent.ItemType<SashaUpgrade>())
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
+        public static bool HasSashaUpgrade(this Player player) => player.HasItemInAnyInventory(ModContent.ItemType<SashaUpgrade>());
 
-        public static bool HasFireBirdUpgrade(this Player player)
-        {
-            for (int i = 0; i < player.bank.item.Length; i++)
-            {
-                Item upgrade = player.bank.item[i];
-                if (upgrade.type == ModContent.ItemType<FireBirdUpgrade>())
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
+        public static bool HasFireBirdUpgrade(this Player player) => player.HasItemInAnyInventory(ModContent.ItemType<FireBirdUpgrade>());
 
         /// <summary> Checks if the NPC is NOT active or is friendly. If true kill this projectile else set it's timeleft to 2. (Projectile is alive as long as NPC is alive). Good for chasing AI. </summary>>
         public static void CheckAliveNPCProj(this Projectile proj, NPC target)
         {
-            if (!target.active || target.friendly) proj.Kill();
-            else proj.timeLeft = 2;
+            if (!target.active || target.friendly)
+                proj.Kill();
+            else
+                proj.timeLeft = 2;
         }
 
         /// <summary>
@@ -363,30 +426,21 @@ namespace BagOfNonsense.Helpers
         /// <para>Rotating in the direction of travel is often used in projectiles like arrows.</para>
         /// </summary>
         /// <param name="proj"></param>
-        public static void FaceForward(this Projectile proj)
-        {
-            proj.rotation = proj.velocity.ToRotation() + MathHelper.PiOver2;
-        }
+        public static void FaceForward(this Projectile proj) => proj.rotation = proj.velocity.ToRotation() + MathHelper.PiOver2;
 
         /// <summary>
         /// Returns true if this NPC is airborn
         /// </summary>
         /// <param name="npc"></param>
         /// <returns></returns>
-        public static bool IsAirborn(this NPC npc)
-        {
-            return !Collision.SolidCollision(npc.BottomLeft, npc.width, 6);
-        }
+        public static bool IsAirborn(this NPC npc) => !Collision.SolidCollision(npc.BottomLeft, npc.width, 6);
 
         /// <summary>
         /// Returns true if this player is airborn
         /// </summary>
         /// <param name="player"></param>
         /// <returns></returns>
-        public static bool IsAirborn(this Player player)
-        {
-            return !Collision.SolidCollision(player.BottomLeft, player.width, 6);
-        }
+        public static bool IsAirborn(this Player player) => !Collision.SolidCollision(player.BottomLeft, player.width, 6);
 
         /// <summary>
         /// Teleports this projectile to whatever idle position is.

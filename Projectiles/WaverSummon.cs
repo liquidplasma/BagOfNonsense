@@ -147,6 +147,11 @@ namespace BagOfNonsense.Projectiles
             return true;
         }
 
+        public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
+        {
+            return false;
+        }
+
         public override bool? CanCutTiles()
         {
             return false;
@@ -186,7 +191,8 @@ namespace BagOfNonsense.Projectiles
             float attackVel = 0.02f;
             float projSpeed = 16f;
             int closestNPC = HelperStats.FindTargetProjectileCenter(Projectile, 1100f);
-            if (closestNPC == -1) attackVel = 0.04f;
+            if (closestNPC == -1)
+                attackVel = 0.04f;
             if (Main.npc.IndexInRange(closestNPC))
             {
                 idleTime = 0;
@@ -196,7 +202,8 @@ namespace BagOfNonsense.Projectiles
                     target = Main.npc[Player.MinionAttackTargetNPC];
                 Vector2 aim = Projectile.DirectionTo(Player.position + Player.Size) * (projSpeed * 1.15f);
                 float distanceHead = Projectile.Distance(Player.Top);
-                if (distanceHead > 200) attackVel = 0.08f;
+                if (distanceHead > 200)
+                    attackVel = 0.08f;
                 float amount = MathHelper.Lerp(attackVel, attackVel, Utils.GetLerpValue(140f, 30f, Projectile.timeLeft, clamped: true));
                 Projectile.velocity = Vector2.SmoothStep(Projectile.velocity, aim, amount);
                 Projectile.rotation = Projectile.AngleTo(target.Center) - 5.5f;

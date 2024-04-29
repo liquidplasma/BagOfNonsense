@@ -21,11 +21,8 @@ namespace BagOfNonsense.Items.Accessory
                 for (int i = 0; i < Main.maxPlayers; i++)
                 {
                     Player otherPlayer = Main.player[i];
-                    if (otherPlayer.team == Player.team && otherPlayer.dead && otherPlayer.active)
-                    {
+                    if (otherPlayer.active && otherPlayer.team == Player.team && otherPlayer.dead)
                         Player.AddBuff(ModContent.BuffType<BBloodyRage>(), 2);
-                        Player.GetDamage(DamageClass.Generic) += 0.9f;
-                    }
                 }
             }
         }

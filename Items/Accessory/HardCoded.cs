@@ -13,10 +13,6 @@ namespace BagOfNonsense.Items.Accessory
     {
         private int frameCounter = 0;
 
-        public override void SetStaticDefaults()
-        {           
-        }
-
         public override void SetDefaults()
         {
             Item.width = 26;

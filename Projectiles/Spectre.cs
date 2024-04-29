@@ -19,11 +19,14 @@ namespace BagOfNonsense.Projectiles
             Projectile.height = 9;
             Projectile.DamageType = DamageClass.Magic;
             Projectile.tileCollide = true;
-            Projectile.timeLeft = 390;
+            Projectile.timeLeft = Projectile.SentryLifeTime;
             Projectile.alpha = 0;
             Projectile.friendly = true;
-            Projectile.light = 1f;
-            Projectile.scale = 0.5f;
+        }
+
+        public override bool? CanCutTiles()
+        {
+            return false;
         }
 
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
@@ -33,7 +36,7 @@ namespace BagOfNonsense.Projectiles
 
         public override void AI()
         {
-            if (Player.whoAmI == Main.myPlayer && Main.mouseRight && Player.HeldItem.type == AirControlUnit)
+            if (!Player.mouseInterface && Player.whoAmI == Main.myPlayer && !Player.mouseInterface && Main.mouseRight && Player.HeldItem.type == AirControlUnit)
                 Projectile.Kill();
 
             if (Player.channel && Main.myPlayer == Player.whoAmI && Player.HeldItem.type == ModContent.ItemType<AirControlUnit>() && Player.ItemAnimationJustStarted)
@@ -41,13 +44,10 @@ namespace BagOfNonsense.Projectiles
                 Projectile.Center = Main.MouseWorld;
                 Projectile.netUpdate = true;
             }
-            Projectile.CheckPlayerActiveAndNotDead(Player);
+            Projectile.KeepAliveIfOwnerIsAlive(Player);
             Projectile.velocity = Vector2.Zero;
             if (Player.ownedProjectileCounts[ModContent.ProjectileType<Spectre>()] < 1)
-            {
-                var spectre = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<Spectre>(), Projectile.damage, Projectile.knockBack, Player.whoAmI);
-                spectre.originalDamage = Projectile.damage;
-            }
+                Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, Vector2.Zero, ModContent.ProjectileType<Spectre>(), Projectile.damage, Projectile.knockBack, Player.whoAmI);
         }
     }
 
@@ -55,6 +55,7 @@ namespace BagOfNonsense.Projectiles
     {
         private Player Player => Main.player[Projectile.owner];
         private bool playerHasMana;
+
         private static int SpectreCenterIndex => ModContent.ProjectileType<SpectreCenter>();
         private static int AirControlUnit => ModContent.ItemType<AirControlUnit>();
 
@@ -65,17 +66,6 @@ namespace BagOfNonsense.Projectiles
             ProjectileID.Sets.MinionTargettingFeature[Projectile.type] = true;
             ProjectileID.Sets.CultistIsResistantTo[Projectile.type] = false;
             Main.projFrames[Type] = 4;
-        }
-
-        public override bool PreAI()
-        {
-            Projectile.frameCounter++;
-            if (Projectile.frameCounter >= 3)
-            {
-                Projectile.frameCounter = 0;
-                Projectile.frame = (Projectile.frame + 1) % 4;
-            }
-            return base.PreAI();
         }
 
         public override void SetDefaults()
@@ -91,67 +81,74 @@ namespace BagOfNonsense.Projectiles
             Projectile.scale = 1f;
         }
 
+        public override bool? CanCutTiles()
+        {
+            return false;
+        }
+
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
         {
             return false;
         }
 
-        private static Vector2 GetBase(Player player)
+        private static Projectile GetBase(Player player)
         {
-            Vector2 pos = Vector2.Zero;
-            for (int i = 0; i < Main.maxProjectiles; i++)
+            Projectile pos = null;
+            int spectreCenter = HelperStats.FindProjectileIndex(player, SpectreCenterIndex);
+            if (Main.projectile.IndexInRange(spectreCenter))
             {
-                Projectile proj = Main.projectile[i];
-                if (proj.type == SpectreCenterIndex && proj.owner == player.whoAmI)
-                {
-                    pos = proj.Center;
-                }
+                Projectile Base = Main.projectile[spectreCenter];
+                if (Base.active)
+                    pos = Base;
             }
             return pos;
         }
 
+        public override bool PreAI()
+        {
+            Projectile.frameCounter++;
+            if (Projectile.frameCounter >= 3)
+            {
+                Projectile.frameCounter = 0;
+                Projectile.frame = (Projectile.frame + 1) % 4;
+            }
+            return base.PreAI();
+        }
+
         public override void AI()
         {
-            if (Player.whoAmI == Main.myPlayer && Main.mouseRight && Player.HeldItem.type == AirControlUnit)
+            if (Player.whoAmI == Main.myPlayer && !Player.mouseInterface && Main.mouseRight && Player.HeldItem.type == AirControlUnit)
                 Projectile.Kill();
 
             Lighting.AddLight(Projectile.Center, Color.White.ToVector3());
-            Projectile.CheckPlayerActiveAndNotDead(Player);
-            Vector2 pos = GetBase(Player);
-            Projectile.RotateAroundSomething(408, 1f, pos, false);
-            Projectile.rotation = Projectile.AngleTo(pos);
-            int aimNPC = HelperStats.FindTargetLOSProjectile(Projectile, 1400);
-            if (Main.npc.IndexInRange(aimNPC))
+            Projectile.KeepAliveIfOwnerIsAlive(Player);
+            Projectile pos = GetBase(Player);
+            if (pos != null)
             {
-                if (Player.statMana <= ContentSamples.ItemsByType[AirControlUnit].mana)
-                    playerHasMana = false;
-                int mana75Percent = Player.statManaMax2 - (Player.statManaMax2 / 4);
-                if (Player.statMana >= mana75Percent)
-                    playerHasMana = true;
-
-                NPC target = Main.npc[aimNPC];
-                int NPCnext = HelperStats.FindNextNPC(Projectile, target, 1400);
-                Projectile.ai[0]++;
-                Vector2 aim = Projectile.Center.DirectionTo(target.Center) * 12f;
-                if (target.active && Projectile.ai[0] > 4 && playerHasMana)
+                Projectile.RotateAroundSomething(408, 1f, pos.Center, false);
+                Projectile.rotation = Projectile.AngleTo(pos.Center);
+                int aimNPC = HelperStats.FindTargetLOSProjectile(Projectile, 1400);
+                if (Main.npc.IndexInRange(aimNPC))
                 {
-                    Player.CheckMana(6, true);
-                    Projectile.ai[0] = 0;
-                    if (Main.myPlayer == Player.whoAmI)
+                    if (Player.statMana <= ContentSamples.ItemsByType[AirControlUnit].mana)
+                        playerHasMana = false;
+                    int mana75Percent = Player.statManaMax2 - (Player.statManaMax2 / 4);
+                    if (Player.statMana >= mana75Percent)
+                        playerHasMana = true;
+
+                    NPC target = Main.npc[aimNPC];
+                    Projectile.ai[0]++;
+                    Vector2 aim = Projectile.Center.DirectionTo(target.Center) * 12f;
+                    if (target.active && Projectile.ai[0] > 6)
                     {
-                        var shooty = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, aim, ModContent.ProjectileType<SpectreBomb>(), Projectile.damage, 0.8f, Player.whoAmI);
-                        var dart = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, (aim * 0.9f).RotatedByRandom(MathHelper.ToRadians(4)) * Main.rand.NextFloat(.8f, 1.2f), ModContent.ProjectileType<MonkeyDart>(), (int)(Projectile.damage * 0.5f), 0f, Player.whoAmI);
-                        shooty.CritChance = 0;
+                        Projectile.ai[0] = 0;
+                        var dart = ExtensionMethods.BetterNewProjectile(Player, Projectile.GetSource_FromThis(), Projectile.Center, aim.RotatedByRandom(MathHelper.ToRadians(4)) * Main.rand.NextFloat(.8f, 1.2f), ModContent.ProjectileType<MonkeyDart>(), (int)(Projectile.damage * 0.5f), 0f, Player.whoAmI);
                         dart.CritChance = 0;
-                    }
-                    if (Main.npc.IndexInRange(NPCnext))
-                    {
-                        NPC otherTarget = Main.npc[NPCnext];
-                        Vector2 aimNext = Projectile.Center.DirectionTo(otherTarget.Center) * 12f;
-                        if (Projectile.DistanceSQ(otherTarget.Center) < 1400 * 1400 && Main.myPlayer == Player.whoAmI)
+                        if (playerHasMana)
                         {
-                            var extraShoot = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, aimNext, ModContent.ProjectileType<SpectreBomb>(), Projectile.damage, 0.8f, Player.whoAmI);
-                            extraShoot.CritChance = 0;
+                            Player.CheckMana(6, true);
+                            var shooty = ExtensionMethods.BetterNewProjectile(Player, Projectile.GetSource_FromThis(), Projectile.Center, aim, ModContent.ProjectileType<SpectreBomb>(), Projectile.damage, 0.8f, Player.whoAmI);
+                            shooty.CritChance = 0;
                         }
                     }
                 }
@@ -172,11 +169,8 @@ namespace BagOfNonsense.Projectiles
 
     public class SpectreBomb : ModProjectile
     {
-        private Player Player => Main.player[Projectile.owner];
-
         public override void SetStaticDefaults()
         {
-            // DisplayName.SetDefault("Spectre Bomb");
         }
 
         public override void SetDefaults()
@@ -188,36 +182,12 @@ namespace BagOfNonsense.Projectiles
             Projectile.timeLeft = 300;
             Projectile.alpha = 0;
             Projectile.friendly = true;
-            Projectile.light = 1f;
             Projectile.alpha = 255;
             Projectile.extraUpdates = 3;
         }
 
-        public override void ModifyDamageHitbox(ref Rectangle hitbox)
-        {
-        }
-
-        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
-        {
-        }
-
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            Boom(Projectile, damageDone, target, Player);
-        }
-
-        private static void Boom(Projectile proj, int damage, NPC target, Player player)
-        {
-            for (int i = 0; i < Main.maxNPCs; i++)
-            {
-                NPC targetNext = Main.npc[i];
-                if (targetNext.whoAmI != target.whoAmI && targetNext.active && !targetNext.friendly && targetNext.CanBeChasedBy() && proj.DistanceSQ(targetNext.Center) <= 64 * 64)
-                {
-                    NPC.HitInfo hit = new() { Damage = damage, DamageType = DamageClass.Magic };
-                    targetNext.StrikeNPC(hit);
-                    NetMessage.SendStrikeNPC(target, hit);
-                }
-            }
         }
 
         public override void AI()
@@ -228,14 +198,19 @@ namespace BagOfNonsense.Projectiles
             Projectile.FaceForward();
         }
 
+        public override bool OnTileCollide(Vector2 oldVelocity)
+        {
+            return base.OnTileCollide(oldVelocity);
+        }
+
         public override void OnKill(int timeLeft)
         {
+            SoundEngine.PlaySound(SoundID.Item14, Projectile.Center);
             for (int i = 0; i < 2; i++)
             {
                 var gore = Gore.NewGoreDirect(Projectile.GetSource_Death(), Projectile.Center, default, HelperStats.GrenadeGore);
-                gore.velocity = Utils.RandomVector2(Main.rand, -1f, 1f) * Main.rand.NextFloat(1f, 4f);
+                gore.velocity = Utils.RandomVector2(Main.rand, -1f, 1f) * Main.rand.NextFloat(4f);
             }
-            SoundEngine.PlaySound(SoundID.Item14, Projectile.Center);
         }
     }
 
@@ -243,7 +218,6 @@ namespace BagOfNonsense.Projectiles
     {
         public override void SetStaticDefaults()
         {
-            // DisplayName.SetDefault("Monkey Dart");
         }
 
         public override void SetDefaults()
@@ -257,7 +231,6 @@ namespace BagOfNonsense.Projectiles
             Projectile.timeLeft = 300;
             Projectile.alpha = 0;
             Projectile.friendly = true;
-            Projectile.light = 1f;
             Projectile.alpha = 255;
             Projectile.scale = 0.5f;
             Projectile.extraUpdates = 3;

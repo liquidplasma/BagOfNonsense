@@ -18,12 +18,7 @@ namespace BagOfNonsense.Helpers
     {
         private static int
             KnifeDustEffect;
-
-        /// <summary>
-        /// Muzzleflash effect, has 6 frames
-        /// </summary>
-        public static Texture2D MuzzleFlash = ModContent.Request<Texture2D>("BagOfNonsense/Assets/AR2MuzzleFlashFixed").Value;
-
+        
         public static int RandomCyanDust => Utils.SelectRandom(Main.rand, 226, 300);
 
         /// <summary>
@@ -60,8 +55,11 @@ namespace BagOfNonsense.Helpers
             }
         }
 
-        public static void Smoke(IEntitySource source, Vector2 position, int amount, float magnitudeRange, float rotationRange = MathHelper.TwoPi)
+        public static void SmokeGore(IEntitySource source, Vector2 position, int amount, float magnitudeRange, float rotationRange = MathHelper.TwoPi)
         {
+            if (Main.netMode == NetmodeID.Server)
+                return;
+
             for (int i = 0; i < amount; ++i)
             {
                 Vector2 velocity = Utils.RandomVector2(Main.rand, -magnitudeRange, magnitudeRange).RotatedByRandom(rotationRange);
@@ -82,26 +80,6 @@ namespace BagOfNonsense.Helpers
             Vector2 distance = target - source;
             distance.Normalize();
             return distance * speed;
-        }
-
-        /// <summary>
-        /// Finds said item type in the player inventory
-        /// </summary>
-        /// <param name="player"></param>
-        /// <param name="type"></param>
-        /// <returns></returns>
-        public static Item FindItemInInventory(this Player player, int type)
-        {
-            Item Item = null;
-            for (int i = 0; i < player.inventory.Length; i++)
-            {
-                Item p = player.inventory[i];
-                if (p != null && !p.IsAir && p.active && p.type == type)
-                {
-                    Item = p;
-                }
-            }
-            return Item;
         }
 
         /// <summary>
@@ -339,7 +317,7 @@ namespace BagOfNonsense.Helpers
             return result;
         }
 
-        /// <summary> Returns a NPC index within the range of maxRange. This one does NOT required line of sight.</summary>>
+        /// <summary> Returns a NPC index within the range of maxRange. This one does NOT requires line of sight.</summary>>
         public static int FindTargetNoLOS(Projectile proj, float maxRange)
         {
             float num = maxRange;

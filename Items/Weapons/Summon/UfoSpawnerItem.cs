@@ -89,8 +89,7 @@ namespace BagOfNonsense.Items.Weapons.Summon
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
             position = Main.MouseWorld;
-            var projectile = Projectile.NewProjectileDirect(source, position, velocity, type, damage, knockback, player.whoAmI);
-            projectile.originalDamage = Item.damage;
+            Projectile.NewProjectileDirect(source, position, velocity, type, damage, knockback, player.whoAmI);
             return false;
         }
 

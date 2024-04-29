@@ -58,7 +58,7 @@ namespace BagOfNonsense.Projectiles
                 Projectile.netUpdate = true;
             }
 
-            Projectile.CheckPlayerActiveAndNotDead(Player);
+            Projectile.KeepAliveIfOwnerIsAlive(Player);
 
             int mouseDirection = (Player.DirectionTo(mousePosLauncher).X > 0f) ? 1 : -1;
             Player.ChangeDir(mouseDirection);
@@ -71,7 +71,7 @@ namespace BagOfNonsense.Projectiles
                 SoundEngine.PlaySound(Fire, Player.Center);
 
             Projectile.ai[0]++;
-            if (Player.HasAmmo(Player.HeldItem) && Player.channel && Main.myPlayer == Projectile.owner && Player.ownedProjectileCounts[ModContent.ProjectileType<HLRocket>()] < 1 && Projectile.ai[0] > Player.HeldItem.useTime)
+            if (Player.HasAmmo(Player.HeldItem) && Player.channel && Player.ownedProjectileCounts[ModContent.ProjectileType<HLRocket>()] < 1 && Projectile.ai[0] > Player.HeldItem.useTime)
             {
                 Projectile.ai[0] = 0;
                 soundEffect = 31;
@@ -79,7 +79,7 @@ namespace BagOfNonsense.Projectiles
                 int fixDamage = (int)((ammo.damage + Projectile.damage) * Player.GetPlayerDamageMultiplier(Player.HeldItem.DamageType));
                 Vector2 aim = Projectile.Bottom.DirectionTo(Projectile.Top) * 9;
                 Vector2 offset = Projectile.Center.DirectionTo(mousePosLauncher) * 32f;
-                Projectile shot = Projectile.NewProjectileDirect(Player.GetSource_ItemUse_WithPotentialAmmo(Player.HeldItem, Player.HeldItem.useAmmo), Projectile.Center + offset, aim, ModContent.ProjectileType<HLRocket>(), fixDamage, 20f, Player.whoAmI);
+                ExtensionMethods.BetterNewProjectile(Player, Player.GetSource_ItemUse_WithPotentialAmmo(Player.HeldItem, Player.HeldItem.useAmmo), Projectile.Center + offset, aim, ModContent.ProjectileType<HLRocket>(), fixDamage, 20f, Player.whoAmI);
             }
 
             int followIndex = HelperStats.FindProjectileIndex(Player, ModContent.ProjectileType<HLRocketLaser>());
@@ -92,6 +92,7 @@ namespace BagOfNonsense.Projectiles
             Projectile.spriteDirection = Player.direction;
 
             Player.HoldOutArm(Projectile, mousePosLauncher);
+            Projectile.Center = Player.MountedCenter + new Vector2(0, -4);
 
             Player.heldProj = Projectile.whoAmI;
             if (Player.HeldItem.type != ModContent.ItemType<HLRocketGun>())
@@ -150,7 +151,7 @@ namespace BagOfNonsense.Projectiles
 
         public override void AI()
         {
-            Projectile.CheckPlayerActiveAndNotDead(Player);
+            Projectile.KeepAliveIfOwnerIsAlive(Player);
             Projectile.rotation++;
             if (Main.myPlayer == Projectile.owner)
             {
@@ -201,16 +202,21 @@ namespace BagOfNonsense.Projectiles
         private void Boom()
         {
             Projectile.netUpdate = true;
-            Projectile.timeLeft = 3;
+            Projectile.timeLeft = 6;
         }
 
         public override void AI()
         {
-            if (Projectile.timeLeft <= 3)
+            if (Projectile.timeLeft <= 6)
             {
-                Projectile.tileCollide = false;
-                Projectile.Resize(256, 256);
+                Projectile.Resize(360, 360);
                 Projectile.alpha = 255;
+                Projectile.velocity = Vector2.Zero;
+                Projectile.tileCollide = false;
+                Projectile.usesLocalNPCImmunity = true;
+                Projectile.localNPCHitCooldown = -1;
+                Projectile.netUpdate = true;
+                HelperStats.SmokeGore(Projectile.GetSource_Death(), Projectile.Center, 35, 4);
             }
             Projectile.alpha -= 15;
             Projectile.ai[0]++;
@@ -234,7 +240,9 @@ namespace BagOfNonsense.Projectiles
                 {
                     Projectile followThis = Main.projectile[followIndex];
                     Vector2 aim = Projectile.Center.DirectionTo(followThis.Center) * 24f;
-                    Projectile.velocity = Vector2.Lerp(Projectile.velocity, aim, 0.08f);
+                    float distance = 0.1f - Projectile.Distance(followThis.Center) * 0.000872f;
+                    Main.NewText(distance);
+                    Projectile.velocity = Vector2.Lerp(Projectile.velocity, aim, 0.08f - distance);
                     Projectile.FaceForward();
                 }
             }
@@ -255,7 +263,7 @@ namespace BagOfNonsense.Projectiles
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
             Boom();
-            return base.OnTileCollide(oldVelocity);
+            return false;
         }
 
         public override bool PreKill(int timeLeft)

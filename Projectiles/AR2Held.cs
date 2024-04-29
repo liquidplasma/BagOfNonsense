@@ -3,11 +3,13 @@ using BagOfNonsense.Items.Ammo;
 using BagOfNonsense.Items.Weapons.Ranged;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System;
 using System.ComponentModel;
 using System.IO;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
+using Terraria.ID;
 using Terraria.ModLoader;
 using Terraria.ModLoader.Config;
 
@@ -19,7 +21,6 @@ namespace BagOfNonsense.Projectiles
 
         [Header("AR2FireSoundType")]
         [DefaultValue(true)]
-        [TooltipArgs("")]
         public bool AR2AlternateFireSFXType { get; set; }
     }
 
@@ -27,10 +28,12 @@ namespace BagOfNonsense.Projectiles
     {
         private Player Player => Main.player[Projectile.owner];
         private Item CombineBall { get; set; }
-        private int BallType => ModContent.ProjectileType<PulseBall>();
         public bool AllowedToFire => Player.channel && !ChargingAltFire && Player.HasAmmo(Player.HeldItem);
         private bool ChargingAltFire => AltFireDelay >= 60;
-        private Texture2D Glow => ModContent.Request<Texture2D>("BagOfNonsense/Projectiles/AR2Held_Glow").Value;
+        private static Texture2D Glow => ModContent.Request<Texture2D>("BagOfNonsense/Projectiles/AR2Held_Glow").Value;
+        private Item Ammo => ContentSamples.ItemsByType[ModContent.ItemType<PulseAmmo>()];
+        private bool HasAltFireAmmo => Player.HasItem(ModContent.ItemType<CombineBalls>());
+        private int ShotDamage => (int)((Projectile.originalDamage + Player.GetTotalDamage(DamageClass.Ranged).ApplyTo(Ammo.damage)) * Player.GetStealth());
 
         private int ShotDelay
         {
@@ -117,7 +120,7 @@ namespace BagOfNonsense.Projectiles
             if (AllowedToFire)
             {
                 Vector2 muzzleDrawPos = Player.MountedCenter;
-                Texture2D muzzleFlash = HelperStats.MuzzleFlash;
+                Texture2D muzzleFlash = ModContent.Request<Texture2D>("BagOfNonsense/Assets/AR2MuzzleFlashFixed").Value;
                 Rectangle rect = muzzleFlash.Frame(verticalFrames: 6, frameY: Projectile.frame - 1);
                 Main.EntitySpriteDraw(muzzleFlash, muzzleDrawPos + muzzleDrawPos.DirectionTo(MouseAim) * 60f - Main.screenPosition, rect, Color.Cyan, Projectile.rotation + (MathHelper.PiOver2 * -Player.direction), rect.Size() / 2, 0.8f, (SpriteEffects)(Player.direction > 0 ? 0 : 1), 0);
             }
@@ -135,18 +138,9 @@ namespace BagOfNonsense.Projectiles
 
         public override bool PreAI()
         {
-            CombineBall ??= HelperStats.FindItemInInventory(Player, ModContent.ItemType<CombineBalls>());
-            if (CombineBall != null && CombineBall.stack <= 0)
-                CombineBall.TurnToAir();
-            Projectile.CheckPlayerActiveAndNotDead(Player);
+            Projectile.KeepAliveIfOwnerIsAlive(Player);
             if (AllowedToFire)
-            {
-                if (++Projectile.frameCounter >= 1)
-                {
-                    Projectile.frameCounter = 0;
-                    Projectile.frame = ++Projectile.frame % Main.projFrames[Projectile.type];
-                }
-            }
+                Projectile.frame = Math.Clamp(ShotDelay, 0, Main.projFrames[Type]);
             else
                 Projectile.frame = 0;
             return base.PreAI();
@@ -173,7 +167,7 @@ namespace BagOfNonsense.Projectiles
                 if (ShotDelay >= Player.HeldItem.useTime)
                 {
                     ShotDelay = 0;
-                    if (Main.rand.NextBool(10) && AR2Spread <= 7)
+                    if (Main.rand.NextBool(10) && AR2Spread <= 3)
                         AR2Spread++;
 
                     if (ModContent.GetInstance<AR2FireNoiseSelection>().AR2AlternateFireSFXType)
@@ -181,13 +175,10 @@ namespace BagOfNonsense.Projectiles
                     else
                         SoundEngine.PlaySound(FireSMODElite, Player.Center);
 
-                    Item ammo = Player.ChooseAmmo(Player.HeldItem);
-                    int damage = (int)((Projectile.damage + Player.GetTotalDamage(DamageClass.Ranged).ApplyTo(ammo.damage)) * Player.GetPlayerStealth());
                     Vector2 aim = (Projectile.Center.DirectionTo(MouseAim) * 16f).RotatedByRandom(MathHelper.ToRadians(AR2Spread) * Main.rand.NextFloat(0.95f, 1.05f));
+
                     if (Player.whoAmI == Main.myPlayer)
-                    {
-                        var shot = Projectile.NewProjectileDirect(Player.GetSource_ItemUse_WithPotentialAmmo(Player.HeldItem, Player.HeldItem.useAmmo), Projectile.Center, aim * Main.rand.NextFloat(0.9f, 1.1f), ModContent.ProjectileType<PulseBullet>(), damage, 3f, Player.whoAmI);
-                    }
+                        Projectile.NewProjectileDirect(Player.GetSource_ItemUse_WithPotentialAmmo(Player.HeldItem, Player.HeldItem.useAmmo), Projectile.Center, aim * Main.rand.NextFloat(0.9f, 1.1f), ModContent.ProjectileType<PulseBullet>(), ShotDamage, 3f, Player.whoAmI);
                 }
             }
             else
@@ -199,7 +190,7 @@ namespace BagOfNonsense.Projectiles
 
             //alternate fire
             #region
-            if (RightMousePressed && AltFireDelay == 0 && Player.ownedProjectileCounts[BallType] < 1 && !Player.mouseInterface && CombineBall != null && CombineBall.stack > 0)
+            if (HasAltFireAmmo && RightMousePressed && AltFireDelay == 0 && !Player.mouseInterface)
             {
                 AltFireDelay = 120;
                 SoundEngine.PlaySound(Charging, Projectile.Center);
@@ -208,11 +199,10 @@ namespace BagOfNonsense.Projectiles
             {
                 SoundEngine.PlaySound(BallLaunch, Projectile.Center);
                 Vector2 aim = Projectile.Center.DirectionTo(MouseAim) * 12f;
-                int damage = 1000;
-                if (CombineBall != null && Player.whoAmI == Main.myPlayer)
+                if (HasAltFireAmmo)
                 {
-                    CombineBall.stack--;
-                    var shot = Projectile.NewProjectileDirect(Player.GetSource_ItemUse_WithPotentialAmmo(Player.HeldItem, Player.HeldItem.useAmmo), Projectile.Center, aim * Main.rand.NextFloat(0.9f, 1.1f), BallType, damage, 10f, Player.whoAmI);
+                    Player.ConsumeItem(ModContent.ItemType<CombineBalls>());
+                    ExtensionMethods.BetterNewProjectile(Player, Player.GetSource_ItemUse_WithPotentialAmmo(Player.HeldItem, Player.HeldItem.useAmmo), Projectile.Center, aim * Main.rand.NextFloat(0.9f, 1.1f), ModContent.ProjectileType<PulseBall>(), 1000, 10f, Player.whoAmI);
                 }
             }
             if (AltFireDelay >= 60)
@@ -230,14 +220,15 @@ namespace BagOfNonsense.Projectiles
             Vector2 distance = Player.Center.DirectionTo(MouseAim) * 16f - recoil;
             drawPos = Projectile.Center = Player.MountedCenter + distance;
             Projectile.velocity = Vector2.Zero;
-            int mouseDirection = (Player.DirectionTo(MouseAim).X > 0f) ? 1 : -1;
-            Player.ChangeDir(mouseDirection);
+            int mouseDirection = (Player.DirectionTo(MouseAim).X > 0f) ? 1 : -1;            
             Projectile.spriteDirection = Player.direction;
             Player.heldProj = Projectile.whoAmI;
             Projectile.rotation = Player.AngleTo(MouseAim) + MathHelper.PiOver2;
             if (Player.channel || AltFireDelay >= 60)
             {
                 Player.HoldOutArm(Projectile, MouseAim);
+                Player.SetDummyItemTime(2);
+                Player.ChangeDir(mouseDirection);
                 Projectile.alpha = 0;
             }
             else

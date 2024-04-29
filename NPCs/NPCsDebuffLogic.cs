@@ -30,15 +30,21 @@ namespace BagOfNonsense.NPCs
         {
             if (greenrotDebuff)
             {
-                if (npc.lifeRegen > 0) npc.lifeRegen = 0;
+                if (npc.lifeRegen > 0)
+                    npc.lifeRegen = 0;
+
                 npc.lifeRegen -= 160;
-                if (damage < 20) damage = 20;
+                if (damage < 20)
+                    damage = 20;
             }
             if (coldtouch)
             {
-                if (npc.lifeRegen > 0) npc.lifeRegen = 0;
+                if (npc.lifeRegen > 0)
+                    npc.lifeRegen = 0;
+
                 npc.lifeRegen -= 64;
-                if (damage < 8) damage = 8;
+                if (damage < 8)
+                    damage = 8;
             }
             if (corrupttouch)
             {
@@ -62,6 +68,19 @@ namespace BagOfNonsense.NPCs
             }
         }
 
+        private void DustEffect(Entity target, float velocity, float velocityY, float scale, int dustType, Color color = default)
+        {
+            Dust dusty = Dust.NewDustDirect(target.position - new Vector2(2f, 2f), target.width + 4, target.height + 4, dustType, target.velocity.X * 0.4f, target.velocity.Y * 0.4f, 100, color, 2f);
+            dusty.noGravity = true;
+            dusty.velocity *= velocity;
+            dusty.velocity.Y -= velocityY;
+            if (Main.rand.NextBool(4))
+            {
+                dusty.noGravity = false;
+                dusty.scale *= scale;
+            }
+        }
+
         public override void DrawEffects(NPC npc, ref Color drawColor)
         {
             if (Main.player.IndexInRange(ChamaleonPlayerIndex))
@@ -76,65 +95,22 @@ namespace BagOfNonsense.NPCs
                     Biome.Update();
                     drawColor = Biome.Color;
                     Lighting.AddLight(npc.Center, Biome.Color.ToVector3());
+
                     if (Main.rand.NextBool(6))
-                    {
-                        int dust = Dust.NewDust(npc.position - new Vector2(2f, 2f), npc.width + 4, npc.height + 4, DustID.Scorpion, npc.velocity.X * 0.4f, npc.velocity.Y * 0.4f, 100, Biome.Color, 2f);
-                        Main.dust[dust].noGravity = true;
-                        Main.dust[dust].velocity *= Main.rand.NextFloat(2.1f, 4.8f);
-                        Main.dust[dust].velocity.Y -= Main.rand.NextFloat(-0.8f, 0.8f);
-                        if (Main.rand.NextBool(4))
-                        {
-                            Main.dust[dust].noGravity = false;
-                            Main.dust[dust].scale *= Main.rand.NextFloat(0.1f, 0.7f);
-                        }
-                    }
+                        DustEffect(npc, Main.rand.NextFloat(2.1f, 4.8f), Main.rand.NextFloat(-0.8f, 0.8f), Main.rand.NextFloat(0.1f, 0.7f), DustID.Scorpion, Biome.Color);
                 }
             }
-            if (coldtouch)
-            {
-                if (Main.rand.NextBool(6))
-                {
-                    int dust = Dust.NewDust(npc.position - new Vector2(2f, 2f), npc.width + 4, npc.height + 4, DustID.IceTorch, npc.velocity.X * 0.4f, npc.velocity.Y * 0.4f, 100, default, 2f);
-                    Main.dust[dust].noGravity = true;
-                    Main.dust[dust].velocity *= 2.1f;
-                    Main.dust[dust].velocity.Y -= 0.4f;
-                    if (Main.rand.NextBool(4))
-                    {
-                        Main.dust[dust].noGravity = false;
-                        Main.dust[dust].scale *= 0.5f;
-                    }
-                }
-            }
-            if (corrupttouch)
-            {
-                if (Main.rand.NextBool(2))
-                {
-                    int dust = Dust.NewDust(npc.position - new Vector2(2f, 2f), npc.width + 4, npc.height + 4, DustID.ScourgeOfTheCorruptor, npc.velocity.X * 0.4f, npc.velocity.Y * 0.4f, 100, default, 2f);
-                    Main.dust[dust].noGravity = true;
-                    Main.dust[dust].velocity *= 3.8f;
-                    Main.dust[dust].velocity.Y -= 0.87f;
-                    if (Main.rand.NextBool(4))
-                    {
-                        Main.dust[dust].noGravity = false;
-                        Main.dust[dust].scale *= 0.5f;
-                    }
-                }
-            }
+
+            if (coldtouch && Main.rand.NextBool(6))
+                DustEffect(npc, 2.1f, 0.4f, 0.5f, DustID.IceTorch);
+
+            if (corrupttouch && Main.rand.NextBool(2))
+                DustEffect(npc, 3.8f, 0.87f, 0.5f, DustID.ScourgeOfTheCorruptor);
 
             if (highwattage)
             {
                 if (Main.rand.NextBool(2))
-                {
-                    int dust = Dust.NewDust(npc.position - new Vector2(2f, 2f), npc.width + 4, npc.height + 4, DustID.Vortex, npc.velocity.X * 0.4f, npc.velocity.Y * 0.4f, 100, default, 2f);
-                    Main.dust[dust].noGravity = true;
-                    Main.dust[dust].velocity *= 1.8f;
-                    Main.dust[dust].velocity.Y -= 0.5f;
-                    if (Main.rand.NextBool(4))
-                    {
-                        Main.dust[dust].noGravity = false;
-                        Main.dust[dust].scale *= 0.5f;
-                    }
-                }
+                    DustEffect(npc, 1.8f, 0.5f, 0.5f, DustID.Vortex);
                 Lighting.AddLight(npc.position, Color.Cyan.ToVector3());
             }
         }

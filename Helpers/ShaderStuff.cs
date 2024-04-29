@@ -42,12 +42,12 @@ namespace BagOfNonsense.Helpers
 
         public static float PulseBulletStripWidth(float progressOnStrip)
         {
-            return MathHelper.Lerp(13f, 23f, Utils.GetLerpValue(0f, 0.2f, progressOnStrip, clamped: true)) * Utils.GetLerpValue(0f, 0.07f, progressOnStrip, clamped: true);
+            return MathHelper.Lerp(0f, 14f, Utils.GetLerpValue(0f, 0.2f, progressOnStrip, clamped: true)) * Utils.GetLerpValue(0f, 0.01f, progressOnStrip, clamped: true);
         }
 
         public static float MagicMissileStripWidth(float progressOnStrip)
         {
-            return MathHelper.Lerp(26f, 32f, Utils.GetLerpValue(0f, 0.2f, progressOnStrip, clamped: true)) * Utils.GetLerpValue(0f, 0.07f, progressOnStrip, clamped: true);
+            return MathHelper.Lerp(4f, 32f, Utils.GetLerpValue(0f, 0.2f, progressOnStrip, clamped: true)) * Utils.GetLerpValue(0f, 0.07f, progressOnStrip, clamped: true);
         }
 
         #endregion

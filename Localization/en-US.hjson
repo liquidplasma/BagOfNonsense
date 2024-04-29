@@ -1,5 +1,7 @@
 Mods: {
 	BagOfNonsense: {
+		Sets.NecroSetExtra.Description: Shoot additional bone arrows when hurting enemies with ranged attacks
+
 		Buffs: {
 			BBloodyRage: {
 				DisplayName: Bloody Orb
@@ -130,6 +132,7 @@ Mods: {
 					Only active above 25% life
 					Grants immunity to knockback and fire blocks
 					Grants immunity to most debuffs
+					Permanent life force buff
 					Puts a shell around the owner when below 50% life that reduces damage
 					'Also grants immunity to myopia'
 					'''
@@ -151,7 +154,7 @@ Mods: {
 				Tooltip:
 					'''
 					Greatly increases health regen when not moving
-					Puts a shell around the owner when below 50% life that reduces damage
+					Puts a shell around the owner when below 75% life that reduces damage
 					Provides life regeneration and reduces the cooldown of healing potions
 					Summons spores over time that will damage enemies
 					'''
@@ -844,7 +847,7 @@ Mods: {
 				DisplayName: Overwatch Standard Issue Pulse Rifle
 				Tooltip:
 					'''
-					Can shoot energy balls
+					Shoots energy balls
 					66% chance not to consume ammo
 					'''
 			}
@@ -859,18 +862,23 @@ Mods: {
 				Tooltip: ""
 			}
 
-			AttackCyclingWeapon: {
-				DisplayName: Attack Cycling Weapon
+			CombineBalls: {
+				DisplayName: Combine Balls
 				Tooltip: ""
 			}
 
-			M1Garand: {
-				DisplayName: M1 Garand
-				Tooltip: Ping!
+			SymbolOfLuck: {
+				DisplayName: Symbol Of Luck
+				Tooltip: Damage done will be mutiplied between 1% and 199%
 			}
 
-			CombineBalls: {
-				DisplayName: Combine Balls
+			CelestialHeart: {
+				DisplayName: Celestial Heart
+				Tooltip: Increases effectiveness of life crystals by 50%
+			}
+
+			AttackCyclingWeapon: {
+				DisplayName: Attack Cycling Weapon
 				Tooltip: ""
 			}
 		}
@@ -977,6 +985,8 @@ Mods: {
 			M1GarandEnbloc.DisplayName: M1 Garand Enbloc
 			M1GarandHeld.DisplayName: M1 Garand Held
 			NormalBullet.DisplayName: Normal Bullet
+			SpriteCreator.DisplayName: Sprite Creator
+			SpriteCreatorShots.DisplayName: Sprite Creator Shots
 		}
 
 		Configs: {

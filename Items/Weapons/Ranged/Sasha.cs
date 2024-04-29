@@ -16,7 +16,7 @@ namespace BagOfNonsense.Items.Weapons.Ranged
             return Main.LocalPlayer.HeldItem.type == ModContent.ItemType<Sasha>();
         }
 
-        public override string DisplayValue(ref Color displayColor)/* tModPorter Suggestion: Set displayColor to InactiveInfoTextColor if your display value is "zero"/shows no valuable information */
+        public override string DisplayValue(ref Color displayColor, ref Color displayShadowColor)
         {
             return "Damage done: " + Main.LocalPlayer.GetModPlayer<SashaCritTime>().damageTracker.ToString();
         }
@@ -24,11 +24,6 @@ namespace BagOfNonsense.Items.Weapons.Ranged
 
     public class Sasha : ModItem
     {
-        public override void SetStaticDefaults()
-        {
-            // DisplayName.SetDefault("Sasha");
-        }
-
         public override void SetDefaults()
         {
             Item.width = 52;
@@ -40,7 +35,7 @@ namespace BagOfNonsense.Items.Weapons.Ranged
             Item.useTime = 6;
             Item.width = 52;
             Item.height = 40;
-            Item.shoot = ModContent.ProjectileType<FireBirdProj>();
+            Item.shoot = ProjectileID.PurificationPowder;
             Item.damage = 27;
             Item.shootSpeed = 16f;
             Item.noMelee = true;
@@ -55,11 +50,8 @@ namespace BagOfNonsense.Items.Weapons.Ranged
         public override void HoldItem(Player player)
         {
             if (player.ownedProjectileCounts[ModContent.ProjectileType<SashaProj>()] < 1 && player.whoAmI == Main.myPlayer)
-            {
-                var shot = Projectile.NewProjectileDirect(player.GetSource_ItemUse_WithPotentialAmmo(player.HeldItem, Item.useAmmo), player.Center, Vector2.Zero, ModContent.ProjectileType<SashaProj>(), Item.damage, Item.knockBack, player.whoAmI);
-                shot.originalDamage = Item.damage;
-            }
-            Item.useTime = Item.useAnimation = 6;
+
+                Projectile.NewProjectileDirect(player.GetSource_ItemUse_WithPotentialAmmo(player.HeldItem, Item.useAmmo), player.Center, Vector2.Zero, ModContent.ProjectileType<SashaProj>(), Item.damage, Item.knockBack, player.whoAmI);
         }
 
         public override void ModifyTooltips(List<TooltipLine> tooltips)
@@ -67,8 +59,6 @@ namespace BagOfNonsense.Items.Weapons.Ranged
             tooltips.RemoveAll(tip => tip.Name.StartsWith("Damage"));
             TooltipLine actualDamage = new(Mod, "actualDamage", (Main.LocalPlayer.HasSashaUpgrade() ? 54 : 27) + " ranged damage");
             tooltips.Insert(1, actualDamage);
-            TooltipLine info = new(Mod, "susceptible", "Susceptible to damage fall off\nMay crit randomly");
-            tooltips.Add(info);
             base.ModifyTooltips(tooltips);
         }
 
@@ -77,7 +67,8 @@ namespace BagOfNonsense.Items.Weapons.Ranged
             for (int i = 0; i < Main.maxProjectiles; i++)
             {
                 Projectile proj = Main.projectile[i];
-                if (proj.active && proj.type == ModContent.ProjectileType<SashaProj>() && proj.owner == player.whoAmI && player.GetModPlayer<SashaCritTime>().canConsumeAmmo == 1) return true;
+                if (proj.active && proj.type == ModContent.ProjectileType<SashaProj>() && proj.owner == player.whoAmI && player.GetModPlayer<SashaCritTime>().canConsumeAmmo == 1)
+                    return true;
             }
             return false;
         }

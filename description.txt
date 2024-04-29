@@ -9,4 +9,4 @@ Thanks to @Annihigamer for [url=https://forums.terraria.org/index.php?threads/an
 Thanks to [url=https://steamcommunity.com/profiles/76561198801238096/] -Faroz- [/url] for letting me use his [url=https://steamcommunity.com/sharedfiles/filedetails/?id=2571103135] workshop content [/url] on my mod!
 
 Changelog//
-v1.7.2 - Updated to newest tmod version
+v1.7.3 - Fixes some forgotten bugs

@@ -29,12 +29,24 @@ namespace BagOfNonsense.Items.Weapons.Magic
             Item.DamageType = DamageClass.Magic;
             Item.mana = 10;
             Item.autoReuse = false;
-            Item.useStyle = ItemUseStyleID.Shoot;
+            Item.useStyle = ItemUseStyleID.HoldUp;
             Item.UseSound = SoundID.Item43;
             Item.shootSpeed = 20f;
             Item.shoot = SunGod;
             Item.noMelee = true;
             Item.channel = true;
+        }
+
+        public override bool CanUseItem(Player player)
+        {
+            if (Main.myPlayer == player.whoAmI)
+            {
+                bool tileBehind = Main.tile[(int)(Main.MouseWorld.X / 16), (int)(Main.MouseWorld.Y / 16)].HasTile;
+                if (tileBehind)
+                    return false;
+            }
+
+            return base.CanUseItem(player);
         }
 
         public override bool AltFunctionUse(Player player)
@@ -91,12 +103,24 @@ namespace BagOfNonsense.Items.Weapons.Magic
             Item.DamageType = DamageClass.Magic;
             Item.mana = 10;
             Item.autoReuse = false;
-            Item.useStyle = ItemUseStyleID.Shoot;
+            Item.useStyle = ItemUseStyleID.HoldUp;
             Item.UseSound = SoundID.Item43;
             Item.shootSpeed = 20f;
             Item.shoot = SunGod;
             Item.noMelee = true;
             Item.channel = true;
+        }
+
+        public override bool CanUseItem(Player player)
+        {
+            if (Main.myPlayer == player.whoAmI)
+            {
+                bool tileBehind = Main.tile[(int)(Main.MouseWorld.X / 16), (int)(Main.MouseWorld.Y / 16)].HasTile;
+                if (tileBehind)
+                    return false;
+            }
+
+            return base.CanUseItem(player);
         }
 
         public override bool AltFunctionUse(Player player)

@@ -10,7 +10,9 @@ namespace BagOfNonsense.Buffs
     public class FireBurnGlobal : GlobalNPC
     {
         public bool burning;
+        public int burningTime;
         private int timer;
+        public bool CanBurn => burningTime > 0;
         public Player Player { get; set; }
 
         private static SoundStyle Hit => new("BagOfNonsense/Sounds/FireBurnHit/hit", 10)
@@ -19,18 +21,20 @@ namespace BagOfNonsense.Buffs
             Volume = 0.1f
         };
 
-        private int DustType => Utils.SelectRandom(Main.rand, 259, 64, 158);
+        private static int DustType => Utils.SelectRandom(Main.rand, 259, 64, 158);
 
         public override bool InstancePerEntity => true;
 
         public override void ResetEffects(NPC npc)
         {
-            burning = false;
+            if (CanBurn)            
+                burningTime--;
+                       
         }
 
         public override void DrawEffects(NPC npc, ref Color drawColor)
         {
-            if (burning && npc.active && !npc.friendly)
+            if (Player != null && Player.active && CanBurn && npc.active && !npc.friendly)
             {
                 drawColor = Color.IndianRed;
             }
@@ -38,11 +42,11 @@ namespace BagOfNonsense.Buffs
 
         public override void UpdateLifeRegen(NPC npc, ref int damage)
         {
-            if (burning && !npc.friendly && npc.active && Player != null)
-            {
+            if (Player != null && Player.active && CanBurn && !npc.friendly && npc.active)
+            {               
                 timer++;
                 Lighting.AddLight(npc.Center, Color.IndianRed.ToVector3());
-                if (timer >= 30 && Player.whoAmI == Main.myPlayer)
+                if (timer >= 30)
                 {
                     timer = 0;
                     for (int i = 0; i < 36; i++)
@@ -52,25 +56,10 @@ namespace BagOfNonsense.Buffs
                         dust.velocity *= 1.2f + Utils.SelectRandom(Main.rand, .15f, .3f, .45f) * Utils.SelectRandom(Main.rand, -1, 1);
                     }
                     int hitDamage = (20 * (Player.HasFireBirdUpgrade() ? 5 : 1)) + Main.rand.Next(Player.HasFireBirdUpgrade() ? 84 : 21);
-                    Projectile.NewProjectileDirect(Player.GetSource_ItemUse_WithPotentialAmmo(Player.HeldItem, Player.HeldItem.useAmmo), npc.Center, Vector2.Zero, ModContent.ProjectileType<UfoMissileBits>(), hitDamage, 2f, Player.whoAmI, 1);
+                    ExtensionMethods.BetterNewProjectile(Player, Player.GetSource_ItemUse_WithPotentialAmmo(Player.HeldItem, Player.HeldItem.useAmmo), npc.Center, Vector2.Zero, ModContent.ProjectileType<UfoMissileBits>(), hitDamage, 2f, Player.whoAmI, 1);
                     SoundEngine.PlaySound(Hit, npc.Center);
                 }
             }
-        }
-    }
-
-    public class DFireBurn : ModBuff
-    {
-        public override void SetStaticDefaults()
-        {
-            // DisplayName.SetDefault("Fire Burn");
-            Main.buffNoTimeDisplay[Type] = true;
-            Main.debuff[Type] = true;
-        }
-
-        public override void Update(NPC npc, ref int buffIndex)
-        {
-            npc.GetGlobalNPC<FireBurnGlobal>().burning = true;
         }
     }
 }

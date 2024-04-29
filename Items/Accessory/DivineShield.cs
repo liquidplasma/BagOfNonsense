@@ -7,16 +7,7 @@ namespace BagOfNonsense.Items.Accessory
     [AutoloadEquip(EquipType.Shield)]
     public class DivineShield : ModItem
     {
-        public override void SetStaticDefaults()
-        {
-            // DisplayName.SetDefault("Divine Shield");
-            /* Tooltip.SetDefault("Absorbs 25% of damage done to players on your team\n" +
-                "Only active above 25% life\n" +
-                "Grants immunity to knockback and fire blocks\n" +
-                "Grants immunity to most debuffs\n" +
-                "Puts a shell around the owner when below 50% life that reduces damage\n" +
-                "'Also grants immunity to myopia'"); */
-        }
+        
 
         public override void SetDefaults()
         {
@@ -31,6 +22,7 @@ namespace BagOfNonsense.Items.Accessory
 
         public override void UpdateEquip(Player player)
         {
+            player.GetModPlayer<PlayerChanges>().DivineShield = true;
             player.buffImmune[46] = true;
             player.noKnockback = true;
             player.fireWalk = true;

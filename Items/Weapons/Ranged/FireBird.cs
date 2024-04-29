@@ -1,4 +1,5 @@
-﻿using BagOfNonsense.Items.Ingredients;
+﻿using BagOfNonsense.Helpers;
+using BagOfNonsense.Items.Ingredients;
 using BagOfNonsense.Projectiles;
 using Microsoft.Xna.Framework;
 using Terraria;
@@ -47,7 +48,7 @@ namespace BagOfNonsense.Items.Weapons.Ranged
                 for (int i = 1; i < 9; i++)
                 {
                     var shot = Projectile.NewProjectileDirect(player.GetSource_ItemUse_WithPotentialAmmo(player.HeldItem, Item.useAmmo), player.Center, Vector2.Zero, ModContent.ProjectileType<FireBirdBase>(), Item.damage, Item.knockBack, player.whoAmI, 0, i);
-                    shot.originalDamage = Item.damage;
+                    shot.originalDamage = (int)player.GetDamage(DamageClass.Ranged).ApplyTo(Item.damage);
                 }
             }
         }
@@ -57,9 +58,16 @@ namespace BagOfNonsense.Items.Weapons.Ranged
             for (int i = 0; i < Main.maxProjectiles; i++)
             {
                 Projectile proj = Main.projectile[i];
-                if (proj.type == ModContent.ProjectileType<FireBirdBase>() && proj.owner == player.whoAmI && proj.active) return true;
+                if (proj.type == ModContent.ProjectileType<FireBirdBase>() && proj.owner == player.whoAmI && proj.active)
+                    return true;
             }
             return false;
+        }
+
+        public override void ModifyWeaponDamage(Player player, ref StatModifier damage)
+        {
+            damage *= player.HasFireBirdUpgrade() ? 1.5f : 1f;
+            base.ModifyWeaponDamage(player, ref damage);
         }
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)

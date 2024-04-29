@@ -27,15 +27,6 @@ namespace BagOfNonsense.Items.Accessory
             base.AI(projectile);
         }
     }
-
-    public class DropChance : GlobalNPC
-    {
-        public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot)
-        {
-            if (NPCExtensions.SkeletonGunners.Contains(npc.type))
-                npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<GhostlyArrow>(), 8, 1, 1));
-        }
-    }
 }
 
 namespace BagOfNonsense.Items.Accessory

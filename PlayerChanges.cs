@@ -1,9 +1,7 @@
 using BagOfNonsense.Dusts;
-using BagOfNonsense.Items.Accessory;
 using BagOfNonsense.Items.Armor;
 using BagOfNonsense.Items.Weapons.Ranged;
 using Microsoft.Xna.Framework;
-using System;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.Graphics.Shaders;
@@ -36,6 +34,10 @@ namespace BagOfNonsense
 
         public int stockedTeleports = 0;
         public float stTick = 0f;
+
+        public bool
+            ShinyStone,
+            DivineShield;
 
         public override void ResetEffects()
         {
@@ -132,7 +134,7 @@ namespace BagOfNonsense
                 Main.dust[dust].position = Player.Center;
                 vector123.Normalize();
                 vector123 *= 30f;
-                vector123 = vector123.RotatedBy((double)num1007, default(Vector2));
+                vector123 = vector123.RotatedBy((double)num1007, default);
                 Main.dust[dust].velocity.X = 0f;
                 Main.dust[dust].velocity.Y = 0f;
                 Main.dust[dust].noGravity = true;
@@ -146,76 +148,33 @@ namespace BagOfNonsense
 
         public override void PostUpdateEquips()
         {
-            if (Player.inventory[Player.selectedItem].type == ModContent.ItemType<SpaceBlaster>())
-            {
+            if (Player.HeldItem.type == ModContent.ItemType<SpaceBlaster>())
                 Player.scope = true;
-            }
-            for (int l = 3; l < 8 + Player.extraAccessorySlots; l++)
+
+            if (ShinyStone && Player.statLife <= Player.statLifeMax2 * 0.75)
+                Player.AddBuff(BuffID.IceBarrier, 2, true);
+
+            if (DivineShield)
             {
-                if (Player.armor[l].type == ModContent.ItemType<FrozenShinyStone>())
+                if (Player.statLife <= Player.statLifeMax2 * 0.5)
+                    Player.AddBuff(BuffID.IceBarrier, 5, true);
+
+                Player.noKnockback = true;
+                if (Player.statLife > Player.statLifeMax2 * 0.25)
                 {
-                    if ((double)Player.statLife <= (double)Player.statLifeMax2 * 0.5)
+                    for (int i = 0; i < Main.maxPlayers; i++)
                     {
-                        Player.AddBuff(62, 5, true);
-                    }
-                }
-                if (Player.armor[l].type == ModContent.ItemType<DivineShield>())
-                {
-                    if ((double)Player.statLife <= (double)Player.statLifeMax2 * 0.5)
-                    {
-                        Player.AddBuff(62, 5, true);
-                    }
-                    Player.noKnockback = true;
-                    if ((double)Player.statLife > (double)Player.statLifeMax2 * 0.25)
-                    {
-                        if (Player.whoAmI == Main.myPlayer)
-                        {
-                            //player.paladinGive = true;
-                        }
-                        if (Player.miscCounter % 5 == 0)
-                        {
-                            int myPlayer = Main.myPlayer;
-                            if (Main.player[myPlayer].team == Player.team && Player.team != 0)
-                            {
-                                float num3 = Player.position.X - Main.player[myPlayer].position.X;
-                                float num4 = Player.position.Y - Main.player[myPlayer].position.Y;
-                                float num5 = (float)Math.Sqrt((double)(num3 * num3 + num4 * num4));
-                                if (num5 < 800f)
-                                {
-                                    Main.player[myPlayer].AddBuff(43, 10, true);
-                                }
-                            }
-                        }
+                        Player otherP = Main.player[i];
+
+                        if (i == Player.whoAmI)
+                            continue;
+
+                        if (otherP.active && otherP.team == Player.team && Player.DistanceSQ(otherP.Center) <= 800 * 800)
+                            otherP.AddBuff(BuffID.PaladinsShield, 2);
                     }
                 }
             }
         }
-
-        private int GetStage(NPC npc)
-        {
-            int stage = 0;
-            float hp = (float)(npc.life);
-            float hpM = (float)(npc.lifeMax);
-            float hpP = hp / hpM;
-            if (!npc.lavaImmune)
-            {
-                stage = 0;
-            }
-            else if (npc.lavaImmune && hpP > 0.5f)
-            {
-                stage = 1;
-            }
-            else
-            {
-                stage = 2;
-            }
-            return stage;
-        }
-
-        /*public override Texture2D GetMapBackgroundImage()
-		{
-			return mod.GetTexture("NeonBackground");
-		}*/
 
         private static bool StellarNinja(Player player)
         {

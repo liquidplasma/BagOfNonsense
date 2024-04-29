@@ -97,7 +97,9 @@ namespace BagOfNonsense
 
         public override void ModifyHitNPC(Projectile projectile, NPC target, ref NPC.HitModifiers modifiers)
         {
-            if (NecroArmorBoneArrow) modifiers.DisableCrit();
+            if (NecroArmorBoneArrow)
+                modifiers.DisableCrit();
+
             if (SashaProjBool)
             {
                 Player player = Main.player[projectile.owner];

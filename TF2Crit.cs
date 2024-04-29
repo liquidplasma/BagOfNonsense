@@ -16,7 +16,8 @@ namespace BagOfNonsense
         private static SoundStyle MiniCritHit => new("BagOfNonsense/Sounds/Crit/crit_hit_mini", 5)
         {
             Pitch = Main.rand.NextFloat(-0.15f, 0.15f),
-            Volume = Main.rand.NextFloat(0.6f, 0.7f)
+            Volume = Main.rand.NextFloat(0.2f, 0.3f),
+            MaxInstances = 0
         };
 
         /// <summary>
@@ -25,7 +26,8 @@ namespace BagOfNonsense
         private static SoundStyle CritHit => new("BagOfNonsense/Sounds/Crit/crit_hit", 5)
         {
             Pitch = Main.rand.NextFloat(-0.15f, 0.15f),
-            Volume = Main.rand.NextFloat(0.8f, 0.9f)
+            Volume = Main.rand.NextFloat(0.2f, 0.4f),
+            MaxInstances = 0
         };
 
         /// <summary>

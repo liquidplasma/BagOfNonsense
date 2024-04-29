@@ -74,7 +74,8 @@ namespace BagOfNonsense.Items.Weapons.Magic
             loopActive = SoundEngine.FindActiveSound(Loop);
             endActive = SoundEngine.FindActiveSound(End);
 
-            if (!player.channel && timer > 0) timer--;
+            if (!player.channel && timer > 0)
+                timer--;
 
             if (player.channel && player.CheckMana(player.HeldItem.mana) && player.statMana > 0)
             {

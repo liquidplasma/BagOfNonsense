@@ -3,6 +3,7 @@ using Terraria.ID;
 using Terraria;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
+using Terraria.Localization;
 
 namespace BagOfNonsense
 {
@@ -21,7 +22,11 @@ namespace BagOfNonsense
 
         public override void UpdateArmorSet(Player player, string set)
         {
-            if (set == "BON_NecroSet") player.GetModPlayer<BagOfNonsenseSetBonuses>().equippedNecroSet = true;
+            if (set == "BON_NecroSet")
+            {
+                player.GetModPlayer<BagOfNonsenseSetBonuses>().equippedNecroSet = true;
+                player.setBonus += "\n" + Language.GetTextValue("Mods.BagOfNonsense.Sets.NecroSetExtra.Description");
+            }
             if (set == "BON_AnglerSet")
             {
                 player.GetModPlayer<BagOfNonsenseSetBonuses>().equippedAnglerSet = true;

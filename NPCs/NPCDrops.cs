@@ -1,7 +1,9 @@
-﻿using BagOfNonsense.Items.Accessory;
+﻿using BagOfNonsense.Helpers;
+using BagOfNonsense.Items.Accessory;
 using BagOfNonsense.Items.Ammo;
 using BagOfNonsense.Items.Ingredients;
 using BagOfNonsense.Items.Others;
+using System.Linq;
 using Terraria;
 using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
@@ -14,15 +16,25 @@ namespace BagOfNonsense.NPCs
         public override void ModifyItemLoot(Item item, ItemLoot itemLoot)
         {
             if (item.type == ItemID.DestroyerBossBag)
-
                 itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<ProjectileDeflectorAccessory>(), 5, 1, 1));
 
             if (item.type == ItemID.WallOfFleshBossBag)
-
                 itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<BullseyeEmblem16>(), 3, 1, 1));
 
             if (item.type == ItemID.MoonLordBossBag)
                 itemLoot.Add(ItemDropRule.Common(ModContent.ItemType<BullseyeEmblem16>(), 1, 20, 34));
+        }
+    }
+
+    public class BagOfNonsenseDrops : GlobalNPC
+    {
+        public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot)
+        {
+            if (NPCExtensions.SkeletonGunners.Contains(npc.type))
+                npcLoot.Add(ItemDropRule.Common(ModContent.ItemType<GhostlyArrow>(), 8, 1, 1));
+
+            if (npc.type == NPCID.TheDestroyer)
+                npcLoot.Add(ItemDropRule.ByCondition(new Conditions.NotExpert(), ModContent.ItemType<ProjectileDeflectorAccessory>(), 5, 1, 1));
         }
     }
 

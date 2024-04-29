@@ -20,6 +20,18 @@ namespace BagOfNonsense.Projectiles
             mousePosFireBird,
             placeToGo;
 
+        private int ShotDelay
+        {
+            get
+            {
+                return (int)Projectile.ai[0];
+            }
+            set
+            {
+                Projectile.ai[0] = value;
+            }
+        }
+
         private int TypeDust => Utils.SelectRandom(Main.rand, 259, 64, 158);
 
         private Player Player => Main.player[Projectile.owner];
@@ -43,6 +55,7 @@ namespace BagOfNonsense.Projectiles
             Projectile.aiStyle = 0;
             Projectile.scale = 1;
             Projectile.extraUpdates = 1;
+            Projectile.ContinuouslyUpdateDamageStats = true;
         }
 
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
@@ -74,18 +87,18 @@ namespace BagOfNonsense.Projectiles
 
         public override void AI()
         {
-            Projectile.CheckPlayerActiveAndNotDead(Player);
+            Projectile.KeepAliveIfOwnerIsAlive(Player);
             if (Player.whoAmI == Main.myPlayer)
             {
-                Projectile.ai[0]++;
+                ShotDelay++;
                 mousePosFireBird = Main.MouseWorld;
                 Projectile.netUpdate = true;
                 int useTime = (int)(Player.HeldItem.useTime * (Player.HasFireBirdUpgrade() ? 1.5f : 2));
-                if (Player.channel && Projectile.ai[0] >= useTime && Player.HasAmmo(Player.HeldItem))
+                if (Player.channel && ShotDelay >= useTime && Player.HasAmmo(Player.HeldItem))
                 {
                     Item ammo = Player.ChooseAmmo(Player.HeldItem);
-                    fixDamage = (int)((ammo.damage + Projectile.damage) * Player.GetDamage(DamageClass.Ranged).Additive * (Player.HasFireBirdUpgrade() ? 1.5f : 0.85f));
-                    Projectile.ai[0] = 0;
+                    fixDamage = (int)(Player.GetDamage(DamageClass.Ranged).ApplyTo(ammo.damage) + Projectile.damage);
+                    ShotDelay = 0;
                     Vector2 aim = Projectile.Center.DirectionTo(mousePosFireBird) * 14f * Main.rand.NextFloat(0.9f, 1.1f);
                     Projectile.NewProjectileDirect(Player.GetSource_ItemUse_WithPotentialAmmo(Player.HeldItem, Player.HeldItem.useAmmo), Projectile.Center, aim, ModContent.ProjectileType<FireBirdProj>(), fixDamage, Projectile.knockBack, Player.whoAmI);
                 }
@@ -151,18 +164,7 @@ namespace BagOfNonsense.Projectiles
     public class FireBirdProj : ModProjectile
     {
         private Player Player => Main.player[Projectile.owner];
-        private int TypeDust => Utils.SelectRandom(Main.rand, 259, 64, 158);
-
-        private int TimeAlive
-        {
-            get => (int)Projectile.ai[0];
-            set => Projectile.ai[0] = value;
-        }
-
-        public override void SetStaticDefaults()
-        {
-            // DisplayName.SetDefault("Fire Bird");
-        }
+        private static int TypeDust => Utils.SelectRandom(Main.rand, 259, 64, 158);
 
         public override void SetDefaults()
         {
@@ -203,8 +205,11 @@ namespace BagOfNonsense.Projectiles
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            target.AddBuff(ModContent.BuffType<DFireBurn>(), (int)(300 * Main.rand.NextFloat(2f, 3f)));
-            target.GetGlobalNPC<FireBurnGlobal>().Player = Player;
+            FireBurnGlobal fireBurnGlobal = target.GetGlobalNPC<FireBurnGlobal>();
+            int time = (int)(300 * Main.rand.NextFloat(2f, 3f));
+            fireBurnGlobal.Player = Player;
+            fireBurnGlobal.burningTime = time;
+            fireBurnGlobal.burning = true;
         }
 
         public override void AI()

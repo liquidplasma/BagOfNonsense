@@ -34,7 +34,7 @@ namespace BagOfNonsense.Projectiles
             Projectile.alpha = 255;
         }
 
-        public void Dusts(Color color)
+        public void DeathDusts(Color color)
         {
             for (int i = 0; i < 12; i++)
             {
@@ -43,6 +43,19 @@ namespace BagOfNonsense.Projectiles
                 hitEffect.noGravity = true;
                 hitEffect.color = color;
             }
+        }
+
+        public void ReflectTowardsNearbyNPC(NPC target)
+        {
+            int foundNPC = HelperStats.FindNextNPC(Projectile, target, 1000);
+            if (Main.npc.IndexInRange(foundNPC) && Main.rand.NextBool())
+            {
+                NPC targetNext = Main.npc[foundNPC];
+                Vector2 aim = Projectile.DirectionTo(targetNext.Center) * 15f;
+                var shooty = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, aim, Type, Projectile.damage, Projectile.knockBack, Player.whoAmI, target.whoAmI);
+                shooty.CritChance = 0;
+            }
+            else Projectile.Kill();
         }
 
         public void Behavior(Color color)
@@ -73,6 +86,12 @@ namespace BagOfNonsense.Projectiles
     {
         public override string Texture => "BagOfNonsense/Projectiles/UfoShotBase";
 
+        public override void SetDefaults()
+        {
+            Projectile.ArmorPenetration = 9999;
+            base.SetDefaults();
+        }
+
         public override bool PreDraw(ref Color lightColor)
         {
             MiscShaderData miscShaderData = GameShaders.Misc["RainbowRod"];
@@ -87,16 +106,7 @@ namespace BagOfNonsense.Projectiles
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            int foundNPC = HelperStats.FindNextNPC(Projectile, target, 1000);
-            if (foundNPC != -1 && Main.rand.NextBool(2))
-            {
-                NPC targetNext = Main.npc[foundNPC];
-                Vector2 aim = Projectile.DirectionTo(targetNext.Center) * 15f;
-                var shooty = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, aim, ModContent.ProjectileType<UfoShotBlue>(), Projectile.damage, Projectile.knockBack, Player.whoAmI, target.whoAmI);
-                shooty.DamageType = DamageClass.Summon;
-                shooty.CritChance = 0;
-            }
-            else Projectile.Kill();
+            ReflectTowardsNearbyNPC(target);
         }
 
         public override void AI()
@@ -106,7 +116,7 @@ namespace BagOfNonsense.Projectiles
 
         public override void OnKill(int timeLeft)
         {
-            Dusts(Color.Blue);
+            DeathDusts(Color.Blue);
         }
     }
 
@@ -128,16 +138,7 @@ namespace BagOfNonsense.Projectiles
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            int foundNPC = HelperStats.FindNextNPC(Projectile, target, 1000);
-            if (foundNPC != -1 && Main.rand.NextBool(2))
-            {
-                NPC targetNext = Main.npc[foundNPC];
-                Vector2 aim = Projectile.DirectionTo(targetNext.Center) * 15f;
-                var shooty = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, aim, ModContent.ProjectileType<UfoShotYellow>(), Projectile.damage, Projectile.knockBack, Player.whoAmI, target.whoAmI);
-                shooty.DamageType = DamageClass.Summon;
-                shooty.CritChance = 0;
-            }
-            else Projectile.Kill();
+            ReflectTowardsNearbyNPC(target);
         }
 
         public override void AI()
@@ -147,7 +148,7 @@ namespace BagOfNonsense.Projectiles
 
         public override void OnKill(int timeLeft)
         {
-            Dusts(Color.Yellow);
+            DeathDusts(Color.Yellow);
         }
     }
 
@@ -169,16 +170,7 @@ namespace BagOfNonsense.Projectiles
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            int foundNPC = HelperStats.FindNextNPC(Projectile, target, 1000);
-            if (foundNPC != -1 && Main.rand.NextBool(2))
-            {
-                NPC targetNext = Main.npc[foundNPC];
-                Vector2 aim = Projectile.DirectionTo(targetNext.Center) * 15f;
-                var shooty = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, aim, ModContent.ProjectileType<UfoShotGreen>(), Projectile.damage, Projectile.knockBack, Player.whoAmI, target.whoAmI);
-                shooty.DamageType = DamageClass.Summon;
-                shooty.CritChance = 0;
-            }
-            else Projectile.Kill();
+            ReflectTowardsNearbyNPC(target);
         }
 
         public override void AI()
@@ -188,7 +180,7 @@ namespace BagOfNonsense.Projectiles
 
         public override void OnKill(int timeLeft)
         {
-            Dusts(Color.Green);
+            DeathDusts(Color.Green);
         }
     }
 
@@ -210,16 +202,7 @@ namespace BagOfNonsense.Projectiles
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            int foundNPC = HelperStats.FindNextNPC(Projectile, target, 1000);
-            if (foundNPC != -1 && Main.rand.NextBool(2))
-            {
-                NPC targetNext = Main.npc[foundNPC];
-                Vector2 aim = Projectile.DirectionTo(targetNext.Center) * 15f;
-                var shooty = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, aim, ModContent.ProjectileType<UfoShotRed>(), Projectile.damage, Projectile.knockBack, Player.whoAmI, target.whoAmI);
-                shooty.DamageType = DamageClass.Summon;
-                shooty.CritChance = 0;
-            }
-            else Projectile.Kill();
+            ReflectTowardsNearbyNPC(target);
         }
 
         public override void AI()
@@ -229,7 +212,7 @@ namespace BagOfNonsense.Projectiles
 
         public override void OnKill(int timeLeft)
         {
-            Dusts(Color.Red);
+            DeathDusts(Color.Red);
         }
     }
 }

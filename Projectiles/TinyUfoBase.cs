@@ -14,6 +14,55 @@ namespace BagOfNonsense.Projectiles
     {
         public Player Player => Main.player[Projectile.owner];
         public int range = 1000 * 1000;
+        public int closeNPC;
+        private bool CanAttack = true;
+
+        public enum ShotStyle
+        {
+            Shotgun = 1,
+            MachineGun,
+            Cannon,
+            Slow
+        }
+
+        public int DesignatedShotType { get; set; }
+        public int ShotType { get; set; }
+
+        public int ShotDelay
+        {
+            get
+            {
+                return (int)(Projectile.ai[0]);
+            }
+            set
+            {
+                Projectile.ai[0] = value;
+            }
+        }
+
+        public int MissileDelay
+        {
+            get
+            {
+                return (int)(Projectile.ai[1]);
+            }
+            set
+            {
+                Projectile.ai[1] = value;
+            }
+        }
+
+        public int TimeAlive
+        {
+            get
+            {
+                return (int)(Projectile.ai[2]);
+            }
+            set
+            {
+                Projectile.ai[2] = value;
+            }
+        }
 
         public override void SetStaticDefaults()
         {
@@ -23,13 +72,16 @@ namespace BagOfNonsense.Projectiles
 
         public override void SetDefaults()
         {
+            if (DesignatedShotType == 0 || ShotType == 0)
+                throw new ArgumentException("Type of shooting can't be empty");
+
             Projectile.width = 56;
             Projectile.height = 54;
             Projectile.tileCollide = true;
             Projectile.friendly = true;
             Projectile.hostile = false;
             Projectile.minion = false;
-            Projectile.timeLeft = 600;
+            Projectile.timeLeft = 3600;
             Projectile.DamageType = DamageClass.Summon;
             Projectile.penetrate = -1;
             Projectile.scale = 1f;
@@ -54,18 +106,25 @@ namespace BagOfNonsense.Projectiles
             return true;
         }
 
-        private static Vector2 GetBasePosition(Player player)
+        public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
         {
-            Vector2 pos = Vector2.Zero;
+            if(!CanAttack)
+                return false;
+            return base.Colliding(projHitbox, targetHitbox);
+        }
+
+        private static Projectile GetBasePosition(Player player)
+        {
+            Projectile projectile = null;
             for (int i = 0; i < Main.maxProjectiles; i++)
             {
                 Projectile proj = Main.projectile[i];
-                if (proj.type == ModContent.ProjectileType<UfoSpawner>() && proj.owner == player.whoAmI)
+                if (proj.active && proj.type == ModContent.ProjectileType<UfoSpawner>() && proj.owner == player.whoAmI)
                 {
-                    pos = proj.Center + Main.rand.NextVector2CircularEdge(-300, 300);
+                    projectile = proj;
                 }
             }
-            return pos;
+            return projectile;
         }
 
         public void Dusts(Color color)
@@ -82,46 +141,133 @@ namespace BagOfNonsense.Projectiles
 
         public void Behavior(Color color)
         {
+            TimeAlive++;
             Lighting.AddLight(Projectile.Center, color.ToVector3());
-            int closeNPC = HelperStats.FindTargetLOSProjectile(Projectile, 1500);
-            Vector2 idlePos = GetBasePosition(Player);
-            if (idlePos == Vector2.Zero) Projectile.Kill();
-            var dust = Dust.NewDustPerfect(idlePos, DustID.Electric, Vector2.Zero, 0, default, 2);
-            dust.noGravity = true;
-            Vector2 goTo = Projectile.DirectionTo(idlePos) * 12f;
-            Projectile.velocity = Vector2.SmoothStep(Projectile.velocity, goTo, 0.03f);
-            if (Main.npc.IndexInRange(closeNPC))
+            closeNPC = HelperStats.FindTargetLOSProjectile(Projectile, 2000);
+            Projectile idlePos = GetBasePosition(Player);
+            if (idlePos == null)
+                Projectile.Kill();
+
+            if (idlePos != null)
             {
-                NPC target = Main.npc[closeNPC];
-                Projectile.ai[0]++;
-                Projectile.ai[1]++;
-                if (Projectile.ai[1] >= 400 && Main.rand.NextBool(8))
+                Vector2 circlePos = idlePos.Center + Main.rand.NextVector2CircularEdge(-300, 300);
+                if (Main.npc.IndexInRange(closeNPC))
                 {
-                    Projectile.ai[1] = 0;
-                    SoundEngine.PlaySound(SoundID.Item61, Projectile.Center);
-                    Vector2 shootAim = (Projectile.DirectionFrom(target.Center) + new Vector2(Main.rand.NextFloat(-4f, -5f), Main.rand.NextFloat(-8f, -10f))) * 1.5f;
-                    Projectile.netUpdate = true;
-                    if (Main.myPlayer == Projectile.owner)
+                    NPC target = Main.npc[closeNPC];
+                    ShotDelay++;
+                    MissileDelay++;
+                    if (MissileDelay >= 500 && Main.rand.NextBool(8) && !CanAttack)
                     {
-                        var shooty = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, shootAim, ModContent.ProjectileType<UfoMissile>(), Projectile.damage * 4, Projectile.knockBack, Player.whoAmI, target.whoAmI);
-                        shooty.DamageType = DamageClass.Summon;
-                        shooty.CritChance = 0;
+                        MissileDelay = 0;
+                        SoundEngine.PlaySound(SoundID.Item61, Projectile.Center);
+                        Vector2 shootAim = (Projectile.DirectionFrom(target.Center) + new Vector2(Main.rand.NextFloat(-4f, -5f), Main.rand.NextFloat(-8f, -10f))) * 1.5f;
+                        Projectile.netUpdate = true;
+                        if (Main.myPlayer == Projectile.owner)
+                        {
+                            var shooty = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, shootAim, ModContent.ProjectileType<UfoMissile>(), Projectile.damage * 4, Projectile.knockBack, Player.whoAmI, target.whoAmI);
+                            shooty.DamageType = DamageClass.Summon;
+                            shooty.CritChance = 0;
+                        }
                     }
                 }
+                if (TimeAlive <= 600)
+                {
+                    Vector2 goTo = Projectile.DirectionTo(circlePos) * 12f;
+                    Projectile.velocity = Vector2.SmoothStep(Projectile.velocity, goTo, 0.03f);
+                }
+                else
+                {
+                    Vector2 goTo = Projectile.DirectionTo(idlePos.Center) * 12f;
+                    Projectile.velocity = Vector2.SmoothStep(Projectile.velocity, goTo, 0.08f);
+                    Projectile.tileCollide = false;
+                    CanAttack = false;
+                    if (Projectile.Hitbox.Intersects(idlePos.Hitbox))
+                        Projectile.Kill();
+                }
+                Projectile.rotation = Projectile.velocity.X * 0.04f;
             }
-            Projectile.rotation = Projectile.velocity.X * 0.04f + Projectile.velocity.Y * 0.04f;
         }
 
-        public override void AI()
+        public void ShootingAction()
         {
+            if (CanAttack)
+            {
+                switch (DesignatedShotType)
+                {
+                    case (int)ShotStyle.MachineGun:
+                        {
+                            if (ShotDelay >= 6 && Main.npc.IndexInRange(closeNPC))
+                            {
+                                NPC target = Main.npc[closeNPC];
+                                Vector2 shootAim = Projectile.DirectionTo(target.Center) * 15f;
+                                float distance = Projectile.DistanceSQ(target.Center);
+                                if (distance < range)
+                                {
+                                    ShotDelay = 0;
+                                    var shooty = ExtensionMethods.BetterNewProjectile(Player, Projectile.GetSource_FromThis(), Projectile.Center, shootAim.RotatedByRandom(MathHelper.ToRadians(2)), ShotType, (int)(Projectile.damage * 0.15f), Projectile.knockBack, Player.whoAmI, target.whoAmI);
+                                    shooty.CritChance = 0;
+                                }
+                            }
+                            break;
+                        }
+                    case (int)ShotStyle.Shotgun:
+
+                        if (ShotDelay >= 50 && Main.npc.IndexInRange(closeNPC))
+                        {
+                            NPC target = Main.npc[closeNPC];
+                            Vector2 shootAim = Projectile.DirectionTo(target.Center) * 15f;
+                            float distance = Projectile.DistanceSQ(target.Center);
+                            if (distance < range)
+                            {
+                                ShotDelay = 0;
+                                for (int i = 0; i < 4; i++)
+                                {
+                                    var shooty = ExtensionMethods.BetterNewProjectile(Player, Projectile.GetSource_FromThis(), Projectile.Center, shootAim.RotatedByRandom(MathHelper.ToRadians(8)), ShotType, (int)(Projectile.damage * 0.5f), Projectile.knockBack, Player.whoAmI, target.whoAmI);
+                                    shooty.CritChance = 0;
+                                }
+                            }
+                        }
+                        break;
+
+                    case (int)ShotStyle.Cannon:
+                        {
+                            if (ShotDelay >= 60 && Main.npc.IndexInRange(closeNPC))
+                            {
+                                NPC target = Main.npc[closeNPC];
+                                Vector2 shootAim = Projectile.DirectionTo(target.Center) * 15f;
+                                float distance = Projectile.DistanceSQ(target.Center);
+                                if (distance < range)
+                                {
+                                    ShotDelay = 0;
+                                    var shooty = ExtensionMethods.BetterNewProjectile(Player, Projectile.GetSource_FromThis(), Projectile.Center, shootAim, ShotType, (int)(Projectile.damage * 1.5f), Projectile.knockBack, Player.whoAmI, target.whoAmI);
+                                    shooty.CritChance = 0;
+                                }
+                            }
+                            break;
+                        }
+                    case (int)ShotStyle.Slow:
+                        {
+                            if (ShotDelay >= 30 && Main.npc.IndexInRange(closeNPC))
+                            {
+                                NPC target = Main.npc[closeNPC];
+                                Vector2 shootAim = Projectile.DirectionTo(target.Center) * 15f;
+                                float distance = Projectile.DistanceSQ(target.Center);
+                                if (distance < range)
+                                {
+                                    ShotDelay = 0;
+                                    var shooty = ExtensionMethods.BetterNewProjectile(Player, Projectile.GetSource_FromThis(), Projectile.Center, shootAim, ShotType, Projectile.damage, Projectile.knockBack, Player.whoAmI, target.whoAmI);
+                                    shooty.CritChance = 0;
+                                }
+                            }
+                            break;
+                        }
+                }
+            }
         }
 
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
-            if (Math.Abs(Projectile.velocity.X - oldVelocity.X) > float.Epsilon)
-                Projectile.velocity.X = -oldVelocity.X;
-            if (Math.Abs(Projectile.velocity.Y - oldVelocity.Y) > float.Epsilon)
-                Projectile.velocity.Y = -oldVelocity.Y;
+            Projectile.Bounce(15);
             return false;
         }
     }
@@ -130,26 +276,17 @@ namespace BagOfNonsense.Projectiles
     {
         public override string Texture => "BagOfNonsense/Projectiles/TinyUfoBlue";
 
+        public override void SetDefaults()
+        {
+            DesignatedShotType = (int)ShotStyle.MachineGun;
+            ShotType = ModContent.ProjectileType<UfoShotBlue>();
+            base.SetDefaults();
+        }
+
         public override void AI()
         {
             Behavior(Color.Blue);
-            int closeNPC = HelperStats.FindTargetLOSProjectile(Projectile, 1500);
-            if (Projectile.ai[0] >= 30 && closeNPC != -1)
-            {
-                NPC target = Main.npc[closeNPC];
-                Vector2 shootAim = Projectile.DirectionTo(target.Center) * 15f;
-                float distance = Projectile.DistanceSQ(target.Center);
-                if (distance < range)
-                {
-                    Projectile.ai[0] = 0;
-                    if (Main.myPlayer == Projectile.owner)
-                    {
-                        var shooty = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, shootAim.RotatedByRandom(MathHelper.ToRadians(4)), ModContent.ProjectileType<UfoShotBlue>(), Projectile.damage, Projectile.knockBack, Player.whoAmI, target.whoAmI);
-                        shooty.DamageType = DamageClass.Summon;
-                        shooty.CritChance = 0;
-                    }
-                }
-            }
+            ShootingAction();
         }
 
         public override void OnKill(int timeLeft)
@@ -162,26 +299,17 @@ namespace BagOfNonsense.Projectiles
     {
         public override string Texture => "BagOfNonsense/Projectiles/TinyUfoRed";
 
+        public override void SetDefaults()
+        {
+            DesignatedShotType = (int)ShotStyle.Cannon;
+            ShotType = ModContent.ProjectileType<UfoShotRed>();
+            base.SetDefaults();
+        }
+
         public override void AI()
         {
             Behavior(Color.Red);
-            int closeNPC = HelperStats.FindTargetLOSProjectile(Projectile, 1500);
-            if (Projectile.ai[0] >= 30 && closeNPC != -1)
-            {
-                NPC target = Main.npc[closeNPC];
-                Vector2 shootAim = Projectile.DirectionTo(target.Center) * 15f;
-                float distance = Projectile.DistanceSQ(target.Center);
-                if (distance < range)
-                {
-                    Projectile.ai[0] = 0;
-                    if (Main.myPlayer == Projectile.owner)
-                    {
-                        var shooty = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, shootAim.RotatedByRandom(MathHelper.ToRadians(4)), ModContent.ProjectileType<UfoShotRed>(), Projectile.damage, Projectile.knockBack, Player.whoAmI, target.whoAmI);
-                        shooty.DamageType = DamageClass.Summon;
-                        shooty.CritChance = 0;
-                    }
-                }
-            }
+            ShootingAction();
         }
 
         public override void OnKill(int timeLeft)
@@ -194,26 +322,17 @@ namespace BagOfNonsense.Projectiles
     {
         public override string Texture => "BagOfNonsense/Projectiles/TinyUfoGreen";
 
+        public override void SetDefaults()
+        {
+            DesignatedShotType = (int)ShotStyle.Shotgun;
+            ShotType = ModContent.ProjectileType<UfoShotGreen>();
+            base.SetDefaults();
+        }
+
         public override void AI()
         {
             Behavior(Color.Green);
-            int closeNPC = HelperStats.FindTargetLOSProjectile(Projectile, 1500);
-            if (Projectile.ai[0] >= 30 && closeNPC != -1)
-            {
-                NPC target = Main.npc[closeNPC];
-                Vector2 shootAim = Projectile.DirectionTo(target.Center) * 15f;
-                float distance = Projectile.DistanceSQ(target.Center);
-                if (distance < range)
-                {
-                    Projectile.ai[0] = 0;
-                    if (Main.myPlayer == Projectile.owner)
-                    {
-                        var shooty = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, shootAim.RotatedByRandom(MathHelper.ToRadians(4)), ModContent.ProjectileType<UfoShotGreen>(), Projectile.damage, Projectile.knockBack, Player.whoAmI, target.whoAmI);
-                        shooty.DamageType = DamageClass.Summon;
-                        shooty.CritChance = 0;
-                    }
-                }
-            }
+            ShootingAction();
         }
 
         public override void OnKill(int timeLeft)
@@ -226,26 +345,17 @@ namespace BagOfNonsense.Projectiles
     {
         public override string Texture => "BagOfNonsense/Projectiles/TinyUfoYellow";
 
+        public override void SetDefaults()
+        {
+            ShotType = ModContent.ProjectileType<UfoShotYellow>();
+            DesignatedShotType = (int)ShotStyle.Slow;
+            base.SetDefaults();
+        }
+
         public override void AI()
         {
             Behavior(Color.Yellow);
-            int closeNPC = HelperStats.FindTargetLOSProjectile(Projectile, 1500);
-            if (Projectile.ai[0] >= 30 && closeNPC != -1)
-            {
-                NPC target = Main.npc[closeNPC];
-                Vector2 shootAim = Projectile.DirectionTo(target.Center) * 15f;
-                float distance = Projectile.DistanceSQ(target.Center);
-                if (distance < range)
-                {
-                    Projectile.ai[0] = 0;
-                    if (Main.myPlayer == Projectile.owner)
-                    {
-                        var shooty = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, shootAim.RotatedByRandom(MathHelper.ToRadians(4)), ModContent.ProjectileType<UfoShotYellow>(), Projectile.damage, Projectile.knockBack, Player.whoAmI, target.whoAmI);
-                        shooty.DamageType = DamageClass.Summon;
-                        shooty.CritChance = 0;
-                    }
-                }
-            }
+            ShootingAction();
         }
 
         public override void OnKill(int timeLeft)
@@ -258,7 +368,6 @@ namespace BagOfNonsense.Projectiles
     {
         public override void SetStaticDefaults()
         {
-            // DisplayName.SetDefault("Ufo Missile");
         }
 
         public override void SetDefaults()
@@ -271,8 +380,8 @@ namespace BagOfNonsense.Projectiles
             Projectile.timeLeft = 300;
             Projectile.DamageType = DamageClass.Summon;
             Projectile.ignoreWater = false;
-            Projectile.light = 1f;
             Projectile.extraUpdates = 1;
+            Projectile.light = 1f;
             Projectile.alpha = 255;
         }
 
@@ -288,7 +397,7 @@ namespace BagOfNonsense.Projectiles
             if (Projectile.ai[0] != -1)
             {
                 NPC target = Main.npc[(int)Projectile.ai[0]];
-                Vector2 aim = Projectile.DirectionTo(target.Center) * 10f;
+                Vector2 aim = Projectile.DirectionTo(target.Center) * 7f;
                 Projectile.velocity = Vector2.Lerp(Projectile.velocity, aim, 0.06f);
                 if (!target.active || target.friendly)
                 {
@@ -310,7 +419,7 @@ namespace BagOfNonsense.Projectiles
             for (int i = 0; i < 14; i++)
             {
                 launchVelocity = launchVelocity.RotatedByRandom(MathHelper.ToRadians(360));
-                Projectile.NewProjectile(Projectile.InheritSource(Projectile), Projectile.Center, launchVelocity, ModContent.ProjectileType<UfoMissileBits>(), Projectile.damage / 2, Projectile.knockBack, Projectile.owner);
+                Projectile.NewProjectile(Projectile.InheritSource(Projectile), Projectile.Center, launchVelocity, ModContent.ProjectileType<UfoMissileBits>(), Projectile.damage / 4, Projectile.knockBack, Projectile.owner);
             }
         }
     }
@@ -323,9 +432,16 @@ namespace BagOfNonsense.Projectiles
         private int rippleSpeed = 5;
         private float distortStrength = 100f;
 
-        public override void SetStaticDefaults()
+        private int TimeAlive
         {
-            // DisplayName.SetDefault("Ufo Missile Bits");
+            get
+            {
+                return (int)Projectile.ai[1];
+            }
+            set
+            {
+                Projectile.ai[1] = value;
+            }
         }
 
         public override void SetDefaults()
@@ -335,7 +451,7 @@ namespace BagOfNonsense.Projectiles
             Projectile.friendly = true;
             Projectile.penetrate = 1;
             Projectile.aiStyle = 0;
-            Projectile.timeLeft = 180;
+            Projectile.timeLeft = 240;
             Projectile.ignoreWater = false;
             Projectile.light = 1f;
             Projectile.extraUpdates = 1;
@@ -381,11 +497,13 @@ namespace BagOfNonsense.Projectiles
             switch (Behavior)
             {
                 case 0:
+                    //Normal behavior (missile bits)
+                    TimeAlive++;
                     Projectile.tileCollide = true;
                     Projectile.DamageType = DamageClass.Summon;
                     var dust = Dust.NewDustPerfect(Projectile.Center, DustID.Shadowflame, Vector2.Zero, 0, default, 1);
                     dust.noGravity = true;
-                    if (Projectile.timeLeft < 140)
+                    if (TimeAlive > 20)
                         Projectile.velocity.Y += 0.1875f;
                     Projectile.rotation = Projectile.velocity.X * 0.5f + Projectile.velocity.Y * 0.5f;
                     break;

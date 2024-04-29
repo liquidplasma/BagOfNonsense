@@ -125,7 +125,7 @@ namespace BagOfNonsense.Projectiles.Pets
             dust.velocity *= 1.2f + Main.rand.NextFloat();
             dust.noLight = true;
             Lighting.AddLight(Projectile.Center, color.ToVector3());
-            Projectile.CheckPlayerActiveAndNotDead(Player);
+            Projectile.KeepAliveIfOwnerIsAlive(Player);
             if (Player.HeldItem.type != ModContent.ItemType<EXExcalibur>()) Projectile.Kill();
 
             Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2 * 1.5f;

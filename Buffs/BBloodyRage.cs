@@ -12,5 +12,11 @@ namespace BagOfNonsense.Buffs
             Main.buffNoTimeDisplay[Type] = true;
             Main.debuff[Type] = false;
         }
+
+        public override void Update(Player player, ref int buffIndex)
+        {
+            player.GetDamage(DamageClass.Generic) += 0.9f;
+            base.Update(player, ref buffIndex);
+        }
     }
 }

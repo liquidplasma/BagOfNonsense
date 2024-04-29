@@ -37,7 +37,7 @@ namespace BagOfNonsense.Projectiles
 
         public override void AI()
         {
-            Projectile.CheckPlayerActiveAndNotDead(Player);
+            Projectile.KeepAliveIfOwnerIsAlive(Player);
             Projectile.velocity = Vector2.Zero;
             if (Player.ownedProjectileCounts[ModContent.ProjectileType<RoboMonkey>()] > 1)
             {

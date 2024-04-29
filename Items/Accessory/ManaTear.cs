@@ -93,8 +93,8 @@ namespace BagOfNonsense.Items.Accessory
 
         public class ManaCore : ManaTear
         {
-            private bool increase;
-            private float size;
+            private float actualsize;
+            private Geometry GeometryObject = new();
 
             public override void SetStaticDefaults()
             {
@@ -132,41 +132,30 @@ namespace BagOfNonsense.Items.Accessory
             public override void Update(ref float gravity, ref float maxFallSpeed)
             {
                 int playerIndex = HelperStats.FindNearestPlayer(Item.Center, 600);
+                Lighting.AddLight(Item.Center, Color.DarkBlue.ToVector3());
                 if (Main.player.IndexInRange(playerIndex))
                 {
                     Player activePlayer = Main.player[playerIndex];
                     if (Main.rand.NextBool(4))
                     {
                         Vector2 pos = Item.position + (Item.Size * Main.rand.NextFloat(0.1f, 1f));
-                        Lighting.AddLight(activePlayer.Center, Color.DarkBlue.ToVector3());
                         Dust dusty = Dust.NewDustPerfect(pos, 156);
                         dusty.velocity = pos.DirectionTo(activePlayer.Center) * 50f * (activePlayer.Distance(Item.Center) / 600f);
                         dusty.shader = GameShaders.Armor.GetSecondaryShader(ContentSamples.ItemsByType[ItemID.BrightBlueDye].dye, Main.LocalPlayer);
                         dusty.noGravity = true;
                         dusty.scale = 1f;
+                        dusty.noLight = true;
                     }
                 }
+                GeometryObject.DrawDustCircle(Item.Center, 20, 600f, 156);
                 Lighting.AddLight(Item.Center, Color.DarkBlue.ToVector3());
                 base.Update(ref gravity, ref maxFallSpeed);
             }
 
             public override bool PreDrawInWorld(SpriteBatch spriteBatch, Color lightColor, Color alphaColor, ref float rotation, ref float scale, int whoAmI)
             {
-                if (increase)
-                {
-                    if (size <= 1.15f)
-                        size += 0.01f;
-                    else
-                        increase = false;
-                }
-                else
-                {
-                    if (size >= 0.5f)
-                        size -= 0.01f;
-                    else
-                        increase = true;
-                }
-                scale = Math.Abs(size);
+                actualsize = GeometryObject.IncreaseDecrease(0.005f);
+                scale = Math.Abs(actualsize);
                 return true;
             }
 

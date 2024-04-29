@@ -18,17 +18,6 @@ namespace BagOfNonsense.Items.Accessory
         }
     }
 
-    public class PDDrop : GlobalNPC
-    {
-        public override void ModifyNPCLoot(NPC npc, NPCLoot npcLoot)
-        {
-            if (npc.type == NPCID.TheDestroyer)
-            {
-                npcLoot.Add(ItemDropRule.ByCondition(new Conditions.NotExpert(), ModContent.ItemType<ProjectileDeflectorAccessory>(), 5, 1, 1));
-            }
-        }
-    }
-
     public class ProjectileDeflectorAccessory : ModItem
     {
         public override string Texture => "BagOfNonsense/Projectiles/ProjectileReflector";

@@ -13,6 +13,15 @@ namespace BagOfNonsense.Projectiles
     public class XenobusterProjBlue : ModProjectile
     {
         // public override void SetStaticDefaults() => DisplayName.SetDefault("Xenobuster");
+        public NPC Target
+        {
+            get
+            {
+                if (Main.npc.IndexInRange((int)Projectile.ai[0]))
+                    return Main.npc[(int)Projectile.ai[0]];
+                return null;
+            }
+        }
 
         public override void SetDefaults()
         {
@@ -67,24 +76,31 @@ namespace BagOfNonsense.Projectiles
 
         public override void AI()
         {
-            for (int n = 0; n < Main.maxNPCs; n++)
+            if (Target != null)
             {
-                NPC npc = Main.npc[n];
-                if (Projectile.Distance(npc.Center) <= 25 * 16 && !npc.friendly && npc.CanBeChasedBy() && Collision.CanHit(npc, Projectile))
-                    Projectile.velocity = Projectile.DirectionTo(npc.Center) * 16f;
+                if (Target.active && !Target.friendly && Target.CanBeChasedBy())
+                    Projectile.SmoothHoming(Target.Center, 16f, 14f);
+                if (Target.active)
+                    Projectile.timeLeft = 2;
+
+                Projectile.FaceForward();
+                if (Projectile.timeLeft < 98)
+                {
+                    Projectile.alpha = 0;
+                    int dusty = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Vortex, Projectile.direction * 2, 0.0f, 150, default, 1f);
+                    var dust = Main.dust[dusty];
+                    Vector2 vector2 = Vector2.Multiply(dust.velocity, 0.2f);
+                    dust.velocity = vector2;
+                    Main.dust[dusty].noGravity = true;
+                    float light = Projectile.alpha / 255f;
+                    Lighting.AddLight((int)Projectile.Center.X / 16, (int)Projectile.Center.Y / 16, 0.3f * light, 0.4f * light, 1f * light);
+                }
+
+                if (!Target.active)
+                    Projectile.Kill();
             }
-            Projectile.FaceForward();
-            if (Projectile.timeLeft < 98)
-            {
-                Projectile.alpha = 0;
-                int dusty = Dust.NewDust(Projectile.position, Projectile.width, Projectile.height, DustID.Vortex, Projectile.direction * 2, 0.0f, 150, default, 1f);
-                var dust = Main.dust[dusty];
-                Vector2 vector2 = Vector2.Multiply(dust.velocity, 0.2f);
-                dust.velocity = vector2;
-                Main.dust[dusty].noGravity = true;
-                float light = Projectile.alpha / 255f;
-                Lighting.AddLight((int)Projectile.Center.X / 16, (int)Projectile.Center.Y / 16, 0.3f * light, 0.4f * light, 1f * light);
-            }
+            else
+                Projectile.Kill();
         }
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
@@ -124,17 +140,17 @@ namespace BagOfNonsense.Projectiles
 
         public override void SetDefaults()
         {
-            Projectile.width = 30;
-            Projectile.height = 30;
+            Projectile.width = 9;
+            Projectile.height = 9;
             Projectile.scale = 1f;
             Projectile.aiStyle = 0;
             Projectile.DamageType = DamageClass.Melee;
             Projectile.penetrate = 4;
-            Projectile.light = 0.4f;
             Projectile.friendly = true;
             Projectile.tileCollide = false;
             Projectile.timeLeft = 3600;
             Projectile.extraUpdates = 1;
+            Projectile.alpha = 255;
         }
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
@@ -145,18 +161,9 @@ namespace BagOfNonsense.Projectiles
             {
                 for (int i = 0; i < 4; i++)
                 {
-                    Vector2 NPCpos = Vector2.Add(Main.npc[target.whoAmI].position, Vector2.Multiply(Main.npc[target.whoAmI].Size, Utils.RandomVector2(Main.rand, -8f, 8f))); // spawn "zone"
-                    Vector2 projspawn = Vector2.Multiply(Main.npc[target.whoAmI].DirectionFrom(NPCpos), 6f); // projectile spawn velocity
-                    float velocity = Main.rand.NextFloat(1.4f, 1.66f);
-                    Projectile.NewProjectile(Projectile.GetSource_FromThis(), NPCpos.X, NPCpos.Y, projspawn.X * velocity, projspawn.Y * velocity, ModContent.ProjectileType<XenobusterProjBlue>(), (int)(damageDone * 0.35f), 0, player.whoAmI, target.whoAmI, 0.0f);
-                }
-                for (int i = 0; i < 15; i++)
-                {
-                    int dusty = Dust.NewDust(new Vector2(target.position.X, target.position.Y), target.width, target.height, DustID.TerraBlade, Projectile.direction * Main.rand.NextFloat(0.1f, 0.8f), 0.0f, 150, default, 0.66f);
-                    var dust = Main.dust[dusty];
-                    Vector2 vector2 = Vector2.Multiply(dust.velocity, 1.5f);
-                    dust.velocity = vector2;
-                    Main.dust[dusty].noGravity = false;
+                    Vector2 NPCpos = target.Center + Utils.RandomVector2(Main.rand, -600, 600); // spawn "zone"
+                    Vector2 projspawn = Vector2.Multiply(Main.npc[target.whoAmI].DirectionFrom(NPCpos), 16f); // projectile spawn velocity
+                    Projectile.NewProjectile(Projectile.GetSource_FromThis(), NPCpos, projspawn, ModContent.ProjectileType<XenobusterProjBlue>(), (int)(damageDone * 0.35f), 0, player.whoAmI, target.whoAmI, 0.0f);
                 }
                 Vector2 direction = target.DirectionTo(player.position) * 6f;
                 if (Main.rand.NextFloat(1f) <= 0.05f && Main.myPlayer == Projectile.owner)
@@ -164,10 +171,19 @@ namespace BagOfNonsense.Projectiles
                     Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.position, direction, ProjectileID.SpiritHeal, damageDone, hit.Knockback, player.whoAmI, ai0: player.whoAmI, ai1: player.statLifeMax2 * 0.05f);
                 }
             }
+            for (int i = 0; i < 15; i++)
+            {
+                int dusty = Dust.NewDust(new Vector2(target.position.X, target.position.Y), target.width, target.height, DustID.TerraBlade, Projectile.direction * Main.rand.NextFloat(0.1f, 0.8f), 0.0f, 150, default, 0.66f);
+                var dust = Main.dust[dusty];
+                Vector2 vector2 = Vector2.Multiply(dust.velocity, 1.5f);
+                dust.velocity = vector2;
+                Main.dust[dusty].noGravity = false;
+            }
         }
 
         public override void AI()
         {
+            Projectile.alpha -= 16;
             Projectile.FaceForward();
             if (Projectile.timeLeft == 3600)
             {
@@ -186,6 +202,7 @@ namespace BagOfNonsense.Projectiles
                 dust = Main.dust[dusty];
                 dust.position -= Projectile.velocity * 0.5f;
             }
+            Lighting.AddLight(Projectile.Center, Color.Green.ToVector3());
         }
 
         public override void OnKill(int timeLeft)

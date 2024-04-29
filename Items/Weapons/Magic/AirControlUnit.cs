@@ -11,12 +11,6 @@ namespace BagOfNonsense.Items.Weapons.Magic
     {
         private static int SpectreCenter => ModContent.ProjectileType<SpectreCenter>();
 
-        public override void SetStaticDefaults()
-        {
-            // DisplayName.SetDefault("Air Control Unit");
-            // Tooltip.SetDefault("From another world\nSummons a Spectre to fight for you");
-        }
-
         public override void SetDefaults()
         {
             Item.width = 24;
@@ -29,27 +23,12 @@ namespace BagOfNonsense.Items.Weapons.Magic
             Item.DamageType = DamageClass.Magic;
             Item.mana = 10;
             Item.autoReuse = true;
-            Item.useStyle = ItemUseStyleID.Shoot;
+            Item.useStyle = ItemUseStyleID.HoldUp;
             Item.UseSound = SoundID.Item43;
             Item.shootSpeed = 20f;
             Item.shoot = SpectreCenter;
             Item.noMelee = true;
             Item.channel = true;
-        }
-
-        public override bool AltFunctionUse(Player player)
-        {
-            return false;
-        }
-
-        public override bool? UseItem(Player player)
-        {
-            return base.UseItem(player);
-        }
-
-        public override bool CanUseItem(Player player)
-        {
-            return base.CanUseItem(player);
         }
 
         public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
@@ -59,8 +38,7 @@ namespace BagOfNonsense.Items.Weapons.Magic
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            var projectile = Projectile.NewProjectileDirect(source, position, velocity, SpectreCenter, damage, knockback, player.whoAmI);
-            projectile.originalDamage = damage;
+            Projectile.NewProjectileDirect(source, position, velocity, SpectreCenter, damage, knockback, player.whoAmI);
             return false;
         }
 

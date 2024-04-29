@@ -1,4 +1,5 @@
-﻿using BagOfNonsense.Items.Ingredients;
+﻿using BagOfNonsense.Helpers;
+using BagOfNonsense.Items.Ingredients;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using Terraria;
@@ -48,8 +49,7 @@ namespace BagOfNonsense.Items.Accessory
                         recoverEffect.scale = 1.2f;
                         recoverEffect.noGravity = true;
                     }
-                    CombatText rechargeText = Main.combatText[CombatText.NewText(Player.getRect(), Color.Red, "+15")];
-                    rechargeText.lifeTime = 27;
+                    ExtensionMethods.CreateCombatText(Player, Color.Red, "15").lifeTime = 27;
                 }
             }
             HealCapMax2 = Utils.Clamp(HealCapMax2, 0, HealCapMax);
@@ -65,29 +65,19 @@ namespace BagOfNonsense.Items.Accessory
             HealCapMax2 = HealCapMax;
         }
 
-        public override void OnHitNPCWithItem(Item item, NPC target, NPC.HitInfo hit, int damageDone)/* tModPorter If you don't need the Item, consider using OnHitNPC instead */
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            if (isActive)
+            HealSelf(damageDone);
+        }
+
+        private void HealSelf(int damage)
+        {
+            if (isActive && Player.statLife < Player.statLifeMax2)
             {
-                int healAmount = 1 + damageDone / 10;
+                int healAmount = 1 + damage / 10;
                 if (healAmount >= 10)
                     healAmount /= 2;
                 if (healAmount <= DefaultMaxHeal / 2 && HealCapMax2 >= 15 && Main.rand.NextBool(6))
-                {
-                    HealCapMax2 -= healAmount;
-                    Player.Heal(healAmount);
-                }
-            }
-        }
-
-        public override void OnHitNPCWithProj(Projectile proj, NPC target, NPC.HitInfo hit, int damageDone)/* tModPorter If you don't need the Projectile, consider using OnHitNPC instead */
-        {
-            if (isActive)
-            {
-                int healAmount = 1 + damageDone / 10;
-                if (healAmount >= 10)
-                    healAmount /= 2;
-                if (healAmount <= DefaultMaxHeal / 2 && HealCapMax2 >= 15 && Main.player[proj.owner].whoAmI == Player.whoAmI && Main.rand.NextBool(6))
                 {
                     HealCapMax2 -= healAmount;
                     Player.Heal(healAmount);

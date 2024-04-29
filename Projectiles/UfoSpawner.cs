@@ -1,5 +1,7 @@
 ﻿using BagOfNonsense.Helpers;
+using BagOfNonsense.Items.Weapons.Summon;
 using Microsoft.Xna.Framework;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
 using Terraria.ID;
@@ -10,10 +12,23 @@ namespace BagOfNonsense.Projectiles
     public class UfoSpawner : ModProjectile
     {
         private Player Player => Main.player[Projectile.owner];
+        private int extraRadius;
+        private static Geometry GeometryObject = new();
+
+        private int SpawnTimer
+        {
+            get
+            {
+                return (int)Projectile.ai[0];
+            }
+            set
+            {
+                Projectile.ai[0] = value;
+            }
+        }
 
         public override void SetStaticDefaults()
         {
-            // DisplayName.SetDefault("UfoSpawner");
             Main.projPet[Projectile.type] = true;
             Main.projFrames[Projectile.type] = 6;
         }
@@ -36,13 +51,9 @@ namespace BagOfNonsense.Projectiles
             return true;
         }
 
-        public override bool MinionContactDamage()
+        public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
         {
             return false;
-        }
-
-        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
-        {
         }
 
         public override bool PreAI()
@@ -57,7 +68,7 @@ namespace BagOfNonsense.Projectiles
             return true;
         }
 
-        private int GetUfoCount(Player player)
+        public static int GetUfoCount(Player player)
         {
             return player.ownedProjectileCounts[ModContent.ProjectileType<TinyUfoBlue>()] +
                 player.ownedProjectileCounts[ModContent.ProjectileType<TinyUfoRed>()] +
@@ -67,25 +78,36 @@ namespace BagOfNonsense.Projectiles
 
         public override void AI()
         {
-            Projectile.CheckPlayerActiveAndNotDead(Player);
+            Projectile.KeepAliveIfOwnerIsAlive(Player);
             Projectile.velocity = Vector2.Zero;
             int closeNPC = HelperStats.FindTargetLOSProjectile(Projectile, 2000);
-            Projectile.ai[0]++;
-            if (Projectile.ai[0] >= Main.rand.Next(120, 150) && Main.myPlayer == Projectile.owner && closeNPC != -1 && GetUfoCount(Player) <= Player.maxMinions)
+            SpawnTimer++;
+            if (SpawnTimer >= Main.rand.Next(120, 150) && Main.npc.IndexInRange(closeNPC) && GetUfoCount(Player) <= Player.maxMinions)
             {
-                SoundEngine.PlaySound(SoundID.Item44, Projectile.Center);
-                NPC target = Main.npc[closeNPC];
-                Vector2 aim = Projectile.DirectionTo(target.Center) * 2.7f;
-                int thingtoShoot = Utils.SelectRandom(
+                SpawnTimer = 0;
+                extraRadius = 120;
+                int UfoToShoot = Utils.SelectRandom(
                     Main.rand,
                     ModContent.ProjectileType<TinyUfoBlue>(),
                     ModContent.ProjectileType<TinyUfoRed>(),
                     ModContent.ProjectileType<TinyUfoGreen>(),
                     ModContent.ProjectileType<TinyUfoYellow>());
-                int shooty = Projectile.NewProjectile(Projectile.GetSource_FromThis(), Projectile.Center, aim.RotatedByRandom(MathHelper.ToRadians(Main.rand.Next(0, 360))), thingtoShoot, Projectile.damage, 0, Player.whoAmI);
-                Main.projectile[shooty].DamageType = DamageClass.Summon;
-                Main.projectile[shooty].CritChance = 0;
-                Projectile.ai[0] = 0;
+                SoundEngine.PlaySound(SoundID.Item44, Projectile.Center);
+                NPC target = Main.npc[closeNPC];
+                Vector2 aim = Projectile.DirectionTo(target.Center) * 2.7f;
+                Projectile shooty = ExtensionMethods.BetterNewProjectile(Player, Projectile.GetSource_FromThis(), Projectile.Center, aim.RotatedByRandom(MathHelper.ToRadians(Main.rand.Next(0, 360))), UfoToShoot, Projectile.damage, 0, Player.whoAmI);
+                shooty.CritChance = 0;
+                for (int i = 0; i < 3; i++)
+                {
+                    Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Vortex).noGravity = true;
+                }
+            }
+
+            if (Main.npc.IndexInRange(closeNPC))
+            {
+                List<Dust> dusty = GeometryObject.DrawDustCircle(Projectile, 120, 300f, DustID.Electric);
+                foreach (Dust dust in dusty)
+                    dust.noGravity = true;
             }
         }
     }

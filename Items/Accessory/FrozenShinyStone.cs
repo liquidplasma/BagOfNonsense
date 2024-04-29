@@ -35,6 +35,7 @@ namespace BagOfNonsense.Items.Accessory
             player.shinyStone = true;
             player.pStone = true;
             player.endurance += 0.1f;
+            player.GetModPlayer<PlayerChanges>().ShinyStone = true;
 
             int slot = -1;
             for (int i = 3; i < 8 + player.extraAccessorySlots; i++)

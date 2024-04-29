@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using System;
 using Terraria;
 using Terraria.GameContent.Bestiary;
 using Terraria.ID;
@@ -10,6 +11,7 @@ namespace BagOfNonsense.NPCs
     public class TestNPC : ModNPC
     {
         private int state;
+        private int attackFramesLeft;
 
         public override void SetStaticDefaults()
         {

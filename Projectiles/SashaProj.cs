@@ -26,10 +26,6 @@ namespace BagOfNonsense.Projectiles
             allowed = false;
         }
 
-        public override void ModifyHitNPCWithProj(Projectile proj, NPC target, ref NPC.HitModifiers modifiers)/* tModPorter If you don't need the Projectile, consider using ModifyHitNPC instead */
-        {
-        }
-
         public override void OnHitNPCWithProj(Projectile proj, NPC target, NPC.HitInfo hit, int damageDone)/* tModPorter If you don't need the Projectile, consider using OnHitNPC instead */
         {
             if (allowed && proj.owner == Player.whoAmI && proj.CountsAsClass(DamageClass.Ranged) && proj.GetGlobalProjectile<BagOfNonsenseGlobalProjectile>().SashaProjBool)
@@ -62,6 +58,18 @@ namespace BagOfNonsense.Projectiles
         private SashaCritTime ControlCritTime => Player.GetModPlayer<SashaCritTime>();
         private bool Critting => ControlCritTime.critTimer > 0;
         private bool NotCritting => ControlCritTime.critTimer <= 0;
+
+        private int ShotDelay
+        {
+            get
+            {
+                return (int)Projectile.ai[0];
+            }
+            set
+            {
+                Projectile.ai[0] = value;
+            }
+        }
 
         private Vector2
             drawPos,
@@ -133,7 +141,7 @@ namespace BagOfNonsense.Projectiles
 
         public override void AI()
         {
-            Projectile.CheckPlayerActiveAndNotDead(Player);
+            Projectile.KeepAliveIfOwnerIsAlive(Player);
             ControlCritTime.allowed = true;
             ControlCritTime.canConsumeAmmo = animationControl;
 
@@ -187,11 +195,11 @@ namespace BagOfNonsense.Projectiles
 
             if (Player.channel)
             {
-                Projectile.ai[0]++;
-                if (Projectile.ai[0] >= Player.HeldItem.useTime && Player.HasAmmo(Player.HeldItem) && animationControl == 1 && animationSpunUp >= 10 && Player.whoAmI == Main.myPlayer)
+                ShotDelay++;
+                if (ShotDelay >= 6 && Player.HasAmmo(Player.HeldItem) && animationControl == 1 && animationSpunUp >= 10)
                 {
                     shouldRotate = 6;
-                    Projectile.ai[0] = 0;
+                    ShotDelay = 0;
                     Item ammo = Player.ChooseAmmo(Player.HeldItem);
                     for (int i = 0; i < 4; i++)
                     {
@@ -200,7 +208,7 @@ namespace BagOfNonsense.Projectiles
                         if (type == ProjectileID.Bullet)
                             type = ProjectileID.GoldenBullet;
 
-                        var shot = Projectile.NewProjectileDirect(Player.GetSource_ItemUse_WithPotentialAmmo(Player.HeldItem, Player.HeldItem.useAmmo), Projectile.Center, aim, type, 9 * (Player.HasSashaUpgrade() ? 2 : 1), Player.HeldItem.knockBack, Player.whoAmI);
+                        var shot = ExtensionMethods.BetterNewProjectile(Player, Player.GetSource_ItemUse_WithPotentialAmmo(Player.HeldItem, Player.HeldItem.useAmmo), Projectile.Center, aim, type, 9 * (Player.HasSashaUpgrade() ? 2 : 1), Player.HeldItem.knockBack, Player.whoAmI);
                         shot.GetGlobalProjectile<BagOfNonsenseGlobalProjectile>().SashaProjBool = true;
                         shot.ArmorPenetration = 50;
                         if (type == ProjectileID.GoldenBullet)

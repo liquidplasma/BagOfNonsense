@@ -19,13 +19,11 @@ namespace BagOfNonsense.Projectiles
         // This field is used in this projectie's custom AI
         public Vector2 initialCenter;
 
-        private VertexStrip _vertexStrip = new();
         private Player Player => Main.player[Projectile.owner];
 
         // This field is used as a counter for the wave motion
         public int sineTimer;
 
-        public int attackedNPC;
         public int waveDirection = 1;
         private float waveAmplitude = 0;
         private Color MainBeam => new(47, 193, 203);
@@ -55,7 +53,7 @@ namespace BagOfNonsense.Projectiles
             Projectile.light = 1f; // How much light emit around the projectile
             Projectile.tileCollide = true; // Can the projectile collide with tiles?
             Projectile.timeLeft = 120; // The live time for the projectile (60 = 1 second, so 600 is 10 seconds)
-            Projectile.extraUpdates = 6;
+            Projectile.extraUpdates = 30;
         }
 
         public override bool PreDraw(ref Color lightColor)
@@ -65,7 +63,6 @@ namespace BagOfNonsense.Projectiles
 
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
-            attackedNPC = target.whoAmI;
             if (Projectile.ai[0] != 1)
             {
                 modifiers.FinalDamage *= 0.57f;
