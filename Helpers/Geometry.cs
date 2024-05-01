@@ -8,7 +8,9 @@ namespace BagOfNonsense.Helpers
     internal class Geometry
     {
         private bool increase;
+
         private float size;
+
         private List<Dust> list = new();
 
         public float IncreaseDecrease(float amount, float max = 1.15f, float min = 0.5f)

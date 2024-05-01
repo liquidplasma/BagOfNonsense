@@ -11,8 +11,11 @@ namespace BagOfNonsense.Projectiles.Minions
     public class Pacman : ModProjectile
     {
         internal int up = 0;
+
         internal int down = 1;
+
         internal int left = 2;
+
         internal int right = 3;
 
         public override void SetStaticDefaults()

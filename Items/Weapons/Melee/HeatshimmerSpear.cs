@@ -45,8 +45,8 @@ namespace BagOfNonsense.Items.Weapons.Melee
                 timer++;
                 if (timer % 15 == 0 && timer <= 120)
                 {
-                    int damageplayer = (int)(player.statLife * 0.025f) + player.statDefense;
-                    player.Hurt(PlayerDeathReason.ByPlayerItem(player.whoAmI, Item), damageplayer, player.direction);
+                    int damageplayer = (int)(player.statLife * 0.1f) + player.statDefense;
+                    player.Hurt(PlayerDeathReason.ByPlayerItem(player.whoAmI, Item), damageplayer, player.direction, knockback: 0f, dodgeable: false);
                 }
                 if (timer >= 120)
                 {
@@ -62,13 +62,15 @@ namespace BagOfNonsense.Items.Weapons.Melee
                 timer--;
                 if (timer <= 0) timer = 0;
             }
-            if (timer >= 120) player.AddBuff(ModContent.BuffType<BShimmerSpear>(), 2);
+            if (timer >= 120) 
+                player.AddBuff(ModContent.BuffType<BShimmerSpear>(), 2);
         }
 
         public override void AddRecipes()
         {
             CreateRecipe()
                 .AddIngredient(ItemID.Spear)
+                .AddIngredient(ItemID.FragmentSolar, 6)
                 .AddIngredient(ModContent.ItemType<MoonFragment>(), 10)
                 .AddTile(TileID.LunarCraftingStation)
                 .Register();

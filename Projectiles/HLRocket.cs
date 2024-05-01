@@ -1,7 +1,6 @@
 ﻿using BagOfNonsense.Helpers;
 using BagOfNonsense.Items.Weapons.Ranged;
 using Microsoft.Xna.Framework;
-using System;
 using System.IO;
 using Terraria;
 using Terraria.Audio;
@@ -14,6 +13,7 @@ namespace BagOfNonsense.Projectiles
     {
         private Player Player => Main.player[Projectile.owner];
         private Vector2 mousePosLauncher;
+
         private int soundEffect;
 
         private static SoundStyle Fire => new("BagOfNonsense/Sounds/Weapons/hl_rocketfire")
@@ -66,7 +66,8 @@ namespace BagOfNonsense.Projectiles
             if (Player.ownedProjectileCounts[ModContent.ProjectileType<HLRocketLaser>()] < 1 && Main.myPlayer == Projectile.owner)
                 Projectile.NewProjectile(Projectile.InheritSource(Projectile), Player.Center, Vector2.Zero, ModContent.ProjectileType<HLRocketLaser>(), 0, 0, Player.whoAmI);
 
-            if (soundEffect > 0) soundEffect--;
+            if (soundEffect > 0)
+                soundEffect--;
             if (soundEffect == 30)
                 SoundEngine.PlaySound(Fire, Player.Center);
 
@@ -216,7 +217,6 @@ namespace BagOfNonsense.Projectiles
                 Projectile.usesLocalNPCImmunity = true;
                 Projectile.localNPCHitCooldown = -1;
                 Projectile.netUpdate = true;
-                HelperStats.SmokeGore(Projectile.GetSource_Death(), Projectile.Center, 35, 4);
             }
             Projectile.alpha -= 15;
             Projectile.ai[0]++;
@@ -241,7 +241,6 @@ namespace BagOfNonsense.Projectiles
                     Projectile followThis = Main.projectile[followIndex];
                     Vector2 aim = Projectile.Center.DirectionTo(followThis.Center) * 24f;
                     float distance = 0.1f - Projectile.Distance(followThis.Center) * 0.000872f;
-                    Main.NewText(distance);
                     Projectile.velocity = Vector2.Lerp(Projectile.velocity, aim, 0.08f - distance);
                     Projectile.FaceForward();
                 }

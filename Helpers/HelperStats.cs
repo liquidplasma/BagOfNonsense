@@ -18,7 +18,7 @@ namespace BagOfNonsense.Helpers
     {
         private static int
             KnifeDustEffect;
-        
+
         public static int RandomCyanDust => Utils.SelectRandom(Main.rand, 226, 300);
 
         /// <summary>

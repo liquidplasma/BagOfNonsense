@@ -8,6 +8,7 @@ namespace BagOfNonsense.Helpers
     public sealed class AttackCyclingWeapon : ModItem
     {
         private static readonly List<AttackInfo> AttackInfo = new();
+
         private int _attackIndex;
 
         public override string Texture => "Terraria/Images/Item_" + ItemID.SpaceGun;
@@ -38,7 +39,9 @@ namespace BagOfNonsense.Helpers
     public readonly struct AttackInfo
     {
         public readonly int ProjectileType;
+
         public readonly float ShootSpeed;
+
         public readonly int Damage;
 
         public AttackInfo(int projectileType, float shootSpeed, int damage)

@@ -164,6 +164,8 @@ Items: {
 	}
 
 	ThrowingMastery: {
+		DisplayName: Throwing Mastery
+		Tooltip: ""
 	}
 
 	CelestialClock: {
@@ -188,8 +190,6 @@ Items: {
 
 	SashaUpgrade: {
 	}
-
-	Sasha.Tooltip: ""
 
 	SuspiciousLookingJoystick: {
 	}
@@ -306,53 +306,48 @@ Items: {
 	}
 }
 
-Buffs: {
-	DVirus: {
-	}
+DVirus: {
+}
 
-	DJarate: {
-	}
+DJarate: {
+}
 
-	DHighwattage: {
-	}
+DHighwattage: {
+}
 
-	DGreenRot: {
-	}
+DGreenRot: {
+}
 
-	DFireBurn: {
-	}
+DFireBurn: {
+}
 
-	DCorruptTouch: {
-	}
+DCorruptTouch: {
+}
 
-	DColdtouch: {
-	}
+DColdtouch: {
+}
 
-	BWeaponJarate.Description: Mods.BagOfNonsense.Buffs.BWeaponJarate.Description
-	BWaver.Description: Mods.BagOfNonsense.Buffs.BWaver.Description
+Bstaffbuff: {
+}
 
-	Bstaffbuff: {
-	}
+BShimmerSpear: {
+}
 
-	BShimmerSpear: {
-	}
+BPrismDream: {
+}
 
-	BPrismDream: {
-	}
+BPracticalCube: {
+}
 
-	BPracticalCube: {
-	}
+BPacman: {
+}
 
-	BPacman: {
-	}
+BInvader: {
+}
 
-	BInvader: {
-	}
+Buffs.BGhostlySword.Description: Mods.BagOfNonsense.Buffs.BGhostlySword.Description
 
-	BGhostlySword.Description: Mods.BagOfNonsense.Buffs.BGhostlySword.Description
-
-	BBloodyRage: {
-	}
+BBloodyRage: {
 }
 
 NPCs: {

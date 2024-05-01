@@ -33,13 +33,14 @@ namespace BagOfNonsense.Items.Weapons.Ranged
             Item.crit = 18;
         }
 
-        public override void UpdateInventory(Player player)
+        public override bool? UseItem(Player player)
         {
-            SoundStyle shoot = new("BagOfNonsense/Sounds/Custom/357shot", 2);
-            Item.UseSound = shoot with
+            SoundStyle shoot = new("BagOfNonsense/Sounds/Custom/357shot", 2)
             {
                 Pitch = Main.rand.NextFloat(-0.1f, 0.1f)
             };
+            SoundEngine.PlaySound(shoot, player.Center);
+            return base.UseItem(player);
         }
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
@@ -54,7 +55,6 @@ namespace BagOfNonsense.Items.Weapons.Ranged
                 projupdates = 2;
             }
             Vector2 dustpos = new(position.X, position.Y - 8f);
-
             Vector2 spread = new Vector2(velocity.X, velocity.Y).RotatedByRandom(MathHelper.ToRadians(1));
             Projectile proj = Projectile.NewProjectileDirect(source, dustpos, spread * 1.66f, type, damage, 8, player.whoAmI);
             proj.DamageType = DamageClass.Ranged;

@@ -1,9 +1,6 @@
-﻿using BagOfNonsense.Helpers;
-using Microsoft.Xna.Framework;
-using System.Linq;
+﻿using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;
-using Terraria.GameContent.ItemDropRules;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -12,6 +9,7 @@ namespace BagOfNonsense.Items.Accessory
     internal class GhostlyArrowTrail : GlobalProjectile
     {
         public bool ghostlyArrowTrailFlag;
+
         public override bool InstancePerEntity => true;
 
         public override void AI(Projectile projectile)

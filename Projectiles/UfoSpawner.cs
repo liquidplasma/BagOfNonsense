@@ -1,5 +1,4 @@
 ﻿using BagOfNonsense.Helpers;
-using BagOfNonsense.Items.Weapons.Summon;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using Terraria;
@@ -13,6 +12,7 @@ namespace BagOfNonsense.Projectiles
     {
         private Player Player => Main.player[Projectile.owner];
         private int extraRadius;
+
         private static Geometry GeometryObject = new();
 
         private int SpawnTimer

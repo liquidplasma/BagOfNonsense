@@ -13,7 +13,9 @@ namespace BagOfNonsense.Projectiles.Pets
     public class EXExcaliburControl : ModPlayer
     {
         public bool EXEAllow;
+
         private int canShoot;
+
         private int aimTarget;
 
         public override void ResetEffects()
@@ -64,10 +66,15 @@ namespace BagOfNonsense.Projectiles.Pets
         public override string Texture => "BagOfNonsense/Items/Weapons/Magic/EXExcalibur";
         private Player Player => Main.player[Projectile.owner];
         private Projectile syncProj;
+
         private Vector2 idlePos;
+
         private float mov;
+
         private bool increase;
+
         private NPC target;
+
         private static int DustType => Utils.SelectRandom(Main.rand, 27, 6, 15);
         private Color color = Color.AliceBlue;
 
@@ -182,6 +189,7 @@ namespace BagOfNonsense.Projectiles.Pets
     {
         private Player Player => Main.player[Projectile.owner];
         private int timer;
+
         public override string Texture => "Terraria/Images/Projectile_" + ProjectileID.LightBeam;
 
         public override void SetStaticDefaults()

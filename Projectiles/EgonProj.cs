@@ -6,7 +6,6 @@ using System.IO;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
-using Terraria.Graphics;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -25,7 +24,9 @@ namespace BagOfNonsense.Projectiles
         public int sineTimer;
 
         public int waveDirection = 1;
+
         private float waveAmplitude = 0;
+
         private Color MainBeam => new(47, 193, 203);
 
         private static SoundStyle HitNoise => new("BagOfNonsense/Sounds/Weapons/egon_hit", 5)

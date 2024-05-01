@@ -92,6 +92,7 @@ namespace BagOfNonsense.Buffs
     {
         public override bool InstancePerEntity => true;
         public bool CoatedJarate = false;
+
         private static Texture2D MiniCritTexture => ModContent.Request<Texture2D>("BagOfNonsense/Other/miniCrit", AssetRequestMode.ImmediateLoad).Value;
 
         public override void ResetEffects(NPC npc)

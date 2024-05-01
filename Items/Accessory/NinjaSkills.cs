@@ -33,9 +33,6 @@ namespace BagOfNonsense.Items.Accessory
 
         public override void UpdateEquip(Player player)
         {
-            player.GetCritChance(DamageClass.Throwing) += 15;
-            player.GetDamage(DamageClass.Throwing) += 0.15f;
-            player.ThrownVelocity += 0.15f;
             player.GetArmorPenetration(DamageClass.Generic) += 50;
             player.dash = 1;
             player.blackBelt = true;

@@ -94,6 +94,7 @@ namespace BagOfNonsense.Items.Accessory
         public class ManaCore : ManaTear
         {
             private float actualsize;
+
             private Geometry GeometryObject = new();
 
             public override void SetStaticDefaults()

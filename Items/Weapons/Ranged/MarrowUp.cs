@@ -1,4 +1,5 @@
 ﻿using BagOfNonsense.Items.Ammo;
+using BagOfNonsense.Items.Ingredients;
 using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.DataStructures;
@@ -10,6 +11,7 @@ namespace BagOfNonsense.Items.Weapons.Ranged
     public class MarrowUp : ModItem
     {
         private int timer, actualDamage;
+
         private float radiansadd;
 
         public override void SetStaticDefaults()
@@ -21,38 +23,45 @@ namespace BagOfNonsense.Items.Weapons.Ranged
         public override void SetDefaults()
         {
             Item.CloneDefaults(ItemID.Marrow);
-            Item.damage = 54;
+            Item.damage = 38;
             Item.knockBack = 2f;
             Item.useTime = 20;
             Item.useAnimation = 20;
             Item.autoReuse = true;
             Item.shoot = ProjectileID.BoneArrow;
+            Item.useAmmo = AmmoID.Arrow;
             Item.shootSpeed = 12f;
             Item.useStyle = ItemUseStyleID.Shoot;
             Item.scale = 0.9f;
             Item.channel = true;
         }
 
-        public override void HoldItem(Player player)
+        public override bool? UseItem(Player player)
         {
             if (player.channel)
             {
-                timer++;
-                Item.useAnimation = Item.useTime = (int)(20 - timer / 45f * 10);
-                if (Item.useAnimation < 6)
+                timer += 9;
+                if (timer > 27)
                 {
-                    Item.useAnimation = 6;
-                    actualDamage = (int)((player.HeldItem.damage - 8) * (player.GetDamage(DamageClass.Ranged).Additive + (player.GetDamage(DamageClass.Generic).Additive - 1f)));
-                    radiansadd = 3f;
+                    Item.useAnimation = Item.useTime = (int)(20 - timer / 45f * 10);
+                    if (Item.useTime < 6)
+                    {
+                        Item.useAnimation = Item.useTime = 6;
+                        actualDamage = (int)((player.HeldItem.damage - 8) * (player.GetDamage(DamageClass.Ranged).Additive + (player.GetDamage(DamageClass.Generic).Additive - 1f)));
+                        radiansadd = 3f;
+                    }
                 }
-                if (Item.useTime < 6)
-                    Item.useTime = 6;
             }
-            else
+
+            return base.UseItem(player);
+        }
+
+        public override void HoldItem(Player player)
+        {
+            if (!player.channel && timer > 540)
             {
                 timer = 0;
-                Item.useAnimation = 20;
-                Item.useTime = 20;
+                Item.useAnimation = Item.useTime = 20;
                 radiansadd = 0f;
                 actualDamage = (int)(player.HeldItem.damage * (player.GetDamage(DamageClass.Ranged).Additive + (player.GetDamage(DamageClass.Generic).Additive - 1f)));
             }
@@ -60,7 +69,8 @@ namespace BagOfNonsense.Items.Weapons.Ranged
 
         public override bool CanConsumeAmmo(Item ammo, Player player)
         {
-            if (Main.rand.NextBool()) return false;
+            if (Main.rand.NextBool())
+                return false;
             return true;
         }
 
@@ -80,6 +90,7 @@ namespace BagOfNonsense.Items.Weapons.Ranged
             CreateRecipe()
                  .AddIngredient(ItemID.Marrow)
                  .AddIngredient(ItemID.ChlorophyteBar, 15)
+                 .AddIngredient(ModContent.ItemType<ShadowEssence>(), 4)
                  .AddIngredient(ModContent.ItemType<ActualBoneArrow>(), 50)
                  .Register();
 

@@ -1,4 +1,5 @@
 ﻿using BagOfNonsense.Buffs;
+using BagOfNonsense.Helpers;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using Terraria;
@@ -11,6 +12,7 @@ namespace BagOfNonsense.Projectiles
     public class CorruptSpearProj : ModProjectile
     {
         // public override void SetStaticDefaults() => DisplayName.SetDefault("Corruptor");
+        private Player Player => Main.player[Projectile.owner];
 
         public override void SetDefaults()
         {
@@ -119,6 +121,7 @@ namespace BagOfNonsense.Projectiles
         }
 
         private const int MAX_STICKY_JAVELINS = 50; // This is the max. amount of javelins being able to attach
+
         private readonly Point[] stickingJavelins = new Point[MAX_STICKY_JAVELINS]; // The point array holding for sticking javelins
 
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
@@ -279,21 +282,11 @@ namespace BagOfNonsense.Projectiles
             }
             else
             {
-                int num744 = Main.rand.Next(2, 5);
-                if (Main.rand.Next(1, 101) == 100)
+                int amount = Main.rand.Next(1, 4);               
+                for (int i = 0; i < amount; i++)
                 {
-                    num744 = 15;
-                }
-                if (Main.myPlayer == Projectile.owner)
-                {
-                    for (int num745 = 0; num745 < num744; num745++)
-                    {
-                        float num746 = (float)Main.rand.Next(-35, 36) * 0.02f;
-                        float num747 = (float)Main.rand.Next(-35, 36) * 0.02f;
-                        num746 *= 10f;
-                        num747 *= 10f;
-                        Projectile.NewProjectile(Projectile.GetSource_FromThis(), ownerPos.X, ownerPos.Y, num746, num747, ProjectileID.TinyEater, (int)(damage * 0.75), (int)((double)knockBack * 0.35), Main.myPlayer);
-                    }
+                    Vector2 aim = Main.rand.NextVector2Circular(8, 8) * Main.rand.NextFloat(0.8f, 1.5f);
+                    ExtensionMethods.BetterNewProjectile(Player, Projectile.GetSource_FromThis(), Projectile.Center, aim, ProjectileID.TinyEater, (int)(damage * 0.75), (int)((double)knockBack * 0.35), Main.myPlayer);
                 }
 
                 // Otherwise, kill the projectile

@@ -16,6 +16,7 @@ namespace BagOfNonsense
             NecroArmorBoneArrow;
 
         private int critTimerEffectTimer;
+
         public override bool InstancePerEntity => true;
         private int ChamaleonPlayerIndex;
 

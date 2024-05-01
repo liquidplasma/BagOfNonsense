@@ -9,7 +9,9 @@ namespace BagOfNonsense.Projectiles
     public class HeatshimmerProj : ModProjectile
     {
         public int awokenHP;
+
         public bool awokenToggle;
+
         private Player Player => Main.player[Projectile.owner];
 
         public override void SetStaticDefaults()

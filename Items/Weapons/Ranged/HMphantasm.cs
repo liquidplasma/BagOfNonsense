@@ -32,7 +32,8 @@ namespace BagOfNonsense.Items.Weapons.Ranged
 
         public override bool CanConsumeAmmo(Item ammo, Player player)
         {
-            if (Main.rand.NextBool(3)) return false;
+            if (Main.rand.NextBool(3))
+                return false;
             return true;
         }
 

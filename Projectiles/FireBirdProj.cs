@@ -14,6 +14,7 @@ namespace BagOfNonsense.Projectiles
     public class FireBirdBase : ModProjectile
     {
         private float distance;
+
         private int fixDamage;
 
         private Vector2

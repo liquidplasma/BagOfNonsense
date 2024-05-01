@@ -41,7 +41,9 @@ namespace BagOfNonsense.Items.Weapons.Magic
         };
 
         private ActiveSound loopActive, windupActive, endActive;
+
         private int timer = 0;
+
         private bool justPlayedLoop, justPlayedWindup = false;
 
         public override void SetStaticDefaults()
@@ -94,8 +96,10 @@ namespace BagOfNonsense.Items.Weapons.Magic
                     SoundEngine.PlaySound(Loop, player.Center);
                 }
 
-                if (windupActive != null) windupActive.Position = player.Center;
-                if (loopActive != null) loopActive.Position = player.Center;
+                if (windupActive != null)
+                    windupActive.Position = player.Center;
+                if (loopActive != null)
+                    loopActive.Position = player.Center;
 
                 endActive?.Stop();
             }
@@ -109,7 +113,7 @@ namespace BagOfNonsense.Items.Weapons.Magic
                 justPlayedLoop = justPlayedWindup = false;
             }
 
-            if (!player.channel)
+            if (!player.channel || !player.CheckMana(player.HeldItem.mana))
             {
                 if (endActive == null && timer != 0)
                 {

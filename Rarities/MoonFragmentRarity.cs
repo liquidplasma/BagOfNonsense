@@ -16,6 +16,7 @@ namespace BagOfNonsense.Rarities
         };
 
         private int numColors = RarityColorLerp.Length;
+
         private int nextIndex => (index + 1) % numColors;
         private int index => (int)(Main.GameUpdateCount / 60 % numColors);
 

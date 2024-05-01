@@ -42,15 +42,7 @@ namespace BagOfNonsense.Items.Weapons.Ranged
         }
 
         public override bool CanConsumeAmmo(Item ammo, Player player)
-        {
-            int ar2Index = HelperStats.FindProjectileIndex(player, AR2Type);
-            if (Main.projectile.IndexInRange(ar2Index))
-            {
-                Projectile AR2 = Main.projectile[ar2Index];
-                AR2Held held = AR2.ModProjectile as AR2Held;
-                if (held.AllowedToFire && Main.rand.NextBool(3))
-                    return true;
-            }
+        {           
             return false;
         }
 

@@ -27,7 +27,6 @@ namespace BagOfNonsense.Projectiles
     public class AR2Held : ModProjectile
     {
         private Player Player => Main.player[Projectile.owner];
-        private Item CombineBall { get; set; }
         public bool AllowedToFire => Player.channel && !ChargingAltFire && Player.HasAmmo(Player.HeldItem);
         private bool ChargingAltFire => AltFireDelay >= 60;
         private static Texture2D Glow => ModContent.Request<Texture2D>("BagOfNonsense/Projectiles/AR2Held_Glow").Value;
@@ -161,12 +160,15 @@ namespace BagOfNonsense.Projectiles
 
             //shooting
             #region
-            if (AllowedToFire)
+            if (AllowedToFire && Player.HasItem(Ammo.type))
             {
                 ShotDelay++;
                 if (ShotDelay >= Player.HeldItem.useTime)
                 {
                     ShotDelay = 0;
+                    if (Main.rand.NextBool(4))
+                        Player.ConsumeItem(Ammo.type);
+
                     if (Main.rand.NextBool(10) && AR2Spread <= 3)
                         AR2Spread++;
 
@@ -220,7 +222,7 @@ namespace BagOfNonsense.Projectiles
             Vector2 distance = Player.Center.DirectionTo(MouseAim) * 16f - recoil;
             drawPos = Projectile.Center = Player.MountedCenter + distance;
             Projectile.velocity = Vector2.Zero;
-            int mouseDirection = (Player.DirectionTo(MouseAim).X > 0f) ? 1 : -1;            
+            int mouseDirection = (Player.DirectionTo(MouseAim).X > 0f) ? 1 : -1;
             Projectile.spriteDirection = Player.direction;
             Player.heldProj = Projectile.whoAmI;
             Projectile.rotation = Player.AngleTo(MouseAim) + MathHelper.PiOver2;

@@ -64,9 +64,13 @@ namespace BagOfNonsense.Projectiles.Pets
     {
         private Player Player => Main.player[Projectile.owner];
         private Vector2 pos;
+
         private int npcIndex;
+
         private int shootStyle;
+
         private int delayShot;
+
         private float radiansShot;
 
         private NPC Target

@@ -10,8 +10,11 @@ namespace BagOfNonsense.Buffs
     public class FireBurnGlobal : GlobalNPC
     {
         public bool burning;
+
         public int burningTime;
+
         private int timer;
+
         public bool CanBurn => burningTime > 0;
         public Player Player { get; set; }
 
@@ -27,9 +30,8 @@ namespace BagOfNonsense.Buffs
 
         public override void ResetEffects(NPC npc)
         {
-            if (CanBurn)            
+            if (CanBurn)
                 burningTime--;
-                       
         }
 
         public override void DrawEffects(NPC npc, ref Color drawColor)
@@ -43,7 +45,7 @@ namespace BagOfNonsense.Buffs
         public override void UpdateLifeRegen(NPC npc, ref int damage)
         {
             if (Player != null && Player.active && CanBurn && !npc.friendly && npc.active)
-            {               
+            {
                 timer++;
                 Lighting.AddLight(npc.Center, Color.IndianRed.ToVector3());
                 if (timer >= 30)

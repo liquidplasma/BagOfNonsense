@@ -11,6 +11,7 @@ namespace BagOfNonsense.Items.Weapons.Ranged
     public class ColdRevDebuff : GlobalProjectile
     {
         public bool coldActivate;
+
         public override bool InstancePerEntity => true;
 
         public override void OnHitNPC(Projectile projectile, NPC target, NPC.HitInfo hit, int damageDone)
@@ -50,13 +51,14 @@ namespace BagOfNonsense.Items.Weapons.Ranged
             Item.crit = 9;
         }
 
-        public override void UpdateInventory(Player player)
+        public override bool? UseItem(Player player)
         {
-            SoundStyle shoot = new("BagOfNonsense/Sounds/Custom/357shot", 2);
-            Item.UseSound = shoot with
+            SoundStyle shoot = new("BagOfNonsense/Sounds/Custom/357shot", 2)
             {
                 Pitch = Main.rand.NextFloat(-0.1f, 0.1f)
             };
+            SoundEngine.PlaySound(shoot, player.Center);
+            return base.UseItem(player);
         }
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
@@ -85,7 +87,7 @@ namespace BagOfNonsense.Items.Weapons.Ranged
                 blizzy.GetGlobalProjectile<ColdRevDebuff>().coldActivate = true;
                 for (int i = 0; i < 36; i++)
                 {
-                    Dust effect = Dust.NewDustDirect(blizzy.Center, 4, 4, Utils.SelectRandom(Main.rand, 259, 31), velocity.X * 0.8f, velocity.Y * 0.8f);
+                    Dust effect = Dust.NewDustDirect(blizzy.Center, 4, 4, Utils.SelectRandom(Main.rand, 259, 31), velocity.X * 0.4f, velocity.Y * 0.4f);
                     effect.noGravity = true;
                 }
             }

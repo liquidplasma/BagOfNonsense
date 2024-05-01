@@ -24,7 +24,7 @@ namespace BagOfNonsense.Items.Weapons.Ranged
             Item.reuseDelay = 15;
             Item.width = 62;
             Item.height = 32;
-            Item.shoot = 10;
+            Item.shoot = ProjectileID.PurificationPowder;
             Item.useAmmo = AmmoID.Bullet;
             Item.UseSound = SoundID.Item31;
             Item.damage = 16;

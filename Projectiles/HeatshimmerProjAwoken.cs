@@ -37,6 +37,7 @@ namespace BagOfNonsense.Projectiles
             }
             var proj = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), target.Center, Vector2.Zero, ProjectileID.DaybreakExplosion, (int)(damageDone * 1.15f), hit.Knockback, Player.whoAmI);
             proj.DamageType = DamageClass.Melee;
+            target.AddBuff(BuffID.Daybreak, 900);
         }
 
         public override void AI()
@@ -94,15 +95,9 @@ namespace BagOfNonsense.Projectiles
                     Projectile.netUpdate = true;
                     Projectile.rotation -= (float)Math.PI;
                 }
-            }
-            if ((Projectile.ai[0] == num12 || (Projectile.ai[0] == (float)(int)(num / 2f) && Projectile.active)) && Projectile.owner == Main.myPlayer)
-            {
-                Vector2 mouseWorld3 = Main.MouseWorld;
-                _ = Player.DirectionTo(mouseWorld3) * 0f;
-            }
+            }            
             float num14 = Projectile.rotation - (float)Math.PI / 4f * (float)num11;
             vector2 = (num14 + ((num11 == -1) ? ((float)Math.PI) : 0f)).ToRotationVector2() * (Projectile.ai[0] / num) * num3;
-            Vector2 vector4 = Projectile.Center + (num14 + ((num11 == -1) ? ((float)Math.PI) : 0f)).ToRotationVector2() * 30f;
             Vector2 vector5 = num14.ToRotationVector2();
             Vector2 vector6 = vector5.RotatedBy((float)Math.PI / 2f * (float)Projectile.spriteDirection);
             for (int j = 0; j < 4; j++)
@@ -134,7 +129,7 @@ namespace BagOfNonsense.Projectiles
                     dust5.velocity = vector6 * (8f + 8f * Main.rand.NextFloat()) * num16 * num15;
                     dust5.noGravity = true;
                     dust5.noLight = true;
-                    dust5.scale = 1.333333333f;
+                    dust5.scale = Main.rand.NextFloat(1f, 1.333333f);
                     dust5.customData = this;
                     if (Main.rand.NextBool(4))
                     {

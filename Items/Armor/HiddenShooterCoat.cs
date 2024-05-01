@@ -25,7 +25,6 @@ namespace BagOfNonsense.Items.Armor
 
         public override void UpdateEquip(Player player)
         {
-            player.GetDamage(DamageClass.Throwing) += 0.15f;
             player.GetDamage(DamageClass.Ranged) += 0.15f;
             player.aggro -= 800;
         }

@@ -12,7 +12,9 @@ namespace BagOfNonsense.Projectiles
     {
         private Player Player => Main.player[Projectile.owner];
         private int timer;
+
         private VertexStrip _vertexStrip = new();
+
         // public override void SetStaticDefaults() => DisplayName.SetDefault("Ghostly Arrow");
 
         private int R => Main.rand.Next(220, 255);

@@ -6,8 +6,11 @@ namespace BagOfNonsense
     public class BiomeInformations
     {
         public string currentbuff = "???";
+
         public string name = "???";
+
         public Color Color = new(255, 0, 0);
+
         public Player Player { get; set; }
 
         /// <summary>

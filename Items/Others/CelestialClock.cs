@@ -8,7 +8,9 @@ namespace BagOfNonsense.Items.Others
     public class CelestialClock : ModItem
     {
         private bool iii = true;
+
         private int state;
+
         private bool day;
 
         public override void SetStaticDefaults()

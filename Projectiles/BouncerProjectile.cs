@@ -14,6 +14,7 @@ namespace BagOfNonsense.Projectiles
     {
         public override string Texture => "BagOfNonsense/Items/Weapons/Ranged/Bouncer";
         private VertexStrip _vertexStrip = new();
+
         private Player Player => Main.player[Projectile.owner];
         private bool HitOnce = false;
 

@@ -18,6 +18,7 @@ namespace BagOfNonsense.Items.Accessory
          };
 
         private int numColors = LerpColor.Length;
+
         private int nextIndex => (index + 1) % numColors;
         private int index => (int)((Main.GameUpdateCount / 60) % numColors);
 

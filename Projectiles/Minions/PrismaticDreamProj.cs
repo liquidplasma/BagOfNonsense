@@ -10,7 +10,9 @@ namespace BagOfNonsense.Projectiles.Minions
     public class PrismaticControl : ModPlayer
     {
         public bool PrismAllow;
+
         private int attackTarget;
+
         private int canShoot;
 
         public override void ResetEffects()

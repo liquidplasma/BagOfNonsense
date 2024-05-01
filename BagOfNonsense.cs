@@ -1,5 +1,4 @@
-﻿using BagOfNonsense.Helpers;
-using BagOfNonsense.Items.Accessory;
+﻿using BagOfNonsense.Items.Accessory;
 using Microsoft.Xna.Framework.Graphics;
 using ReLogic.Content;
 using System.IO;

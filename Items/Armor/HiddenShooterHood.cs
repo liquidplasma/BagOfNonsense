@@ -11,7 +11,9 @@ namespace BagOfNonsense.Items.Armor
     public class SuperCrit : ModPlayer
     {
         public bool SuperCritBool = false;
+
         public bool printCrit = false;
+
         private int hitCounter;
 
         public override void ResetEffects()
@@ -105,7 +107,6 @@ namespace BagOfNonsense.Items.Armor
 
         public override void UpdateEquip(Player player)
         {
-            player.GetCritChance(DamageClass.Throwing) += 15;
             player.GetCritChance(DamageClass.Ranged) += 15;
         }
 
@@ -124,7 +125,7 @@ namespace BagOfNonsense.Items.Armor
                 "2% chance to deal a super-crit dealing 3x damage\n" +
                 "Enables auto reuse on all ranged weapons\n" +
                 "Super-crit is guaranteed at 15 enemy hits\n" +
-                "Only [c/70FF79:Ranged] and [c/FFBB4F:Throwing] damage can trigger this effect";
+                "Only [c/70FF79:Ranged] damage can trigger this effect";
 
             if (player.HeldItem.CountsAsClass(DamageClass.Ranged))
                 player.HeldItem.autoReuse = true;

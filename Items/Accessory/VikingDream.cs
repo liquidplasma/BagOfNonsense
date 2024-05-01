@@ -13,6 +13,7 @@ namespace BagOfNonsense.Items.Accessory
             SpinalShield;
 
         private int timer;
+
         public int Defense { get; private set; }
 
         public int KillCounter { get; private set; }

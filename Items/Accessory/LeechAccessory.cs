@@ -15,6 +15,7 @@ namespace BagOfNonsense.Items.Accessory
             regen;
 
         public int ticks;
+
         private const int DefaultMaxHeal = 100;
 
         public int

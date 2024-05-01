@@ -14,14 +14,19 @@ namespace BagOfNonsense.Projectiles
     {
         public Player Player => Main.player[Projectile.owner];
         public int range = 1000 * 1000;
+
         public int closeNPC;
+
         private bool CanAttack = true;
 
         public enum ShotStyle
         {
             Shotgun = 1,
+
             MachineGun,
+
             Cannon,
+
             Slow
         }
 
@@ -108,7 +113,7 @@ namespace BagOfNonsense.Projectiles
 
         public override bool? Colliding(Rectangle projHitbox, Rectangle targetHitbox)
         {
-            if(!CanAttack)
+            if (!CanAttack)
                 return false;
             return base.Colliding(projHitbox, targetHitbox);
         }
@@ -428,8 +433,11 @@ namespace BagOfNonsense.Projectiles
     {
         private int Behavior => (int)Projectile.ai[0];
         private int rippleCount = 3;
+
         private int rippleSize = 5;
+
         private int rippleSpeed = 5;
+
         private float distortStrength = 100f;
 
         private int TimeAlive

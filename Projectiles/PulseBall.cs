@@ -18,7 +18,9 @@ namespace BagOfNonsense.Projectiles
     {
         private Player Player => Main.player[Projectile.owner];
         private List<int> IgnoredNPCS = new();
+
         private ActiveSound aBallLoop;
+
         private VertexStrip _vertexStrip = new();
 
         private int BallHitTimer
@@ -103,7 +105,7 @@ namespace BagOfNonsense.Projectiles
             modifiers.Knockback *= 10f;
             modifiers.DamageVariationScale *= 0;
             modifiers.DisableCrit();
-            modifiers.ArmorPenetration += target.defense * 2;            
+            modifiers.ArmorPenetration += target.defense * 2;
         }
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)

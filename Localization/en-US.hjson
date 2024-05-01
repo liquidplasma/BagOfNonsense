@@ -40,8 +40,15 @@ Mods: {
 				Description: You feel stronger just by holding it.
 			}
 
-			BWaver.DisplayName: Influx Waver
-			BWeaponJarate.DisplayName: Weapon Imbue: Jarate
+			BWaver: {
+				DisplayName: Wave Whisperer
+				Description: ""
+			}
+
+			BWeaponJarate: {
+				DisplayName: Weapon Imbue: Jarate
+				Description: ""
+			}
 
 			DColdtouch: {
 				DisplayName: Cold touch
@@ -103,15 +110,6 @@ Mods: {
 			BullseyeEmblem50: {
 				DisplayName: Terminator Emblem
 				Tooltip: Increases crit damage by 50%
-			}
-
-			CardGlove: {
-				DisplayName: Card Glove
-				Tooltip:
-					'''
-					10% increased cards damage
-					33% chance to not consume thrown cards
-					'''
 			}
 
 			CursedEye: {
@@ -262,7 +260,6 @@ Mods: {
 				DisplayName: Stellar Ninja Soul
 				Tooltip:
 					'''
-					15% increased throwing damage, velocity and critical strike chance
 					Increases armor penetration by 50
 					Allows player ability to dash
 					Double tap into a direction
@@ -442,7 +439,7 @@ Mods: {
 				DisplayName: Hidden Shooter Coat
 				Tooltip:
 					'''
-					15% increased throwing and ranged damage
+					15% increased ranged damage
 					Enemies will focus other person if possible
 					[c/2E86C1:ZoaklenMod Port]
 					'''
@@ -452,8 +449,8 @@ Mods: {
 				DisplayName: Hidden Shooter Hood
 				Tooltip:
 					'''
-					15% increased throwing and ranged critical strike chance
-					Enables zoom out (right click) with throwing and ranged weapons
+					15% increased ranged critical strike chance
+					Enables zoom out (right click) with ranged weapons
 					[c/2E86C1:ZoaklenMod Port]
 					'''
 			}
@@ -462,35 +459,8 @@ Mods: {
 				DisplayName: Hidden Shooter Pants
 				Tooltip:
 					'''
-					50% chance to not consume thrown or ranged ammo
+					50% chance to not consume ranged ammo
 					[c/2E86C1:ZoaklenMod Port]
-					'''
-			}
-
-			StellarNinjaBreastplate: {
-				DisplayName: Stellar Ninja Breastplate
-				Tooltip:
-					'''
-					30% increased throwing damage
-					You are now resistant as a ninja.
-					'''
-			}
-
-			StellarNinjaHelmet: {
-				DisplayName: Stellar Ninja Helmet
-				Tooltip:
-					'''
-					50% chance to not consume thrown item
-					You are now smart as a ninja.
-					'''
-			}
-
-			StellarNinjaLeggings: {
-				DisplayName: Stellar Ninja Leggings
-				Tooltip:
-					'''
-					20% increased throwing critical strike chance
-					You are now light as a ninja.
 					'''
 			}
 
@@ -545,16 +515,6 @@ Mods: {
 				Tooltip:
 					'''
 					'It is pulsing out'
-					[c/2E86C1:ZoaklenMod Port]
-					'''
-			}
-
-			ThrowingMastery: {
-				DisplayName: Throwing Mastery
-				Tooltip:
-					'''
-					Right-click the mentioned item to convert its damage to throwing
-					* This is not a material
 					[c/2E86C1:ZoaklenMod Port]
 					'''
 			}
@@ -748,7 +708,16 @@ Mods: {
 			}
 
 			PhantasmalCelebration.DisplayName: Phantasm Buster
-			Sasha.DisplayName: Sasha
+
+			Sasha: {
+				DisplayName: Sasha
+				Tooltip:
+					'''
+					Susceptible to damage fall-off
+					After dealing a total of 10000 damage,
+					has a chance to get crit-boosted
+					'''
+			}
 
 			SpaceBlaster: {
 				DisplayName: Space Blaster
@@ -775,8 +744,13 @@ Mods: {
 			}
 
 			InfluxWepSummon: {
-				DisplayName: Influx Waver
-				Tooltip: Influx Waver but good
+				DisplayName: Wave Whisperer
+				Tooltip:
+					'''
+					Influx Weaver but good
+					Summon version of the Influx Weaver
+					Throws weaver swords that hits enemies multiple times
+					'''
 			}
 
 			PrismaticDream: {
@@ -848,7 +822,7 @@ Mods: {
 				Tooltip:
 					'''
 					Shoots energy balls
-					66% chance not to consume ammo
+					75% chance not to consume ammo
 					'''
 			}
 

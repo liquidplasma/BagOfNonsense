@@ -13,8 +13,11 @@ namespace BagOfNonsense.Projectiles
     public class SashaCritTime : ModPlayer
     {
         public int canConsumeAmmo;
+
         public int damageTracker;
+
         public bool allowed;
+
         public int critTimer;
 
         public override void ResetEffects()
@@ -28,7 +31,7 @@ namespace BagOfNonsense.Projectiles
 
         public override void OnHitNPCWithProj(Projectile proj, NPC target, NPC.HitInfo hit, int damageDone)/* tModPorter If you don't need the Projectile, consider using OnHitNPC instead */
         {
-            if (allowed && proj.owner == Player.whoAmI && proj.CountsAsClass(DamageClass.Ranged) && proj.GetGlobalProjectile<BagOfNonsenseGlobalProjectile>().SashaProjBool)
+            if (allowed && proj.owner == Player.whoAmI && proj.GetGlobalProjectile<BagOfNonsenseGlobalProjectile>().SashaProjBool)
             {
                 if (critTimer == 0)
                     damageTracker += damageDone;

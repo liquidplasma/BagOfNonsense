@@ -7,8 +7,6 @@ namespace BagOfNonsense.Items.Accessory
     [AutoloadEquip(EquipType.Shield)]
     public class DivineShield : ModItem
     {
-        
-
         public override void SetDefaults()
         {
             Item.width = 24;

@@ -3,6 +3,7 @@ using BagOfNonsense.Helpers;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Terraria;
+using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -76,7 +77,7 @@ namespace BagOfNonsense.Projectiles
     public class WaverSummon : ModProjectile
     {
         private Player Player => Main.player[Projectile.owner];
-        private int idleTime;
+        private int idleTime, searchRange;
 
         private int IdleCirclePosition
         {
@@ -86,6 +87,8 @@ namespace BagOfNonsense.Projectiles
             }
         }
 
+        private ref float ShootDelay => ref Projectile.ai[0];
+        private ref float RandomMovement => ref Projectile.ai[1];
         public override string Texture => "BagOfNonsense/Items/Weapons/Summon/InfluxWepSummon";
 
         public override void SetStaticDefaults()
@@ -162,8 +165,16 @@ namespace BagOfNonsense.Projectiles
             return false;
         }
 
+        public override void OnSpawn(IEntitySource source)
+        {
+            searchRange = Main.rand.Next(1000, 1200);
+            base.OnSpawn(source);
+        }
+
         public override void AI()
         {
+            RandomMovement++;
+
             int dustType = Utils.SelectRandom(Main.rand, 226, 229);
             if (!CheckActive(Player))
             {
@@ -185,36 +196,39 @@ namespace BagOfNonsense.Projectiles
             Vector2 vectorToIdlePosition = idlePosition - Projectile.Center;
             float distanceToIdlePosition = vectorToIdlePosition.Length();
             if (Player.active && distanceToIdlePosition > 1800)
-            {
                 Projectile.TeleportToOrigin(Player, idlePosition, dustType);
-            }
+
             float attackVel = 0.02f;
             float projSpeed = 16f;
-            int closestNPC = HelperStats.FindTargetProjectileCenter(Projectile, 1100f);
+            int closestNPC = HelperStats.FindTargetProjectileCenter(Projectile, searchRange);
             if (closestNPC == -1)
                 attackVel = 0.04f;
             if (Main.npc.IndexInRange(closestNPC))
             {
+                if (RandomMovement % 120 == 0)
+                {
+                    Projectile.velocity += Projectile.velocity.RotatedByRandom(MathHelper.ToRadians(45)) * 0.25f;
+                    Projectile.netUpdate = true;
+                }
                 idleTime = 0;
-                Projectile.ai[0] += Utils.SelectRandom(Main.rand, 1, 3);
+                ShootDelay += Utils.SelectRandom(Main.rand, 1, 3);
                 NPC target = Main.npc[closestNPC];
                 if (Player.HasMinionAttackTargetNPC)
                     target = Main.npc[Player.MinionAttackTargetNPC];
+
                 Vector2 aim = Projectile.DirectionTo(Player.position + Player.Size) * (projSpeed * 1.15f);
                 float distanceHead = Projectile.Distance(Player.Top);
-                if (distanceHead > 200)
+                if (distanceHead > 350)
                     attackVel = 0.08f;
+
                 float amount = MathHelper.Lerp(attackVel, attackVel, Utils.GetLerpValue(140f, 30f, Projectile.timeLeft, clamped: true));
                 Projectile.velocity = Vector2.SmoothStep(Projectile.velocity, aim, amount);
                 Projectile.rotation = Projectile.AngleTo(target.Center) - 5.5f;
-                if (Projectile.ai[0] >= 100)
+                if (ShootDelay >= 100)
                 {
                     Vector2 shootAim = Projectile.DirectionTo(target.Center) * 16f;
-                    Projectile.ai[0] = 0;
-                    if (Main.myPlayer == Projectile.owner)
-                    {
-                        Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, shootAim, ModContent.ProjectileType<WaverSummonShot>(), Projectile.damage, Projectile.knockBack, Player.whoAmI);
-                    }
+                    ShootDelay = 0;
+                    ExtensionMethods.BetterNewProjectile(Player, Projectile.GetSource_FromThis(), Projectile.Center, shootAim, ModContent.ProjectileType<WaverSummonShot>(), Projectile.damage, Projectile.knockBack, Player.whoAmI);
                 }
             }
             else

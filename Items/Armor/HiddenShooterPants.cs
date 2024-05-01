@@ -43,11 +43,7 @@ namespace BagOfNonsense.Items.Armor
             Item.defense = 9;
         }
 
-        public override void UpdateEquip(Player player)
-        {
-            player.ThrownCost50 = true;
-            player.GetModPlayer<Consume50>().Consume50bool = true;
-        }
+        public override void UpdateEquip(Player player) => player.GetModPlayer<Consume50>().Consume50bool = true;
 
         public override void AddRecipes()
         {

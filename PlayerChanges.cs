@@ -1,5 +1,4 @@
 using BagOfNonsense.Dusts;
-using BagOfNonsense.Items.Armor;
 using BagOfNonsense.Items.Weapons.Ranged;
 using Microsoft.Xna.Framework;
 using Terraria;
@@ -13,26 +12,37 @@ namespace BagOfNonsense
     public class PlayerChanges : ModPlayer
     {
         public bool shadowOrbMinion = false;
+
         public bool creeperMinion = false;
+
         public bool sfaMinion = false;
+
         public bool invaderMinion = false;
+
         public bool pacMinion = false;
+
         public bool practicalCube = false;
 
         public int damageType = -1;
 
         public bool markActivated = false;
+
         public int markFrames = 0;
+
         public int activeMark = -1;
+
         public int markDuration = 300;
 
         public bool virus = false;
+
         public int lastChange = 0;
 
         public bool blinkDashing = false;
+
         public int blinkDashingCounter = 0;
 
         public int stockedTeleports = 0;
+
         public float stTick = 0f;
 
         public bool
@@ -63,10 +73,6 @@ namespace BagOfNonsense
             if (stockedTeleports > 3)
             {
                 stockedTeleports = 3;
-            }
-            if (!StellarNinja(Player))
-            {
-                stockedTeleports = 0;
             }
         }
 
@@ -174,16 +180,6 @@ namespace BagOfNonsense
                     }
                 }
             }
-        }
-
-        private static bool StellarNinja(Player player)
-        {
-            bool have = false;
-            if (player.armor[0].type == ModContent.ItemType<StellarNinjaHelmet>() && player.armor[1].type == ModContent.ItemType<StellarNinjaBreastplate>() && player.armor[2].type == ModContent.ItemType<StellarNinjaLeggings>())
-            {
-                have = true;
-            }
-            return have;
         }
     }
 }
