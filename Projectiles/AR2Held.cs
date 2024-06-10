@@ -153,7 +153,7 @@ namespace BagOfNonsense.Projectiles
             if (Player.whoAmI == Main.myPlayer)
             {
                 MouseAim = Main.MouseWorld;
-                if (!Main.mapFullscreen)
+                if (!Main.mapFullscreen && !Player.mouseInterface)
                     RightMousePressed = Main.mouseRight;
                 Projectile.netUpdate = true;
             }
@@ -201,10 +201,10 @@ namespace BagOfNonsense.Projectiles
             {
                 SoundEngine.PlaySound(BallLaunch, Projectile.Center);
                 Vector2 aim = Projectile.Center.DirectionTo(MouseAim) * 12f;
-                if (HasAltFireAmmo)
+                if (HasAltFireAmmo && Player.whoAmI == Main.myPlayer)
                 {
                     Player.ConsumeItem(ModContent.ItemType<CombineBalls>());
-                    ExtensionMethods.BetterNewProjectile(Player, Player.GetSource_ItemUse_WithPotentialAmmo(Player.HeldItem, Player.HeldItem.useAmmo), Projectile.Center, aim * Main.rand.NextFloat(0.9f, 1.1f), ModContent.ProjectileType<PulseBall>(), 1000, 10f, Player.whoAmI);
+                    Projectile.NewProjectileDirect(Player.GetSource_ItemUse_WithPotentialAmmo(Player.HeldItem, Player.HeldItem.useAmmo), Projectile.Center, aim * Main.rand.NextFloat(0.9f, 1.1f), ModContent.ProjectileType<PulseBall>(), 1000, 10f, Player.whoAmI);
                 }
             }
             if (AltFireDelay >= 60)

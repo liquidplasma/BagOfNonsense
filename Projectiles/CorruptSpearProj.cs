@@ -282,11 +282,12 @@ namespace BagOfNonsense.Projectiles
             }
             else
             {
-                int amount = Main.rand.Next(1, 4);               
+                int amount = Main.rand.Next(1, 4);
                 for (int i = 0; i < amount; i++)
                 {
                     Vector2 aim = Main.rand.NextVector2Circular(8, 8) * Main.rand.NextFloat(0.8f, 1.5f);
-                    ExtensionMethods.BetterNewProjectile(Player, Projectile.GetSource_FromThis(), Projectile.Center, aim, ProjectileID.TinyEater, (int)(damage * 0.75), (int)((double)knockBack * 0.35), Main.myPlayer);
+                    if (Player.whoAmI == Main.myPlayer)
+                        Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, aim, ProjectileID.TinyEater, (int)(damage * 0.75), (int)((double)knockBack * 0.35), Main.myPlayer);
                 }
 
                 // Otherwise, kill the projectile

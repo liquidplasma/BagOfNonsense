@@ -21,7 +21,7 @@ namespace BagOfNonsense
         {
             if (Main.netMode != NetmodeID.Server)
             {
-                Ref<Effect> shockWave = new(ModContent.Request<Effect>("BagOfNonsense/Effects/ShockwaveEffect", AssetRequestMode.ImmediateLoad).Value);
+                Asset<Effect> shockWave = ModContent.Request<Effect>("BagOfNonsense/Effects/ShockwaveEffect", AssetRequestMode.ImmediateLoad);
                 Filters.Scene["Shockwave"] = new Filter(new ScreenShaderData(shockWave, "Shockwave"), EffectPriority.VeryHigh);
                 Filters.Scene["Shockwave"].Load();
             }

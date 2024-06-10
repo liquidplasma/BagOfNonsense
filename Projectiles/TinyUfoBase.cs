@@ -91,6 +91,7 @@ namespace BagOfNonsense.Projectiles
             Projectile.penetrate = -1;
             Projectile.scale = 1f;
             Projectile.light = 0f;
+            Projectile.CritChance = 0;
         }
 
         public override bool PreKill(int timeLeft)
@@ -206,10 +207,10 @@ namespace BagOfNonsense.Projectiles
                                 NPC target = Main.npc[closeNPC];
                                 Vector2 shootAim = Projectile.DirectionTo(target.Center) * 15f;
                                 float distance = Projectile.DistanceSQ(target.Center);
-                                if (distance < range)
+                                if (distance < range && Player.whoAmI == Main.myPlayer)
                                 {
                                     ShotDelay = 0;
-                                    var shooty = ExtensionMethods.BetterNewProjectile(Player, Projectile.GetSource_FromThis(), Projectile.Center, shootAim.RotatedByRandom(MathHelper.ToRadians(2)), ShotType, (int)(Projectile.damage * 0.15f), Projectile.knockBack, Player.whoAmI, target.whoAmI);
+                                    var shooty = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, shootAim.RotatedByRandom(MathHelper.ToRadians(2)), ShotType, (int)(Projectile.damage * 0.15f), Projectile.knockBack, Player.whoAmI, target.whoAmI);
                                     shooty.CritChance = 0;
                                 }
                             }
@@ -222,12 +223,12 @@ namespace BagOfNonsense.Projectiles
                             NPC target = Main.npc[closeNPC];
                             Vector2 shootAim = Projectile.DirectionTo(target.Center) * 15f;
                             float distance = Projectile.DistanceSQ(target.Center);
-                            if (distance < range)
+                            if (distance < range && Player.whoAmI == Main.myPlayer)
                             {
                                 ShotDelay = 0;
                                 for (int i = 0; i < 4; i++)
                                 {
-                                    var shooty = ExtensionMethods.BetterNewProjectile(Player, Projectile.GetSource_FromThis(), Projectile.Center, shootAim.RotatedByRandom(MathHelper.ToRadians(8)), ShotType, (int)(Projectile.damage * 0.5f), Projectile.knockBack, Player.whoAmI, target.whoAmI);
+                                    var shooty = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, shootAim.RotatedByRandom(MathHelper.ToRadians(8)), ShotType, (int)(Projectile.damage * 0.5f), Projectile.knockBack, Player.whoAmI, target.whoAmI);
                                     shooty.CritChance = 0;
                                 }
                             }
@@ -241,10 +242,10 @@ namespace BagOfNonsense.Projectiles
                                 NPC target = Main.npc[closeNPC];
                                 Vector2 shootAim = Projectile.DirectionTo(target.Center) * 15f;
                                 float distance = Projectile.DistanceSQ(target.Center);
-                                if (distance < range)
+                                if (distance < range && Player.whoAmI == Main.myPlayer)
                                 {
                                     ShotDelay = 0;
-                                    var shooty = ExtensionMethods.BetterNewProjectile(Player, Projectile.GetSource_FromThis(), Projectile.Center, shootAim, ShotType, (int)(Projectile.damage * 1.5f), Projectile.knockBack, Player.whoAmI, target.whoAmI);
+                                    var shooty = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, shootAim, ShotType, (int)(Projectile.damage * 1.5f), Projectile.knockBack, Player.whoAmI, target.whoAmI);
                                     shooty.CritChance = 0;
                                 }
                             }
@@ -257,10 +258,10 @@ namespace BagOfNonsense.Projectiles
                                 NPC target = Main.npc[closeNPC];
                                 Vector2 shootAim = Projectile.DirectionTo(target.Center) * 15f;
                                 float distance = Projectile.DistanceSQ(target.Center);
-                                if (distance < range)
+                                if (distance < range && Player.whoAmI == Main.myPlayer)
                                 {
                                     ShotDelay = 0;
-                                    var shooty = ExtensionMethods.BetterNewProjectile(Player, Projectile.GetSource_FromThis(), Projectile.Center, shootAim, ShotType, Projectile.damage, Projectile.knockBack, Player.whoAmI, target.whoAmI);
+                                    var shooty = Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, shootAim, ShotType, Projectile.damage, Projectile.knockBack, Player.whoAmI, target.whoAmI);
                                     shooty.CritChance = 0;
                                 }
                             }

@@ -26,17 +26,6 @@ namespace BagOfNonsense.Helpers
         /// </summary>
         public static void BetterEntityDraw(Texture2D texture, Vector2 position, Rectangle? sourceRectangle, Color color, float rotation, Vector2 origin, float scale, SpriteEffects effects, float worthless = 0f) => Main.EntitySpriteDraw(texture, position - Main.screenPosition, sourceRectangle, color, rotation, origin, new Vector2(scale), effects, worthless);
 
-        /// <summary>
-        /// Already checks for if(Main.myPlayer == Player.whoAmI)
-        /// </summary>
-        /// <returns>Projectile, null if the above condition is false (it shouldn't be)</returns>
-        public static Projectile BetterNewProjectile(Player Player, IEntitySource spawnSource, Vector2 position, Vector2 velocity, int type, int damage, float knockback, int owner = -1, float ai0 = 0, float ai1 = 0, float ai2 = 0)
-        {
-            if (Player.whoAmI == Main.myPlayer)
-                return Projectile.NewProjectileDirect(spawnSource, position, velocity, type, damage, knockback, owner, ai0, ai1, ai2);
-            return null;
-        }
-
         public static CombatText CreateCombatText(Player sourcePlayer, Color color, string text) => Main.combatText[CombatText.NewText(sourcePlayer.getRect(), color, text)];
 
         public static CombatText CreateCombatText(NPC sourceNPC, Color color, string text) => Main.combatText[CombatText.NewText(sourceNPC.getRect(), color, text)];

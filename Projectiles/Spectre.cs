@@ -139,16 +139,14 @@ namespace BagOfNonsense.Projectiles
                     NPC target = Main.npc[aimNPC];
                     Projectile.ai[0]++;
                     Vector2 aim = Projectile.Center.DirectionTo(target.Center) * 12f;
-                    if (target.active && Projectile.ai[0] > 6)
+                    if (target.active && Projectile.ai[0] > 6 && Player.whoAmI == Main.myPlayer)
                     {
                         Projectile.ai[0] = 0;
-                        var dart = ExtensionMethods.BetterNewProjectile(Player, Projectile.GetSource_FromThis(), Projectile.Center, aim.RotatedByRandom(MathHelper.ToRadians(4)) * Main.rand.NextFloat(.8f, 1.2f), ModContent.ProjectileType<MonkeyDart>(), (int)(Projectile.damage * 0.5f), 0f, Player.whoAmI);
-                        dart.CritChance = 0;
+                        Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, aim.RotatedByRandom(MathHelper.ToRadians(4)) * Main.rand.NextFloat(.8f, 1.2f), ModContent.ProjectileType<MonkeyDart>(), (int)(Projectile.damage * 0.5f), 0f, Player.whoAmI);
                         if (playerHasMana)
                         {
                             Player.CheckMana(6, true);
-                            var shooty = ExtensionMethods.BetterNewProjectile(Player, Projectile.GetSource_FromThis(), Projectile.Center, aim, ModContent.ProjectileType<SpectreBomb>(), Projectile.damage, 0.8f, Player.whoAmI);
-                            shooty.CritChance = 0;
+                            Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, aim, ModContent.ProjectileType<SpectreBomb>(), Projectile.damage, 0.8f, Player.whoAmI);
                         }
                     }
                 }
@@ -184,6 +182,7 @@ namespace BagOfNonsense.Projectiles
             Projectile.friendly = true;
             Projectile.alpha = 255;
             Projectile.extraUpdates = 3;
+            Projectile.CritChance = 0;
         }
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
@@ -234,6 +233,7 @@ namespace BagOfNonsense.Projectiles
             Projectile.alpha = 255;
             Projectile.scale = 0.5f;
             Projectile.extraUpdates = 3;
+            Projectile.CritChance = 0;
         }
 
         public override void AI()

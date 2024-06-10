@@ -80,7 +80,8 @@ namespace BagOfNonsense.Projectiles
                 int fixDamage = (int)((ammo.damage + Projectile.damage) * Player.GetPlayerDamageMultiplier(Player.HeldItem.DamageType));
                 Vector2 aim = Projectile.Bottom.DirectionTo(Projectile.Top) * 9;
                 Vector2 offset = Projectile.Center.DirectionTo(mousePosLauncher) * 32f;
-                ExtensionMethods.BetterNewProjectile(Player, Player.GetSource_ItemUse_WithPotentialAmmo(Player.HeldItem, Player.HeldItem.useAmmo), Projectile.Center + offset, aim, ModContent.ProjectileType<HLRocket>(), fixDamage, 20f, Player.whoAmI);
+                if (Player.whoAmI == Main.myPlayer)
+                    Projectile.NewProjectileDirect(Player.GetSource_ItemUse_WithPotentialAmmo(Player.HeldItem, Player.HeldItem.useAmmo), Projectile.Center + offset, aim, ModContent.ProjectileType<HLRocket>(), fixDamage, 20f, Player.whoAmI);
             }
 
             int followIndex = HelperStats.FindProjectileIndex(Player, ModContent.ProjectileType<HLRocketLaser>());

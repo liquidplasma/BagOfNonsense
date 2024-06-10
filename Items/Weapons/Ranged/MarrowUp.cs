@@ -10,60 +10,40 @@ namespace BagOfNonsense.Items.Weapons.Ranged
 {
     public class MarrowUp : ModItem
     {
-        private int timer, actualDamage;
-
-        private float radiansadd;
-
-        public override void SetStaticDefaults()
-        {
-            // DisplayName.SetDefault("Marrowned");
-            // Tooltip.SetDefault("50% chance not to consume ammo");
-        }
+        private float
+            timer,
+            useTimeReduction,
+            inaccuracy;
 
         public override void SetDefaults()
         {
             Item.CloneDefaults(ItemID.Marrow);
             Item.damage = 38;
             Item.knockBack = 2f;
-            Item.useTime = 20;
-            Item.useAnimation = 20;
+            Item.useTime = Item.useAnimation = 20;
             Item.autoReuse = true;
-            Item.shoot = ProjectileID.BoneArrow;
+            Item.shoot = ProjectileID.PurificationPowder;
             Item.useAmmo = AmmoID.Arrow;
-            Item.shootSpeed = 12f;
+            Item.shootSpeed = 11f;
             Item.useStyle = ItemUseStyleID.Shoot;
             Item.scale = 0.9f;
             Item.channel = true;
         }
 
-        public override bool? UseItem(Player player)
+        public override void HoldItem(Player player)
         {
             if (player.channel)
             {
-                timer += 9;
-                if (timer > 27)
-                {
-                    Item.useAnimation = Item.useTime = (int)(20 - timer / 45f * 10);
-                    if (Item.useTime < 6)
-                    {
-                        Item.useAnimation = Item.useTime = 6;
-                        actualDamage = (int)((player.HeldItem.damage - 8) * (player.GetDamage(DamageClass.Ranged).Additive + (player.GetDamage(DamageClass.Generic).Additive - 1f)));
-                        radiansadd = 3f;
-                    }
-                }
+                timer++;
+                if (timer <= 450)
+                    useTimeReduction = timer / 225f; // climbs to 0.75f over 7.5 seconds
+                else
+                    inaccuracy = 3f;
             }
-
-            return base.UseItem(player);
-        }
-
-        public override void HoldItem(Player player)
-        {
-            if (!player.channel && timer > 540)
+            else // reset if player stops firing the weapon
             {
-                timer = 0;
-                Item.useAnimation = Item.useTime = 20;
-                radiansadd = 0f;
-                actualDamage = (int)(player.HeldItem.damage * (player.GetDamage(DamageClass.Ranged).Additive + (player.GetDamage(DamageClass.Generic).Additive - 1f)));
+                timer = useTimeReduction = 0;
+                inaccuracy = 0f;
             }
         }
 
@@ -73,13 +53,22 @@ namespace BagOfNonsense.Items.Weapons.Ranged
                 return false;
             return true;
         }
+        public override float UseSpeedMultiplier(Player player)
+        {
+            return 1f + useTimeReduction; // item will be 75% faster when fully wind up
+        }
+      
+        public override void ModifyShootStats(Player player, ref Vector2 position, ref Vector2 velocity, ref int type, ref int damage, ref float knockback)
+        {
+            type = ProjectileID.BoneArrow;
+            float spread = inaccuracy + Main.rand.NextFloat(0.1f, 2.4f);
+            velocity = velocity.RotatedByRandom(MathHelper.ToRadians(spread));
+        }
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            float speedy = Main.rand.NextFloat(0.9f, 1.25f);
-            float radians = radiansadd + Main.rand.NextFloat(0.1f, 2.4f);
-            Vector2 perturbedSpeed = velocity.RotatedByRandom(MathHelper.ToRadians(radians));
-            Projectile.NewProjectile(source, position, perturbedSpeed * speedy, ProjectileID.BoneArrow, actualDamage, knockback, player.whoAmI);
+            float speedy = Main.rand.NextFloat(0.85f, 1.25f);
+            Projectile.NewProjectile(source, position, velocity * speedy, ProjectileID.BoneArrow, damage, knockback, player.whoAmI);
             return false;
         }
 

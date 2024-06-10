@@ -82,7 +82,7 @@ namespace BagOfNonsense.Projectiles
             Projectile.velocity = Vector2.Zero;
             int closeNPC = HelperStats.FindTargetLOSProjectile(Projectile, 2000);
             SpawnTimer++;
-            if (SpawnTimer >= Main.rand.Next(120, 150) && Main.npc.IndexInRange(closeNPC) && GetUfoCount(Player) <= Player.maxMinions)
+            if (SpawnTimer >= Main.rand.Next(120, 150) && Main.npc.IndexInRange(closeNPC) && GetUfoCount(Player) <= Player.maxMinions && Player.whoAmI == Main.myPlayer)
             {
                 SpawnTimer = 0;
                 extraRadius = 120;
@@ -95,8 +95,7 @@ namespace BagOfNonsense.Projectiles
                 SoundEngine.PlaySound(SoundID.Item44, Projectile.Center);
                 NPC target = Main.npc[closeNPC];
                 Vector2 aim = Projectile.DirectionTo(target.Center) * 2.7f;
-                Projectile shooty = ExtensionMethods.BetterNewProjectile(Player, Projectile.GetSource_FromThis(), Projectile.Center, aim.RotatedByRandom(MathHelper.ToRadians(Main.rand.Next(0, 360))), UfoToShoot, Projectile.damage, 0, Player.whoAmI);
-                shooty.CritChance = 0;
+                Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, aim.RotatedByRandom(MathHelper.ToRadians(Main.rand.Next(0, 360))), UfoToShoot, Projectile.damage, 0, Player.whoAmI);
                 for (int i = 0; i < 3; i++)
                 {
                     Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height, DustID.Vortex).noGravity = true;

@@ -119,9 +119,9 @@ namespace BagOfNonsense
                 Vector2 position = Player.position + Player.Size * Main.rand.NextFloat(0.5f);
                 Vector2 velocity = position.DirectionTo(target.Center) * 16f;
                 int newDamage = (int)MathHelper.Clamp(damageDone * 0.33f, 1, 50);
-                if (!NecroArrow(proj).NecroArmorBoneArrow && newDamage != 1 && necroSetBonusControl > 0)
+                if (!NecroArrow(proj).NecroArmorBoneArrow && newDamage != 1 && necroSetBonusControl > 0 && Player.whoAmI == Main.myPlayer)
                 {
-                    Projectile arrow = ExtensionMethods.BetterNewProjectile(Player, Player.GetSource_FromThis("BON_NecroSet"), position, velocity, ProjectileID.BoneArrow, newDamage, 2f, Player.whoAmI);
+                    Projectile arrow = Projectile.NewProjectileDirect(Player.GetSource_FromThis("BON_NecroSet"), position, velocity, ProjectileID.BoneArrow, newDamage, 2f, Player.whoAmI);
                     arrow.rotation = arrow.AngleTo(target.Center) + MathHelper.PiOver2;
                     NecroArrow(arrow).NecroArmorBoneArrow = true;
                 }

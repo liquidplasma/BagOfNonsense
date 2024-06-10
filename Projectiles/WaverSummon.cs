@@ -224,11 +224,11 @@ namespace BagOfNonsense.Projectiles
                 float amount = MathHelper.Lerp(attackVel, attackVel, Utils.GetLerpValue(140f, 30f, Projectile.timeLeft, clamped: true));
                 Projectile.velocity = Vector2.SmoothStep(Projectile.velocity, aim, amount);
                 Projectile.rotation = Projectile.AngleTo(target.Center) - 5.5f;
-                if (ShootDelay >= 100)
+                if (ShootDelay >= 100 && Player.whoAmI == Main.myPlayer)
                 {
                     Vector2 shootAim = Projectile.DirectionTo(target.Center) * 16f;
                     ShootDelay = 0;
-                    ExtensionMethods.BetterNewProjectile(Player, Projectile.GetSource_FromThis(), Projectile.Center, shootAim, ModContent.ProjectileType<WaverSummonShot>(), Projectile.damage, Projectile.knockBack, Player.whoAmI);
+                    Projectile.NewProjectileDirect(Projectile.GetSource_FromThis(), Projectile.Center, shootAim, ModContent.ProjectileType<WaverSummonShot>(), Projectile.damage, Projectile.knockBack, Player.whoAmI);
                 }
             }
             else

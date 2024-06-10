@@ -37,15 +37,11 @@ namespace BagOfNonsense.Items.Weapons.Magic
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            float spread = MathHelper.ToRadians(360);
-            float baseSpeed = (float)Math.Sqrt(velocity.X * velocity.X + velocity.Y * velocity.Y);
-            double startAngle = Math.Atan2(velocity.X, velocity.Y) - spread / 2;
-            double deltaAngle = spread / 12;
-            double offsetAngle;
-            for (int j = 0; j < 12; j++)
+            int numberProjectiles = 12;
+            for (int i = 0; i < numberProjectiles; i++)
             {
-                offsetAngle = startAngle + deltaAngle * j;
-                Projectile.NewProjectile(source, position.X, position.Y, baseSpeed * (float)Math.Sin(offsetAngle), baseSpeed * (float)Math.Cos(offsetAngle), ModContent.ProjectileType<staffproj>(), damage, 0, player.whoAmI);
+                float angle = (MathHelper.TwoPi / numberProjectiles) * i;
+                Projectile.NewProjectile(source, position, velocity.RotatedByRandom(angle), ModContent.ProjectileType<staffproj>(), damage, 0, player.whoAmI);
             }
             return false;
         }

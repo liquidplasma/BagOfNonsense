@@ -210,12 +210,12 @@ namespace BagOfNonsense.Projectiles
                         int type = ammo.shoot;
                         if (type == ProjectileID.Bullet)
                             type = ProjectileID.GoldenBullet;
-
-                        var shot = ExtensionMethods.BetterNewProjectile(Player, Player.GetSource_ItemUse_WithPotentialAmmo(Player.HeldItem, Player.HeldItem.useAmmo), Projectile.Center, aim, type, 9 * (Player.HasSashaUpgrade() ? 2 : 1), Player.HeldItem.knockBack, Player.whoAmI);
-                        shot.GetGlobalProjectile<BagOfNonsenseGlobalProjectile>().SashaProjBool = true;
-                        shot.ArmorPenetration = 50;
-                        if (type == ProjectileID.GoldenBullet)
-                            shot.extraUpdates += 1;
+                        if (Player.whoAmI == Main.myPlayer)
+                        {
+                            Projectile shot = Projectile.NewProjectileDirect(Player.GetSource_ItemUse_WithPotentialAmmo(Player.HeldItem, Player.HeldItem.useAmmo), Projectile.Center, aim, type, 9 * (Player.HasSashaUpgrade() ? 2 : 1), Player.HeldItem.knockBack, Player.whoAmI);
+                            shot.GetGlobalProjectile<BagOfNonsenseGlobalProjectile>().SashaProjBool = true;
+                            shot.ArmorPenetration = 50;
+                        }
                     }
                 }
             }

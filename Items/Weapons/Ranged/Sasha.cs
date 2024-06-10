@@ -49,8 +49,8 @@ namespace BagOfNonsense.Items.Weapons.Ranged
 
         public override void HoldItem(Player player)
         {
-            if (player.ownedProjectileCounts[ModContent.ProjectileType<SashaProj>()] < 1)
-                ExtensionMethods.BetterNewProjectile(player, player.GetSource_ItemUse_WithPotentialAmmo(player.HeldItem, Item.useAmmo), player.Center, Vector2.Zero, ModContent.ProjectileType<SashaProj>(), Item.damage, Item.knockBack, player.whoAmI);
+            if (player.ownedProjectileCounts[ModContent.ProjectileType<SashaProj>()] < 1 && player.whoAmI == Main.myPlayer)
+                Projectile.NewProjectileDirect(player.GetSource_ItemUse_WithPotentialAmmo(player.HeldItem, Item.useAmmo), player.Center, Vector2.Zero, ModContent.ProjectileType<SashaProj>(), Item.damage, Item.knockBack, player.whoAmI);
         }
 
         public override void ModifyTooltips(List<TooltipLine> tooltips)

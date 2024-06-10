@@ -58,7 +58,8 @@ namespace BagOfNonsense.Buffs
                         dust.velocity *= 1.2f + Utils.SelectRandom(Main.rand, .15f, .3f, .45f) * Utils.SelectRandom(Main.rand, -1, 1);
                     }
                     int hitDamage = (20 * (Player.HasFireBirdUpgrade() ? 5 : 1)) + Main.rand.Next(Player.HasFireBirdUpgrade() ? 84 : 21);
-                    ExtensionMethods.BetterNewProjectile(Player, Player.GetSource_ItemUse_WithPotentialAmmo(Player.HeldItem, Player.HeldItem.useAmmo), npc.Center, Vector2.Zero, ModContent.ProjectileType<UfoMissileBits>(), hitDamage, 2f, Player.whoAmI, 1);
+                    if (Player.whoAmI == Main.myPlayer)
+                        Projectile.NewProjectileDirect(Player.GetSource_ItemUse_WithPotentialAmmo(Player.HeldItem, Player.HeldItem.useAmmo), npc.Center, Vector2.Zero, ModContent.ProjectileType<UfoMissileBits>(), hitDamage, 2f, Player.whoAmI, 1);
                     SoundEngine.PlaySound(Hit, npc.Center);
                 }
             }
