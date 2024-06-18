@@ -78,7 +78,7 @@ namespace BagOfNonsense.Projectiles
             drawPos,
             mousePosSasha;
 
-        private int
+        public int
             shouldRotate,
             animationSpunUp,
             animationControl;
@@ -249,7 +249,6 @@ namespace BagOfNonsense.Projectiles
 
             if (Player.HeldItem.type != ModContent.ItemType<Sasha>())
                 Projectile.Kill();
-
             Player.heldProj = Projectile.whoAmI;
         }
 

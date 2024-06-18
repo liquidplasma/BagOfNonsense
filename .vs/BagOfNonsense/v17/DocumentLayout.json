@@ -3,64 +3,28 @@
   "WorkspaceRootPath": "C:\\Users\\Administrator\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\BagOfNonsense\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{C9C7A90F-7302-4018-83F5-B294C1CE908F}|BagOfNonsense.csproj|c:\\users\\administrator\\documents\\my games\\terraria\\tmodloader\\modsources\\bagofnonsense\\projectiles\\waversummon.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C9C7A90F-7302-4018-83F5-B294C1CE908F}|BagOfNonsense.csproj|solutionrelative:projectiles\\waversummon.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C9C7A90F-7302-4018-83F5-B294C1CE908F}|BagOfNonsense.csproj|c:\\users\\administrator\\documents\\my games\\terraria\\tmodloader\\modsources\\bagofnonsense\\projectiles\\ufospawner.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C9C7A90F-7302-4018-83F5-B294C1CE908F}|BagOfNonsense.csproj|solutionrelative:projectiles\\ufospawner.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C9C7A90F-7302-4018-83F5-B294C1CE908F}|BagOfNonsense.csproj|c:\\users\\administrator\\documents\\my games\\terraria\\tmodloader\\modsources\\bagofnonsense\\projectiles\\tinyufobase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C9C7A90F-7302-4018-83F5-B294C1CE908F}|BagOfNonsense.csproj|solutionrelative:projectiles\\tinyufobase.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C9C7A90F-7302-4018-83F5-B294C1CE908F}|BagOfNonsense.csproj|c:\\users\\administrator\\documents\\my games\\terraria\\tmodloader\\modsources\\bagofnonsense\\projectiles\\spectre.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C9C7A90F-7302-4018-83F5-B294C1CE908F}|BagOfNonsense.csproj|solutionrelative:projectiles\\spectre.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{C9C7A90F-7302-4018-83F5-B294C1CE908F}|BagOfNonsense.csproj|c:\\users\\administrator\\documents\\my games\\terraria\\tmodloader\\modsources\\bagofnonsense\\items\\weapons\\ranged\\sasha.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C9C7A90F-7302-4018-83F5-B294C1CE908F}|BagOfNonsense.csproj|solutionrelative:items\\weapons\\ranged\\sasha.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{C9C7A90F-7302-4018-83F5-B294C1CE908F}|BagOfNonsense.csproj|c:\\users\\administrator\\documents\\my games\\terraria\\tmodloader\\modsources\\bagofnonsense\\projectiles\\sashaproj.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{C9C7A90F-7302-4018-83F5-B294C1CE908F}|BagOfNonsense.csproj|solutionrelative:projectiles\\sashaproj.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C9C7A90F-7302-4018-83F5-B294C1CE908F}|BagOfNonsense.csproj|c:\\users\\administrator\\documents\\my games\\terraria\\tmodloader\\modsources\\bagofnonsense\\projectiles\\hlrocket.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C9C7A90F-7302-4018-83F5-B294C1CE908F}|BagOfNonsense.csproj|solutionrelative:projectiles\\hlrocket.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{C9C7A90F-7302-4018-83F5-B294C1CE908F}|BagOfNonsense.csproj|c:\\users\\administrator\\documents\\my games\\terraria\\tmodloader\\modsources\\bagofnonsense\\tf2crit.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C9C7A90F-7302-4018-83F5-B294C1CE908F}|BagOfNonsense.csproj|solutionrelative:tf2crit.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C9C7A90F-7302-4018-83F5-B294C1CE908F}|BagOfNonsense.csproj|c:\\users\\administrator\\documents\\my games\\terraria\\tmodloader\\modsources\\bagofnonsense\\projectiles\\corruptspearproj.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C9C7A90F-7302-4018-83F5-B294C1CE908F}|BagOfNonsense.csproj|solutionrelative:projectiles\\corruptspearproj.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{C9C7A90F-7302-4018-83F5-B294C1CE908F}|BagOfNonsense.csproj|c:\\users\\administrator\\documents\\my games\\terraria\\tmodloader\\modsources\\bagofnonsense\\items\\armor\\hiddenshooterhood.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C9C7A90F-7302-4018-83F5-B294C1CE908F}|BagOfNonsense.csproj|solutionrelative:items\\armor\\hiddenshooterhood.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{C9C7A90F-7302-4018-83F5-B294C1CE908F}|BagOfNonsense.csproj|c:\\users\\administrator\\documents\\my games\\terraria\\tmodloader\\modsources\\bagofnonsense\\projectiles\\ar2held.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C9C7A90F-7302-4018-83F5-B294C1CE908F}|BagOfNonsense.csproj|solutionrelative:projectiles\\ar2held.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C9C7A90F-7302-4018-83F5-B294C1CE908F}|BagOfNonsense.csproj|c:\\users\\administrator\\documents\\my games\\terraria\\tmodloader\\modsources\\bagofnonsense\\items\\weapons\\ranged\\sasha.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C9C7A90F-7302-4018-83F5-B294C1CE908F}|BagOfNonsense.csproj|solutionrelative:items\\weapons\\ranged\\sasha.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{C9C7A90F-7302-4018-83F5-B294C1CE908F}|BagOfNonsense.csproj|c:\\users\\administrator\\documents\\my games\\terraria\\tmodloader\\modsources\\bagofnonsense\\bagofnonsenseglobalitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{C9C7A90F-7302-4018-83F5-B294C1CE908F}|BagOfNonsense.csproj|solutionrelative:bagofnonsenseglobalitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{C9C7A90F-7302-4018-83F5-B294C1CE908F}|BagOfNonsense.csproj|c:\\users\\administrator\\documents\\my games\\terraria\\tmodloader\\modsources\\bagofnonsense\\helpers\\extensionmethods.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{C9C7A90F-7302-4018-83F5-B294C1CE908F}|BagOfNonsense.csproj|solutionrelative:helpers\\extensionmethods.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C9C7A90F-7302-4018-83F5-B294C1CE908F}|BagOfNonsense.csproj|c:\\users\\administrator\\documents\\my games\\terraria\\tmodloader\\modsources\\bagofnonsense\\bagofnonsensemodplayer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C9C7A90F-7302-4018-83F5-B294C1CE908F}|BagOfNonsense.csproj|solutionrelative:bagofnonsensemodplayer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C9C7A90F-7302-4018-83F5-B294C1CE908F}|BagOfNonsense.csproj|c:\\users\\administrator\\documents\\my games\\terraria\\tmodloader\\modsources\\bagofnonsense\\buffs\\dfireburn.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C9C7A90F-7302-4018-83F5-B294C1CE908F}|BagOfNonsense.csproj|solutionrelative:buffs\\dfireburn.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C9C7A90F-7302-4018-83F5-B294C1CE908F}|BagOfNonsense.csproj|c:\\users\\administrator\\documents\\my games\\terraria\\tmodloader\\modsources\\bagofnonsense\\build.txt||{8B382828-6202-11D1-8870-0000F87579D2}",
-      "RelativeMoniker": "D:0:0:{C9C7A90F-7302-4018-83F5-B294C1CE908F}|BagOfNonsense.csproj|solutionrelative:build.txt||{8B382828-6202-11D1-8870-0000F87579D2}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C9C7A90F-7302-4018-83F5-B294C1CE908F}|BagOfNonsense.csproj|c:\\users\\administrator\\documents\\my games\\terraria\\tmodloader\\modsources\\bagofnonsense\\helpers\\myutils.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C9C7A90F-7302-4018-83F5-B294C1CE908F}|BagOfNonsense.csproj|solutionrelative:helpers\\myutils.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{C9C7A90F-7302-4018-83F5-B294C1CE908F}|BagOfNonsense.csproj|c:\\users\\administrator\\documents\\my games\\terraria\\tmodloader\\modsources\\bagofnonsense\\items\\weapons\\ranged\\marrowup.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{C9C7A90F-7302-4018-83F5-B294C1CE908F}|BagOfNonsense.csproj|solutionrelative:items\\weapons\\ranged\\marrowup.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -70,8 +34,21 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 8,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "ExtensionMethods.cs",
+              "DocumentMoniker": "C:\\Users\\Administrator\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\BagOfNonsense\\Helpers\\ExtensionMethods.cs",
+              "RelativeDocumentMoniker": "Helpers\\ExtensionMethods.cs",
+              "ToolTip": "C:\\Users\\Administrator\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\BagOfNonsense\\Helpers\\ExtensionMethods.cs",
+              "RelativeToolTip": "Helpers\\ExtensionMethods.cs",
+              "ViewState": "AQIAABwAAAAAAAAAAAAkwCgAAABjAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-17T20:40:58.098Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Bookmark",
               "Name": "ST:128:0:{13b12e3e-c1b4-4539-9371-4fe9a0d523fc}"
@@ -86,184 +63,68 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "WaverSummon.cs",
-              "DocumentMoniker": "C:\\Users\\Administrator\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\BagOfNonsense\\Projectiles\\WaverSummon.cs",
-              "RelativeDocumentMoniker": "Projectiles\\WaverSummon.cs",
-              "ToolTip": "C:\\Users\\Administrator\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\BagOfNonsense\\Projectiles\\WaverSummon.cs",
-              "RelativeToolTip": "Projectiles\\WaverSummon.cs",
-              "ViewState": "AQIAAMUAAAAAAAAAAAAAAMwAAAARAAAA",
+              "DocumentIndex": 4,
+              "Title": "BagOfNonsenseGlobalItem.cs",
+              "DocumentMoniker": "C:\\Users\\Administrator\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\BagOfNonsense\\BagOfNonsenseGlobalItem.cs",
+              "RelativeDocumentMoniker": "BagOfNonsenseGlobalItem.cs",
+              "ToolTip": "C:\\Users\\Administrator\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\BagOfNonsense\\BagOfNonsenseGlobalItem.cs",
+              "RelativeToolTip": "BagOfNonsenseGlobalItem.cs",
+              "ViewState": "AQIAABYAAAAAAAAAAAA1wBoAAAA/AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-10T00:37:26.619Z",
+              "WhenOpened": "2024-06-15T17:49:43.407Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "HiddenShooterHood.cs",
+              "DocumentMoniker": "C:\\Users\\Administrator\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\BagOfNonsense\\Items\\Armor\\HiddenShooterHood.cs",
+              "RelativeDocumentMoniker": "Items\\Armor\\HiddenShooterHood.cs",
+              "ToolTip": "C:\\Users\\Administrator\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\BagOfNonsense\\Items\\Armor\\HiddenShooterHood.cs",
+              "RelativeToolTip": "Items\\Armor\\HiddenShooterHood.cs",
+              "ViewState": "AQIAABYAAAAAAAAAAAAqwCIAAAAxAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-15T17:46:50.72Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "TF2Crit.cs",
+              "DocumentMoniker": "C:\\Users\\Administrator\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\BagOfNonsense\\TF2Crit.cs",
+              "RelativeDocumentMoniker": "TF2Crit.cs",
+              "ToolTip": "C:\\Users\\Administrator\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\BagOfNonsense\\TF2Crit.cs",
+              "RelativeToolTip": "TF2Crit.cs",
+              "ViewState": "AQIAAEQAAAAAAAAAAAAswEIAAAApAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-15T17:44:57.685Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "UfoSpawner.cs",
-              "DocumentMoniker": "C:\\Users\\Administrator\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\BagOfNonsense\\Projectiles\\UfoSpawner.cs",
-              "RelativeDocumentMoniker": "Projectiles\\UfoSpawner.cs",
-              "ToolTip": "C:\\Users\\Administrator\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\BagOfNonsense\\Projectiles\\UfoSpawner.cs",
-              "RelativeToolTip": "Projectiles\\UfoSpawner.cs",
-              "ViewState": "AQIAAFIAAAAAAAAAAAAcwFQAAACnAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-10T00:36:41.939Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "TinyUfoBase.cs",
-              "DocumentMoniker": "C:\\Users\\Administrator\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\BagOfNonsense\\Projectiles\\TinyUfoBase.cs",
-              "RelativeDocumentMoniker": "Projectiles\\TinyUfoBase.cs",
-              "ToolTip": "C:\\Users\\Administrator\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\BagOfNonsense\\Projectiles\\TinyUfoBase.cs",
-              "RelativeToolTip": "Projectiles\\TinyUfoBase.cs",
-              "ViewState": "AQIAAEwAAAAAAAAAAAAwwF0AAAAmAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-10T00:35:42.518Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "Spectre.cs",
-              "DocumentMoniker": "C:\\Users\\Administrator\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\BagOfNonsense\\Projectiles\\Spectre.cs",
-              "RelativeDocumentMoniker": "Projectiles\\Spectre.cs",
-              "ToolTip": "C:\\Users\\Administrator\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\BagOfNonsense\\Projectiles\\Spectre.cs",
-              "RelativeToolTip": "Projectiles\\Spectre.cs",
-              "ViewState": "AQIAAH4AAAAAAAAAAAAcwJYAAAAVAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-10T00:34:34.843Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
               "Title": "SashaProj.cs",
               "DocumentMoniker": "C:\\Users\\Administrator\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\BagOfNonsense\\Projectiles\\SashaProj.cs",
               "RelativeDocumentMoniker": "Projectiles\\SashaProj.cs",
               "ToolTip": "C:\\Users\\Administrator\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\BagOfNonsense\\Projectiles\\SashaProj.cs",
               "RelativeToolTip": "Projectiles\\SashaProj.cs",
-              "ViewState": "AQIAAMMAAAAAAAAAAAAcwNkAAAAZAAAA",
+              "ViewState": "AQIAAOQAAAAAAAAAAAAIwPsAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-10T00:33:45.612Z"
+              "WhenOpened": "2024-06-12T21:11:24.271Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "HLRocket.cs",
-              "DocumentMoniker": "C:\\Users\\Administrator\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\BagOfNonsense\\Projectiles\\HLRocket.cs",
-              "RelativeDocumentMoniker": "Projectiles\\HLRocket.cs",
-              "ToolTip": "C:\\Users\\Administrator\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\BagOfNonsense\\Projectiles\\HLRocket.cs",
-              "RelativeToolTip": "Projectiles\\HLRocket.cs",
-              "ViewState": "AQIAAEAAAAAAAAAAAAAcwFMAAAAUAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-10T00:33:27.11Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "CorruptSpearProj.cs",
-              "DocumentMoniker": "C:\\Users\\Administrator\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\BagOfNonsense\\Projectiles\\CorruptSpearProj.cs",
-              "RelativeDocumentMoniker": "Projectiles\\CorruptSpearProj.cs",
-              "ToolTip": "C:\\Users\\Administrator\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\BagOfNonsense\\Projectiles\\CorruptSpearProj.cs",
-              "RelativeToolTip": "Projectiles\\CorruptSpearProj.cs",
-              "ViewState": "AQIAAA4BAAAAAAAAAAAcwBsBAAANAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-10T00:33:08.271Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "AR2Held.cs",
-              "DocumentMoniker": "C:\\Users\\Administrator\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\BagOfNonsense\\Projectiles\\AR2Held.cs",
-              "RelativeDocumentMoniker": "Projectiles\\AR2Held.cs",
-              "ToolTip": "C:\\Users\\Administrator\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\BagOfNonsense\\Projectiles\\AR2Held.cs",
-              "RelativeToolTip": "Projectiles\\AR2Held.cs",
-              "ViewState": "AQIAALwAAAAAAAAAAAAcwMsAAABEAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-10T00:32:55.854Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 0,
               "Title": "Sasha.cs",
               "DocumentMoniker": "C:\\Users\\Administrator\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\BagOfNonsense\\Items\\Weapons\\Ranged\\Sasha.cs",
               "RelativeDocumentMoniker": "Items\\Weapons\\Ranged\\Sasha.cs",
               "ToolTip": "C:\\Users\\Administrator\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\BagOfNonsense\\Items\\Weapons\\Ranged\\Sasha.cs",
               "RelativeToolTip": "Items\\Weapons\\Ranged\\Sasha.cs",
-              "ViewState": "AQIAACMAAAAAAAAAAAAUwDMAAAB6AAAA",
+              "ViewState": "AQIAACsAAAAAAAAAAAAkwD4AAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-10T00:32:41.036Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "DFireBurn.cs",
-              "DocumentMoniker": "C:\\Users\\Administrator\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\BagOfNonsense\\Buffs\\DFireBurn.cs",
-              "RelativeDocumentMoniker": "Buffs\\DFireBurn.cs",
-              "ToolTip": "C:\\Users\\Administrator\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\BagOfNonsense\\Buffs\\DFireBurn.cs",
-              "RelativeToolTip": "Buffs\\DFireBurn.cs",
-              "ViewState": "AQIAACsAAAAAAAAAAAAUwDwAAAAXAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-10T00:31:52.782Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "ExtensionMethods.cs",
-              "DocumentMoniker": "C:\\Users\\Administrator\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\BagOfNonsense\\Helpers\\ExtensionMethods.cs",
-              "RelativeDocumentMoniker": "Helpers\\ExtensionMethods.cs",
-              "ToolTip": "C:\\Users\\Administrator\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\BagOfNonsense\\Helpers\\ExtensionMethods.cs",
-              "RelativeToolTip": "Helpers\\ExtensionMethods.cs",
-              "ViewState": "AQIAAA0AAAAAAAAAAADwvxwAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-10T00:31:22.677Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "BagOfNonsenseModPlayer.cs",
-              "DocumentMoniker": "C:\\Users\\Administrator\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\BagOfNonsense\\BagOfNonsenseModPlayer.cs",
-              "RelativeDocumentMoniker": "BagOfNonsenseModPlayer.cs",
-              "ToolTip": "C:\\Users\\Administrator\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\BagOfNonsense\\BagOfNonsenseModPlayer.cs",
-              "RelativeToolTip": "BagOfNonsenseModPlayer.cs",
-              "ViewState": "AQIAAGUAAAAAAAAAAAAIwHkAAACJAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-10T00:31:15.144Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "build.txt",
-              "DocumentMoniker": "C:\\Users\\Administrator\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\BagOfNonsense\\build.txt",
-              "RelativeDocumentMoniker": "build.txt",
-              "ToolTip": "C:\\Users\\Administrator\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\BagOfNonsense\\build.txt",
-              "RelativeToolTip": "build.txt",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAEAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003109|",
-              "WhenOpened": "2024-05-29T22:14:08.459Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "MyUtils.cs",
-              "DocumentMoniker": "C:\\Users\\Administrator\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\BagOfNonsense\\Helpers\\MyUtils.cs",
-              "RelativeDocumentMoniker": "Helpers\\MyUtils.cs",
-              "ToolTip": "C:\\Users\\Administrator\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\BagOfNonsense\\Helpers\\MyUtils.cs",
-              "RelativeToolTip": "Helpers\\MyUtils.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-24T22:00:04.915Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 14,
-              "Title": "MarrowUp.cs",
-              "DocumentMoniker": "C:\\Users\\Administrator\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\BagOfNonsense\\Items\\Weapons\\Ranged\\MarrowUp.cs",
-              "RelativeDocumentMoniker": "Items\\Weapons\\Ranged\\MarrowUp.cs",
-              "ToolTip": "C:\\Users\\Administrator\\Documents\\My Games\\Terraria\\tModLoader\\ModSources\\BagOfNonsense\\Items\\Weapons\\Ranged\\MarrowUp.cs",
-              "RelativeToolTip": "Items\\Weapons\\Ranged\\MarrowUp.cs",
-              "ViewState": "AQIAACEAAAAAAAAAAAAYwDYAAAAJAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-20T17:05:53.593Z"
+              "WhenOpened": "2024-06-12T21:04:55.327Z",
+              "EditorCaption": ""
             }
           ]
         },

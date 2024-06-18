@@ -1,3 +1,4 @@
+using BagOfNonsense.Helpers;
 using BagOfNonsense.Items.Ingredients;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
@@ -13,6 +14,8 @@ namespace BagOfNonsense.Items.Armor
         public bool SuperCritBool = false;
 
         public bool printCrit = false;
+
+        public int totalDamage;
 
         private int hitCounter;
 
@@ -30,12 +33,7 @@ namespace BagOfNonsense.Items.Armor
                     crit = "CRIT!!!";
                 else
                     crit = hitCounter.ToString();
-                int counterText = CombatText.NewText(player.getRect(), Color.Lime, crit, true);
-                if (counterText < 100)
-                {
-                    Main.combatText[counterText].velocity.Y -= 8f;
-                    Main.combatText[counterText].lifeTime = 24;
-                }
+                ExtensionMethods.CreateCombatText(player, Color.Lime, crit, true);
             }
         }
 
@@ -138,9 +136,10 @@ namespace BagOfNonsense.Items.Armor
 
         public override void ModifyTooltips(List<TooltipLine> tooltips)
         {
-            if (Main.LocalPlayer.GetModPlayer<SuperCrit>().SuperCritBool)
+            SuperCrit Crit = Main.LocalPlayer.GetModPlayer<SuperCrit>();
+            if (Crit.SuperCritBool)
             {
-                TooltipLine damage = new(Mod, "DamageSoFar", "Damage done with Super Crits: " + TF2Crit.UpdateNumber()) { OverrideColor = Color.LightPink };
+                TooltipLine damage = new(Mod, "DamageSoFar", "Damage done with Super Crits: " + Crit.totalDamage) { OverrideColor = Color.LightPink };
                 tooltips.Add(damage);
             }
         }

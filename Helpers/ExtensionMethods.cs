@@ -20,15 +20,27 @@ namespace BagOfNonsense.Helpers
     /// </summary>
     public static class ExtensionMethods
     {
+        public static void SpawnNPC(this NPC _, IEntitySource source, Vector2 position, int type)
+        {
+            if (Main.netMode != NetmodeID.MultiplayerClient)
+            {
+                int index = NPC.NewNPC(source, (int)position.X, (int)position.Y, type);
+                NetMessage.SendData(MessageID.SyncNPC, -1, -1, null, index);
+                return;
+            }
+            else if (Main.netMode == NetmodeID.SinglePlayer)
+                NPC.NewNPCDirect(source, position, type);
+        }
+
         /// <summary>
         /// This EntityDraw call already subtracts screen position
         /// <code>position - Main.screenPosition</code>
         /// </summary>
         public static void BetterEntityDraw(Texture2D texture, Vector2 position, Rectangle? sourceRectangle, Color color, float rotation, Vector2 origin, float scale, SpriteEffects effects, float worthless = 0f) => Main.EntitySpriteDraw(texture, position - Main.screenPosition, sourceRectangle, color, rotation, origin, new Vector2(scale), effects, worthless);
 
-        public static CombatText CreateCombatText(Player sourcePlayer, Color color, string text) => Main.combatText[CombatText.NewText(sourcePlayer.getRect(), color, text)];
+        public static CombatText CreateCombatText(Player sourcePlayer, Color color, string text, bool dramatic = true, bool dot = false) => Main.combatText[CombatText.NewText(sourcePlayer.getRect(), color, text, dramatic, dot)];
 
-        public static CombatText CreateCombatText(NPC sourceNPC, Color color, string text) => Main.combatText[CombatText.NewText(sourceNPC.getRect(), color, text)];
+        public static CombatText CreateCombatText(NPC sourceNPC, Color color, string text, bool dramatic = true, bool dot = false) => Main.combatText[CombatText.NewText(sourceNPC.getRect(), color, text, dramatic, dot)];
 
         /// <summary>
         /// Uses either ChatHelper.BroadcastChatMessage or Main.NewText to send messages

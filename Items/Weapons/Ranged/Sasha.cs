@@ -63,11 +63,13 @@ namespace BagOfNonsense.Items.Weapons.Ranged
 
         public override bool CanConsumeAmmo(Item ammo, Player player)
         {
-            for (int i = 0; i < Main.maxProjectiles; i++)
+            foreach (Projectile proj in Main.ActiveProjectiles)
             {
-                Projectile proj = Main.projectile[i];
-                if (proj.active && proj.type == ModContent.ProjectileType<SashaProj>() && proj.owner == player.whoAmI && player.GetModPlayer<SashaCritTime>().canConsumeAmmo == 1)
-                    return true;
+                if (proj.type == ModContent.ProjectileType<SashaProj>() && proj.owner == player.whoAmI)
+                {
+                    SashaProj heldProj = proj.ModProjectile as SashaProj;
+                    return heldProj.animationControl == 1;
+                }
             }
             return false;
         }

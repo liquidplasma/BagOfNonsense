@@ -8,8 +8,6 @@ namespace BagOfNonsense
 {
     public class TF2Crit
     {
-        private static int totaldamage;
-
         /// <summary>
         /// MINI CRIT!
         /// </summary>
@@ -90,13 +88,8 @@ namespace BagOfNonsense
                     Main.combatText[damageText].lifeTime = 60;
                 }
                 if (Main.LocalPlayer.GetModPlayer<SuperCrit>().SuperCritBool)
-                    totaldamage += damage;
+                    Main.LocalPlayer.GetModPlayer<SuperCrit>().totalDamage += damage;
             }
-        }
-
-        public static int UpdateNumber()
-        {
-            return totaldamage;
         }
     }
 }
