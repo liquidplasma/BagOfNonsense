@@ -14,7 +14,7 @@ namespace BagOfNonsense.Items.Weapons.Magic
 
         public override void PostUpdate()
         {
-            if (Player.HeldItem.type == ModContent.ItemType<Egon>() && Player.channel)
+            if (Player.HeldItem.type == ModContent.ItemType<Egon>())
                 radiansControl += 0.125f;
         }
     }
@@ -53,8 +53,8 @@ namespace BagOfNonsense.Items.Weapons.Magic
 
         public override void SetDefaults()
         {
-            Item.width = 40;
-            Item.height = 24;
+            Item.width = 58;
+            Item.height = 20;
             Item.damage = 22;
             Item.useTime = 4;
             Item.useAnimation = 4;
@@ -138,10 +138,8 @@ namespace BagOfNonsense.Items.Weapons.Magic
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            Projectile mainBeam = Projectile.NewProjectileDirect(source, position, velocity, ModContent.ProjectileType<EgonProj>(), damage, knockback, player.whoAmI, 1);
-            mainBeam.originalDamage = damage;
-            Projectile swirlyBeam = Projectile.NewProjectileDirect(source, position, velocity, ModContent.ProjectileType<EgonProj>(), damage, knockback, player.whoAmI);
-            swirlyBeam.originalDamage = damage;
+            Projectile.NewProjectileDirect(source, position, velocity, ModContent.ProjectileType<EgonProj>(), damage, knockback, player.whoAmI, 0);
+            Projectile.NewProjectileDirect(source, position, velocity, ModContent.ProjectileType<EgonProj>(), damage, knockback, player.whoAmI, 1);
             return false;
         }
 

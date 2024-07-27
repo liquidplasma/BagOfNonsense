@@ -29,7 +29,7 @@ namespace BagOfNonsense.Items.Weapons.Melee
             Item.useTime = 21;
             Item.scale = 1f;
             Item.useAnimation = 21;
-            Item.shoot = ModContent.ProjectileType<ScytheProj>();
+            Item.shoot = ModContent.ProjectileType<SubZeroScytheProj>();
             Item.shootSpeed = 18f;
             Item.rare = ItemRarityID.Cyan;
         }
@@ -53,7 +53,7 @@ namespace BagOfNonsense.Items.Weapons.Melee
             for (int i = 0; i < 2; i++)
             {
                 Vector2 perturbedSpeed = new Vector2(velocity.X, velocity.Y).RotatedBy(MathHelper.Lerp(-rotation, rotation, i / (2 - 1))) * .2f;
-                Projectile.NewProjectile(source, position.X, position.Y, perturbedSpeed.X * 6f, perturbedSpeed.Y * 6f, ModContent.ProjectileType<ScytheProj>(), (int)(damage * 1.2), knockback, player.whoAmI);
+                Projectile.NewProjectile(source, position.X, position.Y, perturbedSpeed.X * 6f, perturbedSpeed.Y * 6f, type, (int)(damage * 1.2), knockback, player.whoAmI);
             }
             Projectile.NewProjectile(source, position, velocity, type, damage, knockback, player.whoAmI);
             return false;

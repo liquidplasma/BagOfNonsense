@@ -21,6 +21,8 @@ namespace BagOfNonsense.Projectiles
 
         private ActiveSound aBallLoop;
 
+        private FlameLashDrawer aBallLashDrawer;
+
         private VertexStrip _vertexStrip = new();
 
         private int BallHitTimer

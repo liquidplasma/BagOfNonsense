@@ -38,9 +38,21 @@ namespace BagOfNonsense.Helpers
         /// </summary>
         public static void BetterEntityDraw(Texture2D texture, Vector2 position, Rectangle? sourceRectangle, Color color, float rotation, Vector2 origin, float scale, SpriteEffects effects, float worthless = 0f) => Main.EntitySpriteDraw(texture, position - Main.screenPosition, sourceRectangle, color, rotation, origin, new Vector2(scale), effects, worthless);
 
-        public static CombatText CreateCombatText(Player sourcePlayer, Color color, string text, bool dramatic = true, bool dot = false) => Main.combatText[CombatText.NewText(sourcePlayer.getRect(), color, text, dramatic, dot)];
+        public static CombatText CreateCombatText(Player sourcePlayer, Color color, string text, bool dramatic = true, bool dot = false)
+        {
+            int combatText = CombatText.NewText(sourcePlayer.getRect(), color, text, dramatic, dot);
+            if (combatText < 100)
+                return Main.combatText[combatText];
+            return null;
+        }
 
-        public static CombatText CreateCombatText(NPC sourceNPC, Color color, string text, bool dramatic = true, bool dot = false) => Main.combatText[CombatText.NewText(sourceNPC.getRect(), color, text, dramatic, dot)];
+        public static CombatText CreateCombatText(NPC sourceNPC, Color color, string text, bool dramatic = true, bool dot = false)
+        {
+            int combatText = CombatText.NewText(sourceNPC.getRect(), color, text, dramatic, dot);
+            if (combatText < 100)
+                return Main.combatText[combatText];
+            return null;
+        }
 
         /// <summary>
         /// Uses either ChatHelper.BroadcastChatMessage or Main.NewText to send messages
@@ -427,7 +439,7 @@ namespace BagOfNonsense.Helpers
         /// <para>Rotating in the direction of travel is often used in projectiles like arrows.</para>
         /// </summary>
         /// <param name="proj"></param>
-        public static void FaceForward(this Projectile proj) => proj.rotation = proj.velocity.ToRotation() + MathHelper.PiOver2;
+        public static void FaceForward(this Projectile proj, float pi = MathHelper.PiOver2) => proj.rotation = proj.velocity.ToRotation() + pi;
 
         /// <summary>
         /// Returns true if this NPC is airborn

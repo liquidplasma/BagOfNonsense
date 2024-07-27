@@ -855,6 +855,11 @@ Mods: {
 				DisplayName: Attack Cycling Weapon
 				Tooltip: ""
 			}
+
+			AllRounder: {
+				DisplayName: All Rounder
+				Tooltip: ""
+			}
 		}
 
 		InfoDisplays.SashaDamageShow.DisplayName: Damage Done
@@ -961,6 +966,8 @@ Mods: {
 			NormalBullet.DisplayName: Normal Bullet
 			SpriteCreator.DisplayName: Sprite Creator
 			SpriteCreatorShots.DisplayName: Sprite Creator Shots
+			LightDiskTest.DisplayName: Light Disk Test
+			SubZeroScytheProj.DisplayName: Sub Zero Scythe Proj
 		}
 
 		Configs: {

@@ -22,8 +22,6 @@ namespace BagOfNonsense.Items.Weapons.Ranged
             Item.useStyle = ItemUseStyleID.HiddenAnimation;
             Item.useAnimation = 6;
             Item.useTime = 6;
-            Item.width = 52;
-            Item.height = 40;
             Item.shoot = ProjectileID.PurificationPowder;
             Item.damage = 27;
             Item.shootSpeed = 16f;
@@ -42,7 +40,7 @@ namespace BagOfNonsense.Items.Weapons.Ranged
         }
 
         public override bool CanConsumeAmmo(Item ammo, Player player)
-        {           
+        {
             return false;
         }
 

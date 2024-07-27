@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("BagOfNonsense")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+83a87b856f3aa268a10d97bbe404892b6dba0c1d")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3d486ef0c580dfc91f07b8269f94a7bdcb9c0dcc")]
 [assembly: System.Reflection.AssemblyProductAttribute("BagOfNonsense")]
 [assembly: System.Reflection.AssemblyTitleAttribute("BagOfNonsense")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

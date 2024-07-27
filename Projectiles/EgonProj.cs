@@ -34,6 +34,8 @@ namespace BagOfNonsense.Projectiles
             MaxInstances = 1,
         };
 
+        private ref float SwirlyType => ref Projectile.ai[0];
+
         public override void SetStaticDefaults()
         {
             ProjectileID.Sets.TrailCacheLength[Type] = 2000;
@@ -54,7 +56,7 @@ namespace BagOfNonsense.Projectiles
             Projectile.light = 1f; // How much light emit around the projectile
             Projectile.tileCollide = true; // Can the projectile collide with tiles?
             Projectile.timeLeft = 120; // The live time for the projectile (60 = 1 second, so 600 is 10 seconds)
-            Projectile.extraUpdates = 30;
+            Projectile.extraUpdates = 15;
         }
 
         public override bool PreDraw(ref Color lightColor)
@@ -64,9 +66,9 @@ namespace BagOfNonsense.Projectiles
 
         public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
         {
-            if (Projectile.ai[0] != 1)
+            if (Projectile.ai[0] != 0)
             {
-                modifiers.FinalDamage *= 0.57f;
+                modifiers.FinalDamage *= 0.33f;
                 modifiers.Knockback *= 0;
             }
             base.ModifyHitNPC(target, ref modifiers);
@@ -97,6 +99,7 @@ namespace BagOfNonsense.Projectiles
 
         public override void AI()
         {
+            Lighting.AddLight(Projectile.Center, Color.DarkCyan.ToVector3());
             // Ensure that the "waveDirection = 1" projectile starts above the "waveDirection = -1" projectile not matter which direction they were fired from
             int trueDirection = Projectile.direction * waveDirection;
 
@@ -105,7 +108,14 @@ namespace BagOfNonsense.Projectiles
             float wavesPerSecond = 2;
 
             // Math.Sin expects a radians angle instead of degrees
-            float radians = MathHelper.ToRadians(sineTimer * 6f * wavesPerSecond) - (Player.GetModPlayer<EgonModPLayer>().radiansControl * (Projectile.ai[0] == 2 ? -1.5f : 1));
+            float swirlyType = 0f;
+            switch (SwirlyType)
+            {
+                case 0:
+                    swirlyType = 1.5f;
+                    break;
+            }
+            float radians = MathHelper.ToRadians(sineTimer * 6f * wavesPerSecond) - (Player.GetModPlayer<EgonModPLayer>().radiansControl * swirlyType);
             float sine = (float)Math.Sin(radians) * trueDirection;
 
             // Using the calculated sine value, generate an offset used to position the projectile on the wave
@@ -115,7 +125,7 @@ namespace BagOfNonsense.Projectiles
             // How wide the wave should be, times two
             // An amplitude of 24 pixels is 1.5 tiles, meaning the total wave width is 48 pixels, or 3 tiles
             waveAmplitude++;
-            if (waveAmplitude >= 18) waveAmplitude = 18;
+            if (waveAmplitude >= 24) waveAmplitude = 24;
 
             if (Projectile.ai[0] == 1)
                 waveAmplitude = 0;
@@ -128,7 +138,7 @@ namespace BagOfNonsense.Projectiles
             // Update the rotation used to draw the projectile
             // This projectile should act as if it were moving along the sine wave
             float cosine = (float)Math.Cos(radians) * trueDirection;
-            Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver4 * cosine * -1;
+            Projectile.rotation = Projectile.velocity.ToRotation() + MathHelper.PiOver2 * cosine * -1;
 
             // Spawn dusts
             if (Projectile.ai[0] == 1)
@@ -137,6 +147,7 @@ namespace BagOfNonsense.Projectiles
                 dusty.velocity = Vector2.Zero;
                 dusty.scale = 1f;
                 dusty.color = MainBeam;
+                dusty.rotation = Projectile.rotation;
             }
             else
             {
@@ -144,6 +155,7 @@ namespace BagOfNonsense.Projectiles
                 dusty2.velocity = Vector2.Zero;
                 dusty2.scale = 1f;
                 dusty2.color = Color.Cyan;
+                dusty2.rotation = Projectile.rotation;
             }
 
             Projectile.direction = (Projectile.velocity.X > 0).ToDirectionInt();
@@ -155,14 +167,14 @@ namespace BagOfNonsense.Projectiles
         {
             if (Projectile.ai[0] == 1)
             {
-                Dust deathDust = Dust.NewDustDirect(Projectile.position + new Vector2(0, -4), 0, 0, ModContent.DustType<EgonLaser>());
-                deathDust.scale = 5f;
+                Dust deathDust = Dust.NewDustDirect(Projectile.Center, 0, 0, ModContent.DustType<EgonLaser>());
+                deathDust.scale = 2f;
                 deathDust.color = MainBeam;
             }
             else
             {
-                Dust deathDust = Dust.NewDustDirect(Projectile.position + new Vector2(0, -4), 0, 0, ModContent.DustType<EgonLaser>());
-                deathDust.scale = 5f;
+                Dust deathDust = Dust.NewDustDirect(Projectile.Center, 0, 0, ModContent.DustType<EgonLaser>());
+                deathDust.scale = 2f;
                 deathDust.color = Color.Cyan;
             }
         }

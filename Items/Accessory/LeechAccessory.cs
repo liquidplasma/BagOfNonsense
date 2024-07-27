@@ -50,7 +50,9 @@ namespace BagOfNonsense.Items.Accessory
                         recoverEffect.scale = 1.2f;
                         recoverEffect.noGravity = true;
                     }
-                    ExtensionMethods.CreateCombatText(Player, Color.Red, "15").lifeTime = 27;
+                    CombatText leech = ExtensionMethods.CreateCombatText(Player, Color.Red, "15");
+                    if (leech != null)
+                        leech.lifeTime = 27;
                 }
             }
             HealCapMax2 = Utils.Clamp(HealCapMax2, 0, HealCapMax);
